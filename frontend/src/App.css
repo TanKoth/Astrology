@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -35,45 +35,4 @@
   to {
     transform: rotate(360deg);
   }
-}
-
-
-.signup-section {
-    min-height: 100vh;
-    position: relative;
-    background: linear-gradient(135deg, rgb(10, 15, 41), rgb(26, 26, 46));
-    overflow: hidden;
-    padding: 120px 0px 60px;
-}
-
-.signup-container {
-    backdrop-filter: blur(10px);
-    box-shadow: rgba(255, 215, 0, 0.1) 0px 0px 50px;
-    max-width: 600px;
-    background: rgba(26, 26, 46, 0.7);
-    border-width: 1px;
-    border-style: solid;
-    border-color: rgba(255, 215, 0, 0.1);
-    border-image: initial;
-    border-radius: 20px;
-    margin: 0px auto;
-    padding: 2rem;
-}
-
-.signup-title {
-    -webkit-text-fill-color: rgba(0, 0, 0, 0);
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    text-align: center;
-    text-shadow: rgba(255, 215, 0, 0.3) 0px 0px 30px;
-    background: linear-gradient(45deg, gold, rgb(255, 140, 0)) text;
-}
-
-.signup-subtitle {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 1.1rem;
-    margin-bottom: 2rem;
-    text-align: center;
-}
-
-
+} */
