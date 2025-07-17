@@ -4,6 +4,7 @@ import {motion} from 'framer-motion';
 import { FaUser, FaLock } from "react-icons/fa";
 import {Form, Button, Input, Typography} from 'antd';
 import {useNavigate} from 'react-router-dom';
+import './Login.css'; // Assuming you have a CSS file for styling 
 
 const {Text} = Typography;
 
@@ -65,7 +66,7 @@ const Login =() => {
           </Form.Item>
 
           <Button
-            type="primary"
+            
             htmlType="submit"
             className="submit-button"
             loading={loading}

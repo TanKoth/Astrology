@@ -1,0 +1,61 @@
+.header {
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    background-color: #1a1a2ecc;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    transition: background-color .3s ease;
+    z-index: 1000;
+}
+
+
+.login-section {
+    align-items: center;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    display: flex
+;
+    height: 100vh;
+    justify-content: center;
+}
+
+.login-container {
+    background: #ffffff1a;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #fff3;
+    padding: 2rem;
+    text-align: center;
+    width: 400px;
+}
+
+.login-title {
+    color: gold;
+    font-size: 2rem;
+    text-shadow: 0 0 10px #ffd70080;
+}
+
+.submit-button{
+    background: linear-gradient(45deg, gold, #ff8c00) !important;
+    border: none !important;
+    border-radius: 24px !important;
+    color: #1a1a2e !important;
+    font-size: 1.1rem;
+    height: 48px;
+    margin-top: 1rem;
+    transition: all .3s ease !important;
+    width: 10rem;
+}
+
+.signup-link {
+    color: #fffc;
+    display: block;
+    font-size: 1rem;
+    margin-top: 1rem;
+}
+
+.signup-link-text {
+    color: gold;
+    font-weight: 700;
+    text-decoration: none;
+}
