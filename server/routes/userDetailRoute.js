@@ -1,9 +1,10 @@
 const express = require('express');
 const userDetailRoute = express.Router();
 
-const {createUser} = require('../controllers/userDetailsController');
+const {createUser, getUserDetails} = require('../controllers/userDetailsController');
 
 
-userDetailRoute.post('/userDetails', createUser);
+userDetailRoute.post('/save', createUser);
+userDetailRoute.get('/details', getUserDetails);
 
 module.exports = userDetailRoute;

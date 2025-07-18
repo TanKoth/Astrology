@@ -14,18 +14,23 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  place_of_birth:{
+  placeOfBirth:{
     type: String,
     required: true,
   },
-  date_of_birth:{
+  dob:{
     type: Date,
     required: true,
   },
-  birth_time:{
+  timeOfBirth:{
     type: String,
     required: true,
   },
+  role:{
+    type: String,
+    enum:['user', 'admin'],
+    default: 'user',
+  }
 })
 
 const userDetailModel = mongoose.model('UserDetail', userSchema);

@@ -13,6 +13,7 @@ import {
   FaClock,
 } from "react-icons/fa";
 import "./SignUp.css";
+import { saveUserData } from "../../api/user"; // Adjust the import path as needed
 import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
@@ -64,8 +65,9 @@ const SignUp = () => {
     try {
       setLoading(true);
 
-      // const response = await saveUserData(userDetails);
-      // console.log("user details", userDetails);
+      const response = await saveUserData(userDetails);
+      console.log("user details", userDetails);
+      console.log("Response from server:", response);
       // localStorage.setItem("token", response.token);
       // localStorage.setItem("user", JSON.stringify(response.user));
       // setUser(response.user);
