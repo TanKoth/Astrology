@@ -5,6 +5,6 @@ const {createUser, getUserDetails} = require('../controllers/userDetailsControll
 
 
 userDetailRoute.post('/save', createUser);
-userDetailRoute.get('/details', getUserDetails);
+userDetailRoute.get('/details/:userId', getUserDetails);
 
 module.exports = userDetailRoute;

@@ -16,11 +16,17 @@ export const saveUserData = async (userData) => {
 
 //fetch user astrology insights
 
-export const getUserInsights = async (userId) => {
+export const getUserInsights = async (userId, locationData) => {
   console.log("Fetching user insights for userId:", userId);
+  console.log("Location Data:", locationData);
   try {
+    const queryParams = new URLSearchParams({
+      latitude: locationData.latitude,
+      longitude: locationData.longitude,
+      gmtOffset: locationData.gmtOffset,
+    });
     const response = await axiosInstance.get(
-      `/api/users/details?userId=${userId}`
+      `/api/users/details/${userId}?${queryParams.toString()}`
     );
     console.log("User insights fetched successfully:", response.data);
     return response.data;

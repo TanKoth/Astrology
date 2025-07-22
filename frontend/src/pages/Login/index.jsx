@@ -1,21 +1,28 @@
-import React from 'react';
-import { useState, useContext } from 'react';
-import {motion} from 'framer-motion';
+import React from "react";
+import { useState, useContext } from "react";
+import { motion } from "framer-motion";
 import { FaUser, FaLock } from "react-icons/fa";
-import {Form, Button, Input, Typography} from 'antd';
-import {useNavigate} from 'react-router-dom';
-import './Login.css'; // Assuming you have a CSS file for styling 
+import { Form, Button, Input, Typography } from "antd";
+import { useNavigate } from "react-router-dom";
+import "./Login.css"; // Assuming you have a CSS file for styling
+import { AppContext } from "../../context/AppContext"; // Adjust the import path as necessary
 
-const {Text} = Typography;
+const { Text } = Typography;
 
-
-
-const Login =() => {
+const Login = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
+  const { setUser } = useContext(AppContext);
 
-  const onFinish = () => {}
+  const onFinish = () => {
+    try {
+      setLoading(true);
+    } catch (err) {
+      console.error("Login error:", err);
+      setMessage("Login failed. Please try again.");
+    }
+  };
 
   return (
     <section className="login-section">
@@ -65,12 +72,7 @@ const Login =() => {
             />
           </Form.Item>
 
-          <Button
-            
-            htmlType="submit"
-            className="submit-button"
-            loading={loading}
-          >
+          <Button htmlType="submit" className="submit-button" loading={loading}>
             Log In
           </Button>
           <Text className="signup-link">
@@ -92,7 +94,7 @@ const Login =() => {
         </Form>
       </motion.div>
     </section>
-  )
-}
+  );
+};
 
 export default Login;

@@ -1,0 +1,28 @@
+.header {
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    background-color: #1a1a2ecc;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    transition: background-color .3s ease;
+    z-index: 1000;
+}
+
+.header-content {
+    align-items: center;
+    display: flex
+;
+    justify-content: space-between;
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 1rem 2rem;
+}
+
+.logo {
+    color: gold;
+    font-size: 2rem;
+    font-weight: 700;
+    text-shadow: 0 0 10px #ffd70080;
+}

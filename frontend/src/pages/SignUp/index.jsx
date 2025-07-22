@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { motion } from "framer-motion";
+import { motion, time } from "framer-motion";
 import { Form, Input, Button, TimePicker, DatePicker } from "antd";
 import PlacesAutocomplete, {
   geocodeByAddress,
@@ -15,6 +15,7 @@ import {
 import "./SignUp.css";
 import { saveUserData } from "../../api/user"; // Adjust the import path as needed
 import { useNavigate } from "react-router-dom";
+import AppContext from "../../context/AppContext";
 
 const SignUp = () => {
   const [address, setAddress] = useState("");
@@ -23,21 +24,82 @@ const SignUp = () => {
   const [message, setMessage] = useState("");
   const [form] = Form.useForm();
   const navigate = useNavigate();
+  const { setUser } = useContext(AppContext);
+
+  // Function to get timezone from coordinates
+  const getTimezone = async (lat, lng) => {
+    try {
+      const timestamp = Math.floor(Date.now() / 1000); // Current timestamp
+      const apiKey = "AIzaSyCQYenBQ4dzHv7M445IIpDs3Lro7-6bAt0"; // Your Google API key
+
+      const response = await fetch(
+        `https://maps.googleapis.com/maps/api/timezone/json?location=${lat},${lng}&timestamp=${timestamp}&key=${apiKey}`
+      );
+
+      const data = await response.json();
+
+      if (data.status === "OK") {
+        return {
+          timeZoneId: data.timeZoneId,
+          timeZoneName: data.timeZoneName,
+          rawOffset: data.rawOffset,
+          dstOffset: data.dstOffset,
+        };
+      } else {
+        console.error("Timezone API error:", data);
+        return null;
+      }
+    } catch (error) {
+      console.error("Error fetching timezone:", error);
+      return null;
+    }
+  };
 
   const handleSelect = async (value) => {
     try {
       const results = await geocodeByAddress(value);
       const latLng = await getLatLng(results[0]);
+      const timezoneInfo = await getTimezone(latLng.lat, latLng.lng);
       setAddress(value);
-      setCoordinates(latLng);
+      setCoordinates({
+        lat: latLng.lat, // Store directly, not as latLng.lat
+        lng: latLng.lng,
+        // Add timezone data to coordinates state
+        timeZone: timezoneInfo?.timeZoneId || "UTC",
+        timeZoneName: timezoneInfo?.timeZoneName || "UTC",
+        rawOffset: timezoneInfo?.rawOffset || 0,
+        dstOffset: timezoneInfo?.dstOffset || 0,
+      });
 
       // Update form with selected address
       form.setFieldsValue({ placeOfBirth: value });
 
-      console.log("Selected Address:", value, "Coordinates:", latLng);
+      console.log(
+        "Selected Address:",
+        value,
+        "Coordinates:",
+        latLng,
+        "Timezone:",
+        timezoneInfo,
+        "GMT :",
+        formatGMTOffset(timezoneInfo.rawOffset / 3600)
+      );
     } catch (error) {
       console.error("Error fetching coordinates:", error);
     }
+  };
+
+  // Helper function to format GMT offset
+  const formatGMTOffset = (offsetHours) => {
+    const sign = offsetHours >= 0 ? "+" : "-";
+    const absOffset = Math.abs(offsetHours);
+    const hours = Math.floor(absOffset);
+    const minutes = Math.round((absOffset - hours) * 60);
+
+    const hoursStr = hours.toString().padStart(2, "0");
+    const minutesStr = minutes.toString().padStart(2, "0");
+
+    return `${hoursStr}:${minutesStr}`;
   };
 
   const onFinish = async (values) => {
@@ -51,13 +113,28 @@ const SignUp = () => {
       : null; // 24-hour format
     const formattedDate = values.dob ? values.dob.format("YYYY-MM-DD") : null;
 
+    // Calculate GMT offset in different formats
+    const totalOffsetSeconds =
+      (coordinates.rawOffset || 0) + (coordinates.dstOffset || 0);
+    const gmtOffsetHours = totalOffsetSeconds / 3600;
+    const gmtOffsetString = formatGMTOffset(gmtOffsetHours);
+
     const userDetails = {
       ...values,
       address,
+      timeOfBirth: formattedTime,
+      dob: formattedDate,
       latitude: coordinates.lat,
       longitude: coordinates.lng,
-      dob: formattedDate,
-      timeOfBirth: formattedTime,
+      gmtOffset: gmtOffsetString, // e.g., "GMT-05:00" or "GMT+05:30"
+      // timeZone: coordinates.timeZone || "UTC",
+      // timeZoneName: coordinates.timeZoneName || "UTC",
+      // GMT offset in different formats
+      // utcOffsetHours: gmtOffsetHours, // e.g., -5 or +5.5
+      // gmtOffset: gmtOffsetString, // e.g., "GMT-05:00" or "GMT+05:30"
+      // rawOffset: coordinates.rawOffset || 0,
+      // dstOffset: coordinates.dstOffset || 0,
+      //timeOfBirth: formattedTime,
     };
 
     console.log("Form Submitted:", userDetails);
@@ -68,9 +145,16 @@ const SignUp = () => {
       const response = await saveUserData(userDetails);
       console.log("user details", userDetails);
       console.log("Response from server:", response);
-      // localStorage.setItem("token", response.token);
-      // localStorage.setItem("user", JSON.stringify(response.user));
-      // setUser(response.user);
+      localStorage.setItem("token", response.token);
+      localStorage.setItem("user", JSON.stringify(response.user));
+      // Store insights if returned from signup
+      if (response.astrologyInsights) {
+        localStorage.setItem(
+          "insights",
+          JSON.stringify(response.astrologyInsights)
+        );
+      }
+      setUser(response.user);
 
       navigate("/dashboard");
     } catch (error) {
