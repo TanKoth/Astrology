@@ -147,6 +147,13 @@ const SignUp = () => {
       console.log("Response from server:", response);
       localStorage.setItem("token", response.token);
       localStorage.setItem("user", JSON.stringify(response.user));
+      if (response.locationData) {
+        localStorage.setItem(
+          "locationData",
+          JSON.stringify(response.locationData)
+        );
+      }
+
       // Store insights if returned from signup
       if (response.astrologyInsights) {
         localStorage.setItem(

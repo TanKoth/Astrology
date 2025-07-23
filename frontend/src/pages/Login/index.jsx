@@ -5,7 +5,7 @@ import { FaUser, FaLock } from "react-icons/fa";
 import { Form, Button, Input, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./Login.css"; // Assuming you have a CSS file for styling
-import { AppContext } from "../../context/AppContext"; // Adjust the import path as necessary
+import AppContext from "../../context/AppContext"; // Adjust the import path as necessary
 
 const { Text } = Typography;
 

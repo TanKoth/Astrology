@@ -2,6 +2,8 @@ const UserDetails = require('../models/userDetailsModel');
 const axios = require('axios');
 require('dotenv').config();
 const ASTROLOGY_API_KEY = process.env.ASTROLOGY_API_KEY;
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const createUser = async (req, res) =>{
   try{
@@ -10,17 +12,33 @@ const createUser = async (req, res) =>{
       return res.status(400).json({success:false, message: "User already exists with this email and name"});
     }
 
+    // Hash the password before saving
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
+
+    
   //Create user data with basic info
   const userData = {
       name: req.body.name,
       email: req.body.email,
-      password: req.body.password,
+      password: hashedPassword,
       placeOfBirth: req.body.placeOfBirth,
       dob: req.body.dob,
       timeOfBirth: req.body.timeOfBirth
     };
 
     const user = await UserDetails.create(userData);
+
+    // Remove password from response for security
+    const userResponse = { ...user.toObject() };
+    delete userResponse.password;
+
+    // Prepare location data to send back to frontend
+    const locationData = {
+      latitude: req.body.latitude,
+      longitude: req.body.longitude,
+      gmtOffset: req.body.gmtOffset
+    };
 
     // If location data is provided, fetch astrology insights immediately
     if(req.body.latitude && req.body.longitude && req.body.gmtOffset) {
@@ -45,28 +63,35 @@ const createUser = async (req, res) =>{
         
         console.log("Fetching astrology insights for new user:", birthDetails);
         const astrologyInsights = await getAstrologyInsights(birthDetails);
-        
+
+        const token = jwt.sign({UserId: user._id},process.env.SECRET_KEY, {expiresIn: '1d'});
+        console.log("Token generated for new user:", token);
+
         return res.status(200).json({
           success: true, 
           message: "User created successfully with astrology insights", 
-          user,
+          user: userResponse,
+          locationData,
+          token:token,
           astrologyInsights
         });
         
       } catch (insightError) {
         console.error("Error fetching astrology insights:", insightError);
         // Still return user creation success even if insights fail
-        return res.status(200).json({
-          success: true, 
-          message: "User created successfully, but astrology insights failed", 
-          user,
-          insightError: insightError.message
-        });
+        // return res.status(200).json({
+        //   success: true, 
+        //   message: "User created successfully, but astrology insights failed", 
+        //   user: userResponse,
+        //   locationData,
+        //   insightError: insightError.message
+        // });
       }
     }
-    return res.status(200).json({success: true, message: "User created successfully", user});
+    return res.status(200).json({success: true, message: "User created successfully", user: userResponse, locationData, token: token});
 
   }catch(error){
+    console.error("Error in createUser:", error); // Add more detailed logging
     return res.status(400).json({success: false, message: "Error creating user", error:error.message})
   }
 }
@@ -152,7 +177,10 @@ const getUserDetails = async(req,res) =>{
     // get astrology insights using birth details
     const astrologyInsights = await getAstrologyInsights(birthDetails);
     console.log("User astrology insights:", astrologyInsights);
-    return res.status(200).json({success: true, message: "User details fetched successfully", astrologyInsights});
+    // Generate token for user
+    const token = jwt.sign({UserId: user._id},process.env.SECRET_KEY, {expiresIn: '1d'});
+    console.log("Token generated for user:", token);
+    return res.status(200).json({success: true, message: "User details fetched successfully", astrologyInsights, token: token});
   }catch(err){
     return res.status(400).json({success: false, message: "Error fetching user details", error: err.message});
   }
