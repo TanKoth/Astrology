@@ -1,0 +1,196 @@
+.sage-inspiration {
+  background: linear-gradient(135deg, #2a1f3d 0%, #1a0f2e 100%);
+  color: #fff;
+  padding: 100px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.sage-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(
+      30deg,
+      #2a1f3d 12%,
+      transparent 12.5%,
+      transparent 87%,
+      #2a1f3d 87.5%,
+      #2a1f3d
+    ),
+    linear-gradient(
+      150deg,
+      #2a1f3d 12%,
+      transparent 12.5%,
+      transparent 87%,
+      #2a1f3d 87.5%,
+      #2a1f3d
+    ),
+    linear-gradient(
+      30deg,
+      #2a1f3d 12%,
+      transparent 12.5%,
+      transparent 87%,
+      #2a1f3d 87.5%,
+      #2a1f3d
+    ),
+    linear-gradient(
+      150deg,
+      #2a1f3d 12%,
+      transparent 12.5%,
+      transparent 87%,
+      #2a1f3d 87.5%,
+      #2a1f3d
+    ),
+    linear-gradient(
+      60deg,
+      #1a0f2e 25%,
+      transparent 25.5%,
+      transparent 75%,
+      #1a0f2e 75%,
+      #1a0f2e
+    ),
+    linear-gradient(
+      60deg,
+      #1a0f2e 25%,
+      transparent 25.5%,
+      transparent 75%,
+      #1a0f2e 75%,
+      #1a0f2e
+    );
+  background-size: 80px 140px;
+  background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.sage-content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+}
+
+.om-symbol {
+  font-size: 4rem;
+  color: #ffd700;
+  margin-bottom: 2rem;
+  opacity: 0.7;
+  animation: float 4s ease-in-out infinite;
+}
+
+.sage-inspiration h2 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  background: linear-gradient(45deg, #ffd700, #ff8c00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+}
+
+.sage-text {
+  position: relative;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.sage-text::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 215, 0, 0.3) 50%,
+    transparent 100%
+  );
+}
+
+.sage-text::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 215, 0, 0.3) 50%,
+    transparent 100%
+  );
+}
+
+.sage-text p {
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+
+.sage-text p:last-child {
+  margin-bottom: 0;
+}
+
+.sage-wrapper {
+  position: relative;
+  z-index: 1;
+  background: rgba(42, 31, 61, 0.7);
+  border-radius: 20px;
+  padding: 3rem;
+  box-shadow: 0 0 50px rgba(255, 215, 0, 0.1);
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@media (max-width: 768px) {
+  .sage-inspiration {
+    padding: 60px 0;
+  }
+
+  .om-symbol {
+    font-size: 3rem;
+  }
+
+  .sage-inspiration h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .sage-text {
+    padding: 1.5rem;
+  }
+
+  .sage-text p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+}

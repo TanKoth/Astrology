@@ -64,7 +64,7 @@ const Header = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          YugaTan_Astrology
+          Vedic Vedang.AI
         </motion.h1>
 
         {user && (

@@ -1,8 +1,8 @@
 import logo from './logo.svg';
-import './App.css';
+import "antd/dist/reset.css"; // Ant Design styles reset
+import "./index.css"; // Tailwind CSS
 import Home from './pages/Home';
 import Login from './pages/Login';
-import Register from './pages/Register';
 import {BrowserRouter as Router, Routes, Route,useLocation} from 'react-router-dom';
 import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
@@ -21,7 +21,6 @@ function AppRoutes() {
           <Route path={"/"} element = {<Home/>}/>
           <Route path ={"/signup"} element = {<SignUp/>}/>
           <Route path ={"/login"} element = {<Login/>} />
-          <Route path = {"/register"} element ={<Register/>} />
           <Route path = {"/dashboard"} element = {<Dashboard/>} />
           {/* Add more routes as needed */} 
         </Routes>

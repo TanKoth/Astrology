@@ -1,0 +1,123 @@
+.hero {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  color: #fff;
+  padding: 150px 0 100px;
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-content {
+  text-align: center;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero h1 {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(45deg, #ffd700, #ff6b6b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+.hero p {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  color: #b8c1ec;
+}
+
+.cta-button {
+  background: linear-gradient(45deg, #ff6b6b, #ffd700);
+  color: #1a1a2e;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.cta-button:hover {
+  background: linear-gradient(45deg, #ffd700, #ff6b6b);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.zodiac-symbol {
+  position: absolute;
+  font-size: 36px;
+  color: rgba(255, 215, 0, 0.3);
+}
+
+.zodiac-symbol:nth-child(1) {
+  top: 10%;
+  left: 5%;
+}
+.zodiac-symbol:nth-child(2) {
+  top: 20%;
+  right: 10%;
+}
+.zodiac-symbol:nth-child(3) {
+  bottom: 15%;
+  left: 15%;
+}
+.zodiac-symbol:nth-child(4) {
+  top: 40%;
+  right: 20%;
+}
+.zodiac-symbol:nth-child(5) {
+  bottom: 30%;
+  left: 25%;
+}
+.zodiac-symbol:nth-child(6) {
+  top: 60%;
+  right: 5%;
+}
+.zodiac-symbol:nth-child(7) {
+  bottom: 10%;
+  right: 15%;
+}
+.zodiac-symbol:nth-child(8) {
+  top: 5%;
+  left: 30%;
+}
+.zodiac-symbol:nth-child(9) {
+  bottom: 40%;
+  right: 25%;
+}
+.zodiac-symbol:nth-child(10) {
+  top: 70%;
+  left: 10%;
+}
+.zodiac-symbol:nth-child(11) {
+  top: 30%;
+  left: 20%;
+}
+.zodiac-symbol:nth-child(12) {
+  bottom: 20%;
+  right: 10%;
+}
+
+.ai-icon {
+  position: absolute;
+  font-size: 72px;
+  color: rgba(78, 84, 200, 0.6);
+  bottom: 10%;
+  right: 10%;
+}

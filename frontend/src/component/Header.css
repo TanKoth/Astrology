@@ -1,28 +1,103 @@
 .header {
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    background-color: #1a1a2ecc;
-    left: 0;
-    position: fixed;
-    right: 0;
-    top: 0;
-    transition: background-color .3s ease;
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: rgba(26, 26, 46, 0.8);
+  backdrop-filter: blur(10px);
+  transition: background-color 0.3s ease;
+}
+
+.header.scrolled {
+  background-color: rgba(26, 26, 46, 0.95);
 }
 
 .header-content {
-    align-items: center;
-    display: flex
-;
-    justify-content: space-between;
-    margin: 0 auto;
-    max-width: 1200px;
-    padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .logo {
-    color: gold;
-    font-size: 2rem;
-    font-weight: 700;
-    text-shadow: 0 0 10px #ffd70080;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ffd700;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+nav ul {
+  display: flex;
+  list-style-type: none;
+  gap: 2rem;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #ffd700;
+}
+
+/* Fixes menu background */
+.ant-menu {
+  background: transparent !important;
+}
+
+/* Removes active highlight from the menu */
+.ant-menu-item-selected {
+  background: none !important;
+  color: #ffd700 !important;
+  font-weight: bold;
+}
+.profile-dropdown {
+  background: rgba(26, 26, 46, 1) !important; /* Solid dark background */
+  border-radius: 8px !important;
+  min-width: 200px;
+  padding: 10px 0;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  z-index: 1200 !important;
+}
+
+/* Ensure dropdown text is visible */
+.profile-dropdown .ant-menu-item {
+  padding: 12px 16px !important;
+  color: #ffd700 !important; /* Golden text */
+  font-weight: 500;
+  font-size: 1rem; /* Ensure readability */
+}
+
+/* Hover effect for menu items */
+.profile-dropdown .ant-menu-item:hover {
+  background: rgba(255, 215, 0, 0.2) !important; /* Light golden hover */
+  color: #fff !important; /* Ensure white text on hover */
+}
+
+/* Ensure full visibility of dropdown */
+.ant-dropdown-menu {
+  background: rgba(26, 26, 46, 1) !important;
+  border-radius: 8px !important;
+  z-index: 1200 !important;
+}
+
+/* Ensure no transparency issues */
+.ant-dropdown-menu-item {
+  color: #ffd700 !important;
+  font-weight: 500;
+}
+
+/* Fix for Ant Design forcing default colors */
+.ant-dropdown-menu-item a {
+  color: #ffd700 !important;
+}
+
+.ant-dropdown-menu-item a:hover {
+  color: #fff !important;
 }
