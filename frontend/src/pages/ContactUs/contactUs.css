@@ -1,0 +1,86 @@
+.contact-section {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100vh;
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  padding-top: 2rem;
+}
+
+.contact-container {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  width: 600px;
+  text-align: center;
+  margin-top: 2rem;
+  max-height: 80vh; /* Limit container height */
+  overflow-y: auto; 
+  margin-top: 4rem;
+}
+
+.contact-title {
+  font-size: 3rem;
+  color: #ffd700;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  margin-top: 1rem;
+}
+
+/* .contact-subtitle {
+  margin-top: 5px;
+  margin-bottom: 1em;
+  color: #ffd700;
+  font-size: 15px;
+} */
+
+
+.contact-form .ant-form-item {
+  margin-bottom: 1rem;
+}
+
+.cosmic-input {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: #fff;
+}
+
+.cosmic-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.submit-button {
+  width: 50%;
+  background-color: #ffd700;
+  border: none;
+  color: #1a1a2e;
+  font-weight: bold;
+}
+
+.submit-button:hover {
+  background-color: #e6c200;
+}
+.signup-link {
+  display: block;
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.signup-link-text {
+  color: #ffd700;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.signup-link-text:hover {
+  text-decoration: underline;
+}
+
+.forgot-link {
+  display: block;
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: left;
+}

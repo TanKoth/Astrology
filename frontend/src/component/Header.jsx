@@ -51,6 +51,10 @@ const Header = () => {
     </Menu>
   );
 
+  const handleLogoClick = () => {
+    navigate("/");
+  };
+
   return (
     <motion.header
       className={`header ${scrolled ? "scrolled" : ""}`}
@@ -63,6 +67,8 @@ const Header = () => {
           className="logo"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          onClick={handleLogoClick}
+          style={{ cursor: "pointer" }}
         >
           Vedic Vedang.AI
         </motion.h1>

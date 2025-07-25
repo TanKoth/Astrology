@@ -8,6 +8,7 @@ import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
 import {AppProvider} from './context/AppContext';
 import Header from './component/Header';
+import ContactUs from './pages/ContactUs/ContactUs';
 function AppRoutes() {
   const location = useLocation();
   const hideHeaderRoutes = ["/signup"];
@@ -22,6 +23,7 @@ function AppRoutes() {
           <Route path ={"/signup"} element = {<SignUp/>}/>
           <Route path ={"/login"} element = {<Login/>} />
           <Route path = {"/dashboard"} element = {<Dashboard/>} />
+          <Route path = {"/contactUS"} element = {<ContactUs/>} />
           {/* Add more routes as needed */} 
         </Routes>
       

@@ -1,10 +1,20 @@
 import React from "react";
-import { FaFacebookF, FaInstagram, FaEnvelope } from "react-icons/fa";
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaEnvelope,
+  FaMobileAlt,
+} from "react-icons/fa";
 import "./home_css/Footer.css";
-
+import { useNavigate } from "react-router-dom";
 const Footer = () => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/contactUs");
+  };
   return (
-    <footer className="footer" id="contact">
+    <footer className="footer" id="footer">
       <div className="footer-content">
         <div className="footer-section">
           <h3>Vedic Vedang.AI</h3>
@@ -23,7 +33,9 @@ const Footer = () => {
               <a href="#features">Features</a>
             </li>
             <li>
-              <a href="#contact">Contact</a>
+              <a href="#" onClick={handleClick}>
+                Contact
+              </a>
             </li>
           </ul>
         </div>
@@ -35,7 +47,10 @@ const Footer = () => {
               (M.A Vedang Jyotish)
             </span>
           </h4>
-          <h4>+91 9421406323</h4>
+          <h4>
+            <FaMobileAlt style={{ marginRight: "8px" }} />
+            +91 9421406323
+          </h4>
           <h4 className="email-link">
             <a
               href="https://mail.google.com/mail/?view=cm&fs=1&to=sangeeta.kothale@gmail.com"

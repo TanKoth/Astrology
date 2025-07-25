@@ -70,7 +70,10 @@ const Hero = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="hero relative bg-gradient-to-b from-background via-primary to-black min-h-screen flex items-center justify-center text-center text-textPrimary">
+    <section
+      className="hero relative bg-gradient-to-b from-background via-primary to-black min-h-screen flex items-center justify-center text-center text-textPrimary"
+      id="home"
+    >
       {/* Hero Content */}
       <div className="hero-content space-y-6 z-10 px-4">
         <motion.h1
