@@ -9,7 +9,7 @@ import { saveContactUsForm } from "../../api/ContactUs";
 const ContactUs = () => {
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
-  const [sunmissionCount, setSubmissionCount] = useState(0);
+  const [submissionCount, setSubmissionCount] = useState(0);
   const [isLimitReached, setIsLimitReached] = useState(false);
 
   const DAILY_LIMIT = 2;
@@ -49,7 +49,12 @@ const ContactUs = () => {
 
   const updateSubmissionCount = () => {
     const today = new Date().toDateString();
-    const newCount = setSubmissionCount + 1;
+    const newCount = submissionCount + 1;
+    console.log("New submission count: ", {
+      today,
+      newCount,
+      currentCount: submissionCount,
+    });
 
     localStorage.setItem(
       STORAGE_KEY,
@@ -62,9 +67,10 @@ const ContactUs = () => {
     }
   };
 
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     if (isLimitReached) {
-      message.error(
+      form.resetFields();
+      alert(
         "You have reached the daily submission limit. Please be patient, our team member will get back to you as soon as possible."
       );
       return;
@@ -72,14 +78,14 @@ const ContactUs = () => {
     setLoading(true);
     try {
       console.log("Form values: ", values);
-      const response = saveContactUsForm(values);
+      const response = await saveContactUsForm(values);
       console.log("Response from contactUs server :", response);
 
       if (response.success) {
         // Handle success (e.g., show a success message, reset the form, etc.)
         updateSubmissionCount();
         setLoading(false);
-        message.success(
+        alert(
           "Your message has been sent successfully. Our team will get back to you soon."
         );
         form.resetFields();
@@ -89,8 +95,6 @@ const ContactUs = () => {
       }
     } catch (err) {
       console.error("Error submitting the contactUs form : ", err);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -108,7 +112,12 @@ const ContactUs = () => {
             If you have any questions, feel free to reach out!
           </p> */}
         </h1>
-        <Form layout="vertical" onFinish={onFinish} className="contact-form">
+        <Form
+          layout="vertical"
+          onFinish={onFinish}
+          className="contact-form"
+          form={form}
+        >
           <Form.Item
             label={
               <span className="form-label">
@@ -176,7 +185,11 @@ const ContactUs = () => {
             />
           </Form.Item>
 
-          <Button htmlType="submit" className="submit-button" loading={loading}>
+          <Button
+            htmlType="submit"
+            className="contactUs-submit-button"
+            loading={loading}
+          >
             Submit
           </Button>
         </Form>

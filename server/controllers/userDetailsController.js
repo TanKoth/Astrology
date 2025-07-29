@@ -184,7 +184,10 @@ const getUserDetails = async(req,res) =>{
   }catch(err){
     return res.status(400).json({success: false, message: "Error fetching user details", error: err.message});
   }
+}
 
+const getCurrentUser = async(req,res) => {
   
 }
-module.exports = {createUser, getUserDetails};
+
+module.exports = {createUser, getUserDetails, getAstrologyInsights};

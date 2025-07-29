@@ -90,7 +90,8 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          Unlock Your Potential with Garg.AI's Advanced Astrological Analysis
+          Unlock Your Potential with Vedic Vedang.AI's Advanced Astrological
+          Analysis
         </motion.p>
         <motion.button
           className="cta-button bg-secondary hover:bg-highlight text-white text-lg px-6 py-3 rounded-full shadow-lg transition-all transform hover:scale-105"

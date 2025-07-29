@@ -24,7 +24,7 @@ const TypingIndicator = () => (
     <div className="typing-indicator">
       <Sparkles className="crystal-ball" />
       <span className="typing-indicator-text">
-        Garg AI is consulting the stars
+        Vedic Vedang AI is consulting the stars
       </span>
       <div className="typing-indicator-dots">
         <div className="typing-dot"></div>

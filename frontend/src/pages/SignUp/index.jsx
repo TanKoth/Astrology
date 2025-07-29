@@ -127,14 +127,6 @@ const SignUp = () => {
       latitude: coordinates.lat,
       longitude: coordinates.lng,
       gmtOffset: gmtOffsetString, // e.g., "GMT-05:00" or "GMT+05:30"
-      // timeZone: coordinates.timeZone || "UTC",
-      // timeZoneName: coordinates.timeZoneName || "UTC",
-      // GMT offset in different formats
-      // utcOffsetHours: gmtOffsetHours, // e.g., -5 or +5.5
-      // gmtOffset: gmtOffsetString, // e.g., "GMT-05:00" or "GMT+05:30"
-      // rawOffset: coordinates.rawOffset || 0,
-      // dstOffset: coordinates.dstOffset || 0,
-      //timeOfBirth: formattedTime,
     };
 
     console.log("Form Submitted:", userDetails);

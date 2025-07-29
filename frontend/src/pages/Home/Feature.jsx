@@ -17,9 +17,11 @@ import Astrologer from "../../img/astrologer.png";
 import Planets from "../../img/planets.png";
 import Planner from "../../img/weekly.png";
 import LifePath from "../../img/path.png";
+import { useNavigate } from "react-router-dom";
 
 const Feature = () => {
   const [activeFeature, setActiveFeature] = useState(0);
+  const navigate = useNavigate();
 
   const features = [
     {
@@ -127,6 +129,7 @@ const Feature = () => {
           className="cta-button"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          onClick={() => navigate("/signup")}
         >
           Explore Your Cosmic Journey
         </motion.button>

@@ -9,6 +9,10 @@ import Dashboard from './pages/Dashboard';
 import {AppProvider} from './context/AppContext';
 import Header from './component/Header';
 import ContactUs from './pages/ContactUs/ContactUs';
+import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
+import ResetPassword from './pages/ResetPassword/ResetPassword';
+
+
 function AppRoutes() {
   const location = useLocation();
   const hideHeaderRoutes = ["/signup"];
@@ -24,7 +28,8 @@ function AppRoutes() {
           <Route path ={"/login"} element = {<Login/>} />
           <Route path = {"/dashboard"} element = {<Dashboard/>} />
           <Route path = {"/contactUS"} element = {<ContactUs/>} />
-          {/* Add more routes as needed */} 
+          <Route path = {"/forgot-password"} element = {<ForgotPassword/>} />
+          <Route path = {"/reset-password/:email"} element = {<ResetPassword/>} />  
         </Routes>
       
       </div>

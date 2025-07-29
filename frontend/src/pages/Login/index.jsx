@@ -4,8 +4,9 @@ import { motion } from "framer-motion";
 import { FaUser, FaLock } from "react-icons/fa";
 import { Form, Button, Input, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
-import "./Login.css"; // Assuming you have a CSS file for styling
-import AppContext from "../../context/AppContext"; // Adjust the import path as necessary
+import "./Login.css";
+import AppContext from "../../context/AppContext";
+import { userLogin } from "../../api/UserLogin";
 
 const { Text } = Typography;
 
@@ -15,13 +16,18 @@ const Login = () => {
   const navigate = useNavigate();
   const { setUser } = useContext(AppContext);
 
-  const onFinish = () => {
+  const onFinish = async (values) => {
     try {
       setLoading(true);
-    } catch (err) {
-      console.error("Login error:", err);
-      setMessage("Login failed. Please try again.");
+      const data = await userLogin(values);
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+      setUser(data.user);
+      navigate("/dashboard");
+    } catch (error) {
+      setMessage(error.response?.data?.message || "Login failed. Try again.");
     }
+    setLoading(false);
   };
 
   return (
