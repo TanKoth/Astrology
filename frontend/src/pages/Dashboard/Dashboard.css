@@ -462,3 +462,32 @@
   /* font-size: 1rem;
   margin-top: 0.5rem;
 } */ 
+
+.dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.dashboard-content {
+  flex: 1;
+  margin-left: 12rem;
+  transition: margin-left 0.3s ease;
+}
+
+
+/* When navigation is collapsed */
+.navigation.collapsed ~ .dashboard-content {
+  margin-left: 80px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .dashboard-content {
+    margin-left: 0;
+    padding-top: 60px;
+  }
+  
+  .navigation.collapsed ~ .dashboard-content {
+    margin-left: 0; /* Reset on mobile */
+  }
+}

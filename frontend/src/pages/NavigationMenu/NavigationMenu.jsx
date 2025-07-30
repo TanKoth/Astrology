@@ -1,0 +1,215 @@
+import React, { useContext } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import {
+  Home,
+  User,
+  Star,
+  MessageCircle,
+  Crown,
+  Settings,
+  LogOut,
+  Menu,
+  X,
+  Logs,
+  Calendar,
+  ChevronDown,
+  ChevronRight,
+  UserSearch,
+  Search,
+} from "lucide-react";
+//import { FaMagnifyingGlass } from "react-icons/fa6";
+import { useState } from "react";
+import AppContext from "../../context/AppContext";
+import "./NavigationMenu.css";
+
+const NavigationMenu = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { user, setUser } = useContext(AppContext);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [expandedSubMenus, setExpandedSubMenus] = useState({});
+
+  const navigationItems = [
+    {
+      path: "/dashboard",
+      icon: Search,
+      label: "Horoscope",
+      hasSubMenu: true,
+      subItems: [{ icon: UserSearch, label: "Planet-Details" }],
+    },
+    {
+      path: "/panchang",
+      icon: Calendar,
+      label: "Panchang",
+      hasSubMenu: true,
+      subItems: [
+        { path: "/panchang/daily", icon: Calendar, label: "Daily Panchang" },
+      ],
+    },
+    { path: "/prediction", icon: MessageCircle, label: "Prediction" },
+    // { path: "/subscription", icon: Crown, label: "Premium" },
+    // { path: "/settings", icon: Settings, label: "Settings" },
+    { path: "/dasha", icon: MessageCircle, label: "Dasha" },
+    { path: "/dosh", icon: MessageCircle, label: "Dosh" },
+    { path: "/lalkitab", icon: MessageCircle, label: "Lalkitab Remedies" },
+  ];
+
+  const handleNavigation = (path) => {
+    navigate(path);
+    setIsMobileMenuOpen(false);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    setUser(null);
+    navigate("/");
+  };
+
+  const toggleCollapse = () => {
+    setIsCollapsed(!isCollapsed);
+  };
+
+  const toggleSubMenu = (path) => {
+    setExpandedSubMenus((prev) => ({
+      ...prev,
+      [path]: !prev[path],
+    }));
+  };
+
+  return (
+    <>
+      {/* Mobile Menu Toggle */}
+      <button
+        className="mobile-menu-toggle"
+        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+      >
+        {isMobileMenuOpen ? <X /> : <Menu />}
+      </button>
+
+      {/* Navigation Sidebar */}
+      <nav
+        className={`navigation ${isMobileMenuOpen ? "mobile-open" : ""} ${
+          isCollapsed ? "collapsed" : ""
+        }`}
+      >
+        {/* Logo Header */}
+        <div className="nav-header">
+          {/* <div className="nav-logo">
+            <Star className="logo-icon" />
+            {!isCollapsed && <span className="logo-text">Vedic Vedang</span>}
+          </div> */}
+          {/* Desktop Collapse Toggle */}
+          <button
+            className="collapse-toggle desktop-only"
+            onClick={toggleCollapse}
+            title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+          >
+            {isCollapsed ? <Logs /> : <Logs />}
+          </button>
+        </div>
+
+        {/* User Section */}
+        {/* <div className="nav-user">
+          <div className="user-avatar">
+            {user?.name?.charAt(0)?.toUpperCase() || "U"}
+          </div>
+          {!isCollapsed && (
+            <div className="user-info">
+              <div className="user-name">{user?.name || "User"}</div>
+              <div className="user-email">{user?.email}</div>
+            </div>
+          )}
+        </div> */}
+
+        {/* Navigation Items */}
+        <div className="nav-items">
+          {navigationItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = location.pathname === item.path;
+            const hasSubMenu = item.hasSubMenu && item.subItems;
+            const isExpanded = expandedSubMenus[item.path];
+
+            return (
+              <div key={item.path} className="nav-item-container">
+                <button
+                  className={`nav-item ${isActive ? "active" : ""}`}
+                  onClick={() => {
+                    if (hasSubMenu) {
+                      toggleSubMenu(item.path);
+                    } else {
+                      handleNavigation(item.path);
+                    }
+                  }}
+                  title={isCollapsed ? item.label : ""}
+                >
+                  <Icon className="nav-icon" />
+                  {!isCollapsed && (
+                    <>
+                      <span className="nav-label">{item.label}</span>
+                      {hasSubMenu && (
+                        <span className="submenu-arrow">
+                          {isExpanded ? (
+                            <ChevronDown size={16} />
+                          ) : (
+                            <ChevronRight size={16} />
+                          )}
+                        </span>
+                      )}
+                    </>
+                  )}
+                </button>
+
+                {/* Submenu Items */}
+                {hasSubMenu && isExpanded && !isCollapsed && (
+                  <div className="submenu">
+                    {item.subItems.map((subItem) => {
+                      const SubIcon = subItem.icon;
+                      const isSubActive = location.pathname === subItem.path;
+
+                      return (
+                        <button
+                          key={subItem.path}
+                          className={`nav-item submenu-item ${
+                            isSubActive ? "active" : ""
+                          }`}
+                          onClick={() => handleNavigation(subItem.path)}
+                        >
+                          <SubIcon className="nav-icon" />
+                          <span className="nav-label">{subItem.label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Logout Section */}
+        <div className="nav-footer">
+          <button
+            className="nav-item logout"
+            onClick={handleLogout}
+            title={isCollapsed ? "Logout" : ""}
+          >
+            <LogOut className="nav-icon" />
+            {!isCollapsed && <span className="nav-label">Logout</span>}
+          </button>
+        </div>
+      </nav>
+
+      {/* Mobile Overlay */}
+      {isMobileMenuOpen && (
+        <div
+          className="mobile-overlay"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+    </>
+  );
+};
+
+export default NavigationMenu;

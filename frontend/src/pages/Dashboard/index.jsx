@@ -11,6 +11,7 @@ import {
   Crown,
   Send,
   Sparkles,
+  Navigation,
 } from "lucide-react";
 import AppContext from "../../context/AppContext";
 import { getUserInsights } from "../../api/user";
@@ -18,6 +19,7 @@ import { getUserInsights } from "../../api/user";
 import "./Dashboard.css";
 import { useNavigate } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
+import NavigationMenu from "../NavigationMenu/NavigationMenu";
 
 const TypingIndicator = () => (
   <div className="message ai">
@@ -97,67 +99,70 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="dashboard-page">
-      <div className="stars" />
-      <div className="dashboard-container">
-        <div className="welcome-section">
-          <motion.h1 className="welcome-title">
-            Welcome, {user?.name} ⭐
-          </motion.h1>
-          <motion.p className="welcome-subtitle">
-            Your cosmic journey continues...
-          </motion.p>
-        </div>
+    <div className="dashboard-layout">
+      <NavigationMenu />
+      <div className="dashboard-content">
+        <div className="dashboard-page">
+          <div className="stars" />
+          <div className="dashboard-container">
+            <div className="welcome-section">
+              <motion.h1 className="welcome-title">
+                Welcome, {user?.name} ⭐
+              </motion.h1>
+              <motion.p className="welcome-subtitle">
+                Your cosmic journey continues...
+              </motion.p>
+            </div>
 
-        {/* Insights Section */}
-        <motion.div className="insights-section">
-          <div
-            className="insights-header"
-            onClick={() => setIsInsightsOpen(!isInsightsOpen)}
-          >
-            <h2 className="insights-title">
-              <Star className="icon" /> Your Astrology Insights
-            </h2>
-            {isInsightsOpen ? (
-              <ChevronUp className="icon" />
-            ) : (
-              <ChevronDown className="icon" />
-            )}
-          </div>
-
-          <AnimatePresence>
-            {isInsightsOpen && (
-              <motion.div className="insights-content">
-                {isLoadingInsights ? (
-                  <div className="loading">
-                    Generating Insights... Please wait.
-                  </div>
+            {/* Insights Section */}
+            <motion.div className="insights-section">
+              <div
+                className="insights-header"
+                onClick={() => setIsInsightsOpen(!isInsightsOpen)}
+              >
+                <h2 className="insights-title">
+                  <Star className="icon" /> Your Astrology Insights
+                </h2>
+                {isInsightsOpen ? (
+                  <ChevronUp className="icon" />
                 ) : (
-                  insights.length > 0 && (
-                    <div>
-                      {insights
-                        .filter(
-                          (insight) =>
-                            insight.category !== "Unlock More Insights 🔓"
-                        )
-                        .map((insight, index) => (
-                          <div key={index} className="insight-item">
-                            <div className="insight-label">
-                              {insight.category}
-                            </div>
-                            <ReactMarkdown>{insight.insight}</ReactMarkdown>
-                          </div>
-                        ))}
-                    </div>
-                  )
+                  <ChevronDown className="icon" />
                 )}
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.div>
+              </div>
 
-        {/* Locked Insights Section */}
-        {/* <motion.div className="locked-insights-section">
+              <AnimatePresence>
+                {isInsightsOpen && (
+                  <motion.div className="insights-content">
+                    {isLoadingInsights ? (
+                      <div className="loading">
+                        Generating Insights... Please wait.
+                      </div>
+                    ) : (
+                      insights.length > 0 && (
+                        <div>
+                          {insights
+                            .filter(
+                              (insight) =>
+                                insight.category !== "Unlock More Insights 🔓"
+                            )
+                            .map((insight, index) => (
+                              <div key={index} className="insight-item">
+                                <div className="insight-label">
+                                  {insight.category}
+                                </div>
+                                <ReactMarkdown>{insight.insight}</ReactMarkdown>
+                              </div>
+                            ))}
+                        </div>
+                      )
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+
+            {/* Locked Insights Section */}
+            {/* <motion.div className="locked-insights-section">
           <h3 className="locked-title">
             <Lock className="icon" /> Unlock Deeper Insights
           </h3>
@@ -174,8 +179,8 @@ const Dashboard = () => {
           </div>
         </motion.div> */}
 
-        {/* Upgrade CTA */}
-        {/* <motion.div className="upgrade-cta">
+            {/* Upgrade CTA */}
+            {/* <motion.div className="upgrade-cta">
           <h3 className="upgrade-title">Unlock Your Cosmic Potential</h3>
           <p className="text-gray-300 mb-4">
             Access deeper insights, unlimited consultations, and personalized
@@ -189,63 +194,65 @@ const Dashboard = () => {
           </button>
         </motion.div> */}
 
-        {/* Chat Section */}
-        <motion.div className="chat-section">
-          <h2 className="chat-title">
-            <MessageCircle className="icon" /> Chat with AI Astrologer
-          </h2>
-          <p
-            className="text-sm text-gray-400 mb-2"
-            style={{ color: "#e2e8f0" }}
-          >
-            Free chats left today:{" "}
-            <span className="text-yellow-300 font-semibold">
-              {freeChatsLeft}
-            </span>
-          </p>
+            {/* Chat Section */}
+            <motion.div className="chat-section">
+              <h2 className="chat-title">
+                <MessageCircle className="icon" /> Chat with AI Astrologer
+              </h2>
+              <p
+                className="text-sm text-gray-400 mb-2"
+                style={{ color: "#e2e8f0" }}
+              >
+                Free chats left today:{" "}
+                <span className="text-yellow-300 font-semibold">
+                  {freeChatsLeft}
+                </span>
+              </p>
 
-          <div className="chat-messages">
-            {messages.length === 0 ? (
-              <div className="text-center text-gray-400 mt-4">
-                <Sparkles className="mx-auto mb-2" /> Ask me anything about your
-                cosmic journey!
-              </div>
-            ) : (
-              <>
-                {messages.map((msg, index) => (
-                  <div key={index} className={`message ${msg.role}`}>
-                    <ReactMarkdown className="message-content prose prose-invert max-w-none text-white">
-                      {msg.content}
-                    </ReactMarkdown>
+              <div className="chat-messages">
+                {messages.length === 0 ? (
+                  <div className="text-center text-gray-400 mt-4">
+                    <Sparkles className="mx-auto mb-2" /> Ask me anything about
+                    your cosmic journey!
                   </div>
-                ))}
-                {isTyping && <TypingIndicator />}
-              </>
-            )}
-          </div>
+                ) : (
+                  <>
+                    {messages.map((msg, index) => (
+                      <div key={index} className={`message ${msg.role}`}>
+                        <ReactMarkdown className="message-content prose prose-invert max-w-none text-white">
+                          {msg.content}
+                        </ReactMarkdown>
+                      </div>
+                    ))}
+                    {isTyping && <TypingIndicator />}
+                  </>
+                )}
+              </div>
 
-          <div className="chat-input">
-            <input
-              type="text"
-              placeholder="Type your question..."
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
-            />
-            <button
-              className="send-button"
-              onClick={sendMessage}
-              disabled={isLoadingChat}
-            >
-              {isLoadingChat ? (
-                "Sending..."
-              ) : (
-                <>
-                  <Send className="icon" /> Send
-                </>
-              )}
-            </button>
+              <div className="chat-input">
+                <input
+                  type="text"
+                  placeholder="Type your question..."
+                  value={newMessage}
+                  onChange={(e) => setNewMessage(e.target.value)}
+                />
+                <button
+                  className="send-button"
+                  onClick={sendMessage}
+                  disabled={isLoadingChat}
+                >
+                  {isLoadingChat ? (
+                    "Sending..."
+                  ) : (
+                    <>
+                      <Send className="icon" /> Send
+                    </>
+                  )}
+                </button>
+              </div>
+            </motion.div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </div>
   );
