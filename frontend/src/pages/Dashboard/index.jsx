@@ -58,10 +58,40 @@ const Dashboard = () => {
   const fetchInsights = async () => {
     try {
       const user = JSON.parse(localStorage.getItem("user"));
+      console.log("User data from localStorage:", user);
       const locationData = JSON.parse(localStorage.getItem("locationData"));
+      console.log("Location data from localStorage:", locationData);
       const data = await getUserInsights(user._id, locationData);
       console.log("Fetched insights:", data);
-      setInsights(data);
+      // Extract insights from the nested response structure
+      let insightsData = [];
+
+      if (
+        data.success &&
+        data.astrologyInsights &&
+        data.astrologyInsights.response
+      ) {
+        // The actual insights are likely in data.astrologyInsights.response
+        const response = data.astrologyInsights.response;
+
+        // Check if response has insights array or convert object to array
+        if (Array.isArray(response)) {
+          insightsData = response;
+        } else if (typeof response === "object") {
+          // If response is an object, convert it to array format
+          // This assumes the response object has categories as keys
+          insightsData = Object.entries(response).map(
+            ([category, insight]) => ({
+              category,
+              insight:
+                typeof insight === "string" ? insight : JSON.stringify(insight),
+            })
+          );
+        }
+      }
+
+      console.log("Processed insights data:", insightsData);
+      setInsights(insightsData);
       setIsLoadingInsights(false);
     } catch (error) {
       console.error("Failed to load insights.");
@@ -135,26 +165,47 @@ const Dashboard = () => {
                   <motion.div className="insights-content">
                     {isLoadingInsights ? (
                       <div className="loading">
+                        <Sparkles className="animate-spin mx-auto mb-2" />
                         Generating Insights... Please wait.
                       </div>
-                    ) : (
-                      insights.length > 0 && (
-                        <div>
-                          {insights
-                            .filter(
-                              (insight) =>
-                                insight.category !== "Unlock More Insights 🔓"
-                            )
-                            .map((insight, index) => (
-                              <div key={index} className="insight-item">
-                                <div className="insight-label">
-                                  {insight.category}
-                                </div>
+                    ) : insights.length > 0 ? (
+                      <div>
+                        {insights
+                          .filter(
+                            (insight) =>
+                              insight.category !== "Unlock More Insights 🔓"
+                          )
+                          .map((insight, index) => (
+                            <motion.div
+                              key={index}
+                              className="insight-item"
+                              initial={{ opacity: 0, y: 20 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ delay: index * 0.1 }}
+                            >
+                              <div className="insight-label">
+                                {insight.category}
+                              </div>
+                              <div className="insight-content">
                                 <ReactMarkdown>{insight.insight}</ReactMarkdown>
                               </div>
-                            ))}
-                        </div>
-                      )
+                            </motion.div>
+                          ))}
+                      </div>
+                    ) : (
+                      <div className="no-insights">
+                        <Star className="mx-auto mb-2 text-gray-400" />
+                        <p className="text-gray-400">
+                          No insights available at the moment. Please try
+                          refreshing or check back later.
+                        </p>
+                        <button
+                          onClick={fetchInsights}
+                          className="mt-2 px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700"
+                        >
+                          Refresh Insights
+                        </button>
+                      </div>
                     )}
                   </motion.div>
                 )}
@@ -195,7 +246,7 @@ const Dashboard = () => {
         </motion.div> */}
 
             {/* Chat Section */}
-            <motion.div className="chat-section">
+            <motion.div className="chat-section" id="chat-section">
               <h2 className="chat-title">
                 <MessageCircle className="icon" /> Chat with AI Astrologer
               </h2>
