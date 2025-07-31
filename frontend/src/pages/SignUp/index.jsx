@@ -263,6 +263,52 @@ const SignUp = () => {
               </Form.Item>
             </div>
 
+            <div className="form-row two-column">
+              <Form.Item
+                label={
+                  <span className="form-label">
+                    <FaClock className="form-icon" />
+                    Date of Birth
+                  </span>
+                }
+                name="dob"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please enter your date of birth!",
+                  },
+                ]}
+              >
+                <DatePicker
+                  className="cosmic-input"
+                  placeholder="YYYY-MM-DD"
+                  format="YYYY-MM-DD"
+                />
+              </Form.Item>
+              <Form.Item
+                label={
+                  <span className="form-label">
+                    <FaClock className="form-icon" />
+                    Birth Time
+                  </span>
+                }
+                name="timeOfBirth"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please enter your time of birth!",
+                  },
+                ]}
+              >
+                <TimePicker
+                  use12Hours
+                  format="h:mm a"
+                  className="cosmic-input"
+                  placeholder="Select Time"
+                />
+              </Form.Item>
+            </div>
+
             <div className="form-row">
               <Form.Item
                 label={
@@ -317,52 +363,6 @@ const SignUp = () => {
                     </div>
                   )}
                 </PlacesAutocomplete>
-              </Form.Item>
-            </div>
-
-            <div className="form-row two-column">
-              <Form.Item
-                label={
-                  <span className="form-label">
-                    <FaClock className="form-icon" />
-                    Date of Birth
-                  </span>
-                }
-                name="dob"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please enter your date of birth!",
-                  },
-                ]}
-              >
-                <DatePicker
-                  className="cosmic-input"
-                  placeholder="YYYY-MM-DD"
-                  format="YYYY-MM-DD"
-                />
-              </Form.Item>
-              <Form.Item
-                label={
-                  <span className="form-label">
-                    <FaClock className="form-icon" />
-                    Birth Time
-                  </span>
-                }
-                name="timeOfBirth"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please enter your time of birth!",
-                  },
-                ]}
-              >
-                <TimePicker
-                  use12Hours
-                  format="h:mm a"
-                  className="cosmic-input"
-                  placeholder="Select Time"
-                />
               </Form.Item>
             </div>
 

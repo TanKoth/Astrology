@@ -228,6 +228,18 @@
   flex-shrink: 0;
 }
 
+.nav-image {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  border-radius: 2px;
+}
+
+/* For collapsed state, center the image */
+.collapsed .nav-image {
+  margin-right: 0;
+}
+
 .nav-label {
   white-space: nowrap;
   opacity: 1;

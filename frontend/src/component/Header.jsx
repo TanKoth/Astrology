@@ -5,7 +5,9 @@ import { UserOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import AppContext from "../context/AppContext";
 import "./Header.css";
-
+//import Kundali_Logo from "../img/kundali_logo.png";
+import Kundali_Logo from "../img/kundli2.png";
+//import Kundali from "../img/kundli1.png";
 const Header = () => {
   const { user, setUser } = useContext(AppContext);
   const [scrolled, setScrolled] = useState(false);
@@ -70,7 +72,36 @@ const Header = () => {
           onClick={handleLogoClick}
           style={{ cursor: "pointer" }}
         >
+          <span>
+            <img
+              src={Kundali_Logo}
+              alt="Logo"
+              className="logo-image"
+              style={{
+                width: "40px",
+                height: "40px",
+                marginRight: "5px",
+                marginBottom: "5px",
+                borderRadius: "20%",
+                boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+                backgroundColor: "transparent",
+              }}
+            />
+          </span>
           Vedic Vedang.AI
+          {/* <span>
+            <img
+              src={Kundali}
+              alt="Logo"
+              className="logo-image"
+              style={{
+                width: "40px",
+                height: "40px",
+                marginRight: "10px",
+                backgroundColor: "transparent",
+              }}
+            />
+          </span> */}
         </motion.h1>
 
         {user && (

@@ -54,9 +54,9 @@
 .hero-background {
   position: absolute;
   top: 0;
-  left: -57rem;
-  right: 4rem;
-  bottom: 6rem;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .zodiac-symbol {

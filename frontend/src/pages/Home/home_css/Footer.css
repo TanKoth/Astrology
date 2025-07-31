@@ -13,7 +13,7 @@
 }
 
 .footer-section {
-  flex: 1;
+  /* flex: 1; */
   min-width: 200px;
   margin-bottom: 30px;
 }
@@ -72,7 +72,7 @@
   cursor: pointer;
 }
 
-p:hover{
+/* p:hover{
   cursor: pointer;
   color: #ffd700;
-}
+} */

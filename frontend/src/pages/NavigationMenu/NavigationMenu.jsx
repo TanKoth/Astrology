@@ -16,11 +16,16 @@ import {
   ChevronRight,
   UserSearch,
   Search,
+  View,
 } from "lucide-react";
+import { FaRobot, FaBook } from "react-icons/fa";
 //import { FaMagnifyingGlass } from "react-icons/fa6";
+import { GiLouvrePyramid } from "react-icons/gi";
+import { RiPlanetFill } from "react-icons/ri";
 import { useState } from "react";
 import AppContext from "../../context/AppContext";
 import "./NavigationMenu.css";
+import Kundali_Logo from "../../img/kundali_logo.png";
 
 const NavigationMenu = () => {
   const navigate = useNavigate();
@@ -47,12 +52,21 @@ const NavigationMenu = () => {
         { path: "/panchang/daily", icon: Calendar, label: "Daily Panchang" },
       ],
     },
-    { path: "/prediction", icon: MessageCircle, label: "Prediction" },
+    {
+      path: "/prediction",
+      icon: View,
+      label: "Prediction",
+    },
     // { path: "/subscription", icon: Crown, label: "Premium" },
     // { path: "/settings", icon: Settings, label: "Settings" },
-    { path: "/dasha", icon: MessageCircle, label: "Dasha" },
-    { path: "/dosh", icon: MessageCircle, label: "Dosh" },
-    { path: "/lalkitab", icon: MessageCircle, label: "Lalkitab Remedies" },
+    { path: "/dasha", icon: RiPlanetFill, label: "Dasha" },
+    { path: "/dosh", icon: GiLouvrePyramid, label: "Dosh" },
+    {
+      path: "/lalkitab",
+      icon: FaBook,
+      label: "Lalkitab Remedies",
+    },
+    { path: "/chat", icon: FaRobot, label: "AI Chat" },
   ];
 
   const handleNavigation = (path) => {
@@ -106,7 +120,19 @@ const NavigationMenu = () => {
             onClick={toggleCollapse}
             title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
           >
-            {isCollapsed ? <Logs /> : <Logs />}
+            {isCollapsed ? (
+              <img
+                src={Kundali_Logo}
+                alt="Expand"
+                style={{ width: "2rem", height: "2rem" }}
+              />
+            ) : (
+              <img
+                src={Kundali_Logo}
+                alt="Collapse"
+                style={{ width: "2rem", height: "2rem" }}
+              />
+            )}
           </button>
         </div>
 
@@ -144,7 +170,16 @@ const NavigationMenu = () => {
                   }}
                   title={isCollapsed ? item.label : ""}
                 >
-                  <Icon className="nav-icon" />
+                  {/* Render image or lucide icon based on iconType */}
+                  {item.iconType === "image" ? (
+                    <img
+                      src={Icon}
+                      alt={item.label}
+                      className="nav-icon nav-image"
+                    />
+                  ) : (
+                    <Icon className="nav-icon" />
+                  )}
                   {!isCollapsed && (
                     <>
                       <span className="nav-label">{item.label}</span>

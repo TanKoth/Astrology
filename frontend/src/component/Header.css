@@ -1,7 +1,7 @@
 .header {
   position: absolute;
   top: 0;
-  left: 3rem;
+  left: 0;
   right: 0; 
   z-index: 1000;
   /* background-color: rgba(26, 26, 46, 0.8);
@@ -27,6 +27,7 @@
   font-weight: bold;
   color: #ffd700;
   text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  margin-left: 1rem;
 }
 
 nav ul {
