@@ -1,6 +1,8 @@
 const userDetails = require('../models/userDetailsModel');
 const { getAstrologyInsights } = require('./userDetailsController'); // Import the function
-//const axios = require('axios');
+const axios = require('axios');
+const encodedParams = new URLSearchParams();
+
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const EmailHelper = require('../utils/emailHelper');
@@ -29,15 +31,71 @@ const userLogin = async (req, res) => {
     // Generate JWT token
     const token = jwt.sign({ userId: user._id, email: user.email }, process.env.SECRET_KEY, { expiresIn: '1d' });
 
+    const dateFormat = (date) =>{
+      const d = new Date(date);
+      const day = String(d.getDate()).padStart(2, '0');
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const year = d.getFullYear();
+      return `${day}-${month}-${year}`;
+    }
+
+    const formatedCity = () => {
+      const cityName = user.placeOfBirth.split(',')[0].trim();
+      const city = cityName.replace(/,/g, "");
+      return city
+    }
+    const userData = {
+      name: user.name,
+      birthdate: dateFormat(user.dob),
+      birthtime: user.timeOfBirth,
+      City: formatedCity(),
+    }
+    
+    console.log("Fetching astrology insights for user:", userData);
+    // Fetch astrology insights
+    const astrologyData = await fetchData(userData);
+
     // Return success response with user data, token, and astrology insights
-    return res.status(200).json({success: true, message: "Login successful", token:token, user: user});
+    return res.status(200).json({success: true, message: "Login successful", token:token, user: user,astrologyData: astrologyData });
 
   } catch (err) {
     return res.status(500).json({success: false,message: "Login failed",error: err.message});
   }
 };
 
+const options = {
+  method: 'POST',
+  url: 'https://kundli1.p.rapidapi.com/',
+  headers: {
+    'x-rapidapi-key': '1f3feabd46mshd3f973c25234bb8p1be3e5jsn3a22ee6cee4b',
+    'x-rapidapi-host': 'kundli1.p.rapidapi.com',
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'Accept': 'application/json'
+  },
+  data: encodedParams,
+};
 
+async function fetchData(userData) {
+	try {
+		encodedParams.set('name', userData.name);
+		encodedParams.set('birthdate', userData.birthdate);
+		encodedParams.set('birthtime', userData.birthtime);
+		encodedParams.set('City', userData.City);
+    encodedParams.set('format', 'json');
+
+		const response = await axios.request(options);
+		console.log("Astrology data fetched successfully:", response.data);
+    return {
+      success: true,
+      data: response.data,
+      status: response.status,
+      contentType: response.headers['content-type']
+    };
+	} catch (error) {
+		console.error(error);
+    return { success: false, message: "Error fetching astrology data", error: error.message};
+	}
+}
 
 const otpGenerator = function() {
     return  Math.floor(100000 + Math.random() * 900000);

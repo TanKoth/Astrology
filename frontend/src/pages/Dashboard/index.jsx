@@ -12,21 +12,29 @@ import {
   Send,
   Sparkles,
   Navigation,
+  Calendar,
+  MapPin,
+  Clock,
+  Moon,
+  Sun,
+  Activity,
+  Printer,
 } from "lucide-react";
 import AppContext from "../../context/AppContext";
-import { getUserInsights } from "../../api/user";
+import { userLogin } from "../../api/UserLogin";
 //import { sendMessageToAI } from "../../api/chatApi";
 import "./Dashboard.css";
 import { useNavigate } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import NavigationMenu from "../NavigationMenu/NavigationMenu";
+import { convertHtmlToAstrologyJson } from "../../utilityFunction/utilityFunction";
 
 const TypingIndicator = () => (
   <div className="message ai">
     <div className="typing-indicator">
       <Sparkles className="crystal-ball" />
       <span className="typing-indicator-text">
-        Vedic Vedang AI is consulting the stars
+        Vedic Vedang.AI is consulting the stars
       </span>
       <div className="typing-indicator-dots">
         <div className="typing-dot"></div>
@@ -40,63 +48,176 @@ const TypingIndicator = () => (
 const Dashboard = () => {
   const { user } = useContext(AppContext);
   const [insights, setInsights] = useState([]);
+  const [astrologyData, setAstrologyData] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [freeChatsLeft, setFreeChatsLeft] = useState(3);
   const [isLoadingInsights, setIsLoadingInsights] = useState(true);
+  const [isLoadingChart, setIsLoadingChart] = useState(true);
   const [isLoadingChat, setIsLoadingChat] = useState(false);
   const [isInsightsOpen, setIsInsightsOpen] = useState(true);
+  const [isChartsOpen, setIsChartsOpen] = useState(true);
+  const [isPlanetaryOpen, setIsPlanetaryOpen] = useState(true);
   const [isTyping, setIsTyping] = useState(false);
-  const navigate = useNavigate(); // Initialize navigation
+  const navigate = useNavigate();
+
+  //Print the Astrology Data
+  // const handlePrint = () => {
+  //   const printContent = `
+  // <html>
+  //   <head>
+  //     <title>Astrology Report - ${user?.name}</title>
+  //     <style>
+  //       @media print {
+  //         * {
+  //           -webkit-print-color-adjust: exact !important;
+  //           color-adjust: exact !important;
+  //         }
+  //       }
+  //       body {
+  //         font-family: Arial, sans-serif;
+  //         margin: 20px;
+  //         color: #000;
+  //       }
+  //       .chart-item img {
+  //         max-width: 100px !important;
+  //         height: 200px !important;
+  //         border: 1px solid #000;
+  //         display: block !important;
+  //         margin: 10px auto !important;
+  //       }
+  //       .no-break { page-break-inside: avoid; }
+  //       h1, h2 { color: #000; }
+
+  //       body { font-family: Arial, sans-serif; margin: 40px; color: #333; }
+  //         h1, h2 { color: #4a5568; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
+  //         .section { margin-bottom: 30px; page-break-inside: avoid; }
+  //         .birth-detail { margin: 8px 0; }
+  //         .chart-section { display: flex; flex-wrap: wrap; gap: 20px; }
+  //         .chart-item { text-align: center; }
+  //         .chart-item img { max-width: 200px; height: auto; border: 1px solid #ddd; }
+  //         .planetary-item { border: 1px solid #e2e8f0; padding: 12px; margin: 8px 0; border-radius: 4px; }
+  //         @media print { body { margin: 20px; } }
+  //     </style>
+  //   </head>
+  //   <body onload="setTimeout(function(){ window.print(); window.close(); }, 2000);">
+  //     <!-- Your existing content here -->
+  //     <h1>Astrology Report for ${user?.name}</h1>
+  //     <p><em>Generated on ${new Date().toLocaleDateString()}</em></p>
+
+  //       <div class="section">
+  //         <h2>Birth Details</h2>
+  //         <div class="birth-detail"><strong>Date of Birth:</strong> ${
+  //           astrologyData.personalInfo.birthDetails["Date Of Birth"]
+  //         }</div>
+  //         <div class="birth-detail"><strong>Birth Time:</strong> ${
+  //           astrologyData.personalInfo.birthDetails["Birth Time"]
+  //         }</div>
+  //         <div class="birth-detail"><strong>Nakshatra:</strong> ${astrologyData.personalInfo.birthDetails.Nakshtra.split(
+  //           " "
+  //         )[0]
+  //           .replace(/[0-9]/g, "")
+  //           .trim()}</div>
+  //         <div class="birth-detail"><strong>Nakshatra Lord:</strong> ${
+  //           astrologyData.personalInfo.birthDetails["Nakshtra-Lord"]
+  //         }</div>
+  //         <div class="birth-detail"><strong>Gana:</strong> ${
+  //           astrologyData.personalInfo.birthDetails.Gana
+  //         }</div>
+  //         <div class="birth-detail"><strong>Yoni:</strong> ${
+  //           astrologyData.personalInfo.birthDetails.Yoni
+  //         }</div>
+  //       </div>
+
+  //     <div class="no-break">
+  //       <h2>Astrology Charts</h2>
+  //       ${astrologyData.charts
+  //         .slice(0, 3)
+  //         .map(
+  //           (chart, index) => `
+  //           <div class="chart-item no-break">
+  //             <strong>${
+  //               chartNameMapping[index] || `Chart ${index + 1}`
+  //             }</strong>
+  //             <img src="${chart.url}" alt="${
+  //             chartNameMapping[index] || `Chart ${index + 1}`
+  //           }" />
+  //           </div>
+  //         `
+  //         )
+  //         .join("")}
+  //     </div>
+  //     <div class="section">
+  //         <h2>Planetary Positions</h2>
+  //         ${astrologyData.planetaryPositions
+  //           .map(
+  //             (position) => `
+  //           <div class="planetary-item">
+  //             <strong>${position.planet}:</strong> ${position.degreeSign}, House ${position.house}, ${position.nakshatra}, ${position.motion}
+  //           </div>
+  //         `
+  //           )
+  //           .join("")}
+  //       </div>
+  //   </body>
+  // </html>
+  // `;
+
+  //   const printWindow = window.open("", "_blank");
+  //   printWindow.document.write(printContent);
+  //   printWindow.document.close();
+  // };
+  const handlePrint = () => {
+    window.print();
+  };
 
   useEffect(() => {
     if (user) {
-      fetchInsights();
+      // Load astrology data frfom localStorage
+      const storedAstrologyData = localStorage.getItem("astrologyData");
+      if (storedAstrologyData) {
+        try {
+          const parsedData = JSON.parse(storedAstrologyData);
+          setAstrologyData(parsedData);
+          setIsLoadingChart(false);
+        } catch (err) {
+          console.log("Error parsing astrology data:", err);
+          setIsLoadingChart(false);
+        }
+      } else {
+        // If no stored data, Fetch astrology data from API
+        fetchInsights();
+      }
+      setIsLoadingInsights(false);
     }
   }, [user]);
 
   const fetchInsights = async () => {
     try {
-      const user = JSON.parse(localStorage.getItem("user"));
-      console.log("User data from localStorage:", user);
-      const locationData = JSON.parse(localStorage.getItem("locationData"));
-      console.log("Location data from localStorage:", locationData);
-      const data = await getUserInsights(user._id, locationData);
-      console.log("Fetched insights:", data);
-      // Extract insights from the nested response structure
-      let insightsData = [];
-
-      if (
-        data.success &&
-        data.astrologyInsights &&
-        data.astrologyInsights.response
-      ) {
-        // The actual insights are likely in data.astrologyInsights.response
-        const response = data.astrologyInsights.response;
-
-        // Check if response has insights array or convert object to array
-        if (Array.isArray(response)) {
-          insightsData = response;
-        } else if (typeof response === "object") {
-          // If response is an object, convert it to array format
-          // This assumes the response object has categories as keys
-          insightsData = Object.entries(response).map(
-            ([category, insight]) => ({
-              category,
-              insight:
-                typeof insight === "string" ? insight : JSON.stringify(insight),
-            })
-          );
-        }
+      if (!user || !user._id) {
+        console.log("User Id not available");
+        setIsLoadingChart(false);
+        return;
       }
-
-      console.log("Processed insights data:", insightsData);
-      setInsights(insightsData);
-      setIsLoadingInsights(false);
+      const response = await userLogin(user._id);
+      if (response && response.astrologyData) {
+        const parsedData = convertHtmlToAstrologyJson(
+          response.astrologyData.data
+        );
+        setAstrologyData(parsedData);
+        localStorage.setItem("astrologyData", JSON.stringify(parsedData));
+      }
+      setIsLoadingChart(false);
     } catch (error) {
       console.error("Failed to load insights.");
-      setIsLoadingInsights(false);
+      setIsLoadingChart(false);
     }
+  };
+
+  const chartNameMapping = {
+    0: "Lagna Chart (D1)",
+    1: "Chandra Chart (Rasi)",
+    2: "Navamsa Chart (D9)",
   };
 
   const sendMessage = async () => {
@@ -112,20 +233,20 @@ const Dashboard = () => {
     setNewMessage("");
     setIsTyping(true);
 
-    // try {
-    //   const recentHistory = [...updatedMessages].slice(-6); // Last 3 rounds
-    //   //const aiResponse = await sendMessageToAI(newMessage, recentHistory);
+    try {
+      // const recentHistory = [...updatedMessages].slice(-6); // Last 3 rounds
+      // const aiResponse = await sendMessageToAI(newMessage, recentHistory);
 
-    //   setMessages([
-    //     ...updatedMessages,
-    //     { role: "assistant", content: aiResponse },
-    //   ]);
-    //   setFreeChatsLeft((prev) => prev - 1);
-    // } catch (error) {
-    //   console.error("Chat request failed.");
-    // } finally {
-    //   setIsTyping(false);
-    // }
+      // setMessages([
+      //   ...updatedMessages,
+      //   { role: "assistant", content: aiResponse },
+      // ]);
+      setFreeChatsLeft((prev) => prev - 1);
+    } catch (error) {
+      console.error("Chat request failed.");
+    } finally {
+      setIsTyping(false);
+    }
   };
 
   return (
@@ -137,15 +258,244 @@ const Dashboard = () => {
           <div className="dashboard-container">
             <div className="welcome-section">
               <motion.h1 className="welcome-title">
-                Welcome, {user?.name} ⭐
+                Welcome {user?.name}
               </motion.h1>
-              <motion.p className="welcome-subtitle">
+              <button
+                className="print-button"
+                onClick={handlePrint}
+                title="Print Dashboard"
+              >
+                <Printer className="icon" />
+                Print
+              </button>
+              {/* <motion.p className="welcome-subtitle">
                 Your cosmic journey continues...
-              </motion.p>
+              </motion.p> */}
             </div>
 
+            {!astrologyData && !isLoadingChart && (
+              <motion.div className="no-data-section">
+                <div className="no-data-message">
+                  <Star className="icon" />
+                  <h3>No Astrology Data Available</h3>
+                  <p>
+                    Please complete your profile to generate your cosmic
+                    insights.
+                  </p>
+                  <button
+                    className="generate-button"
+                    onClick={() => navigate("/profile")}
+                  >
+                    Complete Profile
+                  </button>
+                </div>
+              </motion.div>
+            )}
+
+            {/* Birth Details Section */}
+            {astrologyData && (
+              <motion.div className="insights-section">
+                <div
+                  className="insights-header"
+                  onClick={() => setIsPlanetaryOpen(!isPlanetaryOpen)}
+                >
+                  <h2 className="insights-title">
+                    <Calendar className="icon" /> Birth Details
+                  </h2>
+                  {isPlanetaryOpen ? (
+                    <ChevronUp className="icon" />
+                  ) : (
+                    <ChevronDown className="icon" />
+                  )}
+                </div>
+
+                <AnimatePresence>
+                  {isPlanetaryOpen && (
+                    <motion.div className="insights-content">
+                      <div className="birth-details-grid">
+                        <div className="birth-detail">
+                          <span className="detail-label">Date of Birth:</span>
+                          <span className="detail-value">
+                            {
+                              astrologyData.personalInfo.birthDetails[
+                                "Date Of Birth"
+                              ]
+                            }
+                          </span>
+                        </div>
+                        <div className="birth-detail">
+                          <span className="detail-label">Birth Time:</span>
+                          <span className="detail-value">
+                            {
+                              astrologyData.personalInfo.birthDetails[
+                                "Birth Time"
+                              ]
+                            }
+                          </span>
+                        </div>
+                        <div className="birth-detail">
+                          <span className="detail-label">Nakshatra:</span>
+                          <span className="detail-value">
+                            {astrologyData.personalInfo.birthDetails.Nakshtra.split(
+                              " "
+                            )[0]
+                              .replace(/[0-9]/g, "")
+                              .replace(/[^\w\s]/g, "")
+                              .trim()}
+                          </span>
+                        </div>
+                        <div className="birth-detail">
+                          <span className="detail-label">Nakshatra Lord:</span>
+                          <span className="detail-value">
+                            {
+                              astrologyData.personalInfo.birthDetails[
+                                "Nakshtra-Lord"
+                              ]
+                            }
+                          </span>
+                        </div>
+                        <div className="birth-detail">
+                          <span className="detail-label">Gana:</span>
+                          <span className="detail-value">
+                            {astrologyData.personalInfo.birthDetails.Gana}
+                          </span>
+                        </div>
+                        <div className="birth-detail">
+                          <span className="detail-label">Yoni:</span>
+                          <span className="detail-value">
+                            {astrologyData.personalInfo.birthDetails.Yoni}
+                          </span>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            )}
+
+            {/* Charts Section */}
+            {astrologyData && (
+              <motion.div className="insights-section">
+                <div className="insights-header">
+                  <h2 className="insights-title">
+                    <Navigation className="icon" /> Astrology Charts
+                  </h2>
+                </div>
+                <motion.p className="welcome-subtitle">
+                  Kundli is the term is used for Birth Chart in Vedic Astrology.
+                  Twelve houses of Kundli show ascendant and planet position in
+                  various zodiac signs at the time of birth. The birth place,
+                  date, and time are crucial for accurate Kundli creation.
+                </motion.p>
+                <div className="insights-content">
+                  <div className="charts-grid">
+                    {astrologyData.charts.slice(0, 3).map((chart, index) => (
+                      <div key={index} className="chart-item">
+                        <h4 className="chart-title">
+                          {chartNameMapping[index] ||
+                            chart.name ||
+                            `Chart ${index + 1}`}
+                        </h4>
+                        <div className="chart-container">
+                          <img
+                            src={chart.url}
+                            alt={chartNameMapping[index + 1] || chart.name}
+                            className="chart-image"
+                            onError={(e) => {
+                              e.target.style.display = "none";
+                              e.target.nextSibling.style.display = "flex";
+                            }}
+                          />
+                          <div
+                            className="chart-placeholder"
+                            style={{ display: "none" }}
+                          >
+                            <Star className="chart-placeholder-icon" />
+                            <span>Chart Loading...</span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {/* Planetary Positions Section */}
+            {astrologyData && (
+              <motion.div className="insights-section">
+                <div
+                  className="insights-header"
+                  onClick={() => setIsChartsOpen(!isChartsOpen)}
+                >
+                  <h2 className="insights-title">
+                    <Sun className="icon" /> Planetary Positions
+                  </h2>
+                  {isChartsOpen ? (
+                    <ChevronUp className="icon" />
+                  ) : (
+                    <ChevronDown className="icon" />
+                  )}
+                </div>
+                <motion.p className="welcome-subtitle">
+                  Planetary position play an important role in determining
+                  various aspects of a person's life. The alignment of planets
+                  and other celestial bodies is a crucial factor that decides
+                  individual horoscopes as well. These positions are also
+                  helpful in determining the auspicious and inauspicious timings
+                  of a particular day. Also, today's planetary position gives
+                  the degree and the duration of a planet transiting in a
+                  particular zodiac sign on the given day.
+                </motion.p>
+
+                <AnimatePresence>
+                  {isChartsOpen && (
+                    <motion.div className="insights-content">
+                      <div className="planetary-positions">
+                        {astrologyData.planetaryPositions.map(
+                          (position, index) => (
+                            <div key={index} className="planetary-item">
+                              <div className="planet-name">
+                                {position.planet === "Sun" && (
+                                  <Sun className="planet-icon" />
+                                )}
+                                {position.planet === "Moon" && (
+                                  <Moon className="planet-icon" />
+                                )}
+                                {position.planet !== "Sun" &&
+                                  position.planet !== "Moon" && (
+                                    <Star className="planet-icon" />
+                                  )}
+                                {position.planet}
+                              </div>
+                              <div className="planet-details">
+                                <div className="planet-degree">
+                                  {position.degreeSign}
+                                </div>
+                                <div className="planet-house">
+                                  House {position.house}
+                                </div>
+                                <div className="planet-nakshatra">
+                                  {position.nakshatra}
+                                </div>
+                                <div
+                                  className={`planet-motion ${position.motion.toLowerCase()}`}
+                                >
+                                  {position.motion}
+                                </div>
+                              </div>
+                            </div>
+                          )
+                        )}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            )}
+
             {/* Insights Section */}
-            <motion.div className="insights-section">
+            {/* <motion.div className="insights-section">
               <div
                 className="insights-header"
                 onClick={() => setIsInsightsOpen(!isInsightsOpen)}
@@ -165,52 +515,31 @@ const Dashboard = () => {
                   <motion.div className="insights-content">
                     {isLoadingInsights ? (
                       <div className="loading">
-                        <Sparkles className="animate-spin mx-auto mb-2" />
                         Generating Insights... Please wait.
                       </div>
-                    ) : insights.length > 0 ? (
-                      <div>
-                        {insights
-                          .filter(
-                            (insight) =>
-                              insight.category !== "Unlock More Insights 🔓"
-                          )
-                          .map((insight, index) => (
-                            <motion.div
-                              key={index}
-                              className="insight-item"
-                              initial={{ opacity: 0, y: 20 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              transition={{ delay: index * 0.1 }}
-                            >
-                              <div className="insight-label">
-                                {insight.category}
-                              </div>
-                              <div className="insight-content">
+                    ) : (
+                      insights.length > 0 && (
+                        <div>
+                          {insights
+                            .filter(
+                              (insight) =>
+                                insight.category !== "Unlock More Insights 🔓"
+                            )
+                            .map((insight, index) => (
+                              <div key={index} className="insight-item">
+                                <div className="insight-label">
+                                  {insight.category}
+                                </div>
                                 <ReactMarkdown>{insight.insight}</ReactMarkdown>
                               </div>
-                            </motion.div>
-                          ))}
-                      </div>
-                    ) : (
-                      <div className="no-insights">
-                        <Star className="mx-auto mb-2 text-gray-400" />
-                        <p className="text-gray-400">
-                          No insights available at the moment. Please try
-                          refreshing or check back later.
-                        </p>
-                        <button
-                          onClick={fetchInsights}
-                          className="mt-2 px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700"
-                        >
-                          Refresh Insights
-                        </button>
-                      </div>
+                            ))}
+                        </div>
+                      )
                     )}
                   </motion.div>
                 )}
               </AnimatePresence>
-            </motion.div>
+            </motion.div> */}
 
             {/* Locked Insights Section */}
             {/* <motion.div className="locked-insights-section">
@@ -228,9 +557,9 @@ const Dashboard = () => {
           <div className="locked-feature">
             <Lock className="icon" /> Remedies & Personalized Guidance
           </div>
-        </motion.div> */}
+        </motion.div>
 
-            {/* Upgrade CTA */}
+        {/* Upgrade CTA */}
             {/* <motion.div className="upgrade-cta">
           <h3 className="upgrade-title">Unlock Your Cosmic Potential</h3>
           <p className="text-gray-300 mb-4">
@@ -243,17 +572,14 @@ const Dashboard = () => {
           >
             <Crown className="icon" /> Upgrade to Premium
           </button>
-        </motion.div> */}
+        </motion.div>  */}
 
             {/* Chat Section */}
-            <motion.div className="chat-section" id="chat-section">
+            <motion.div className="chat-section">
               <h2 className="chat-title">
                 <MessageCircle className="icon" /> Chat with AI Astrologer
               </h2>
-              <p
-                className="text-sm text-gray-400 mb-2"
-                style={{ color: "#e2e8f0" }}
-              >
+              <p className="text-sm text-gray-400 mb-2">
                 Free chats left today:{" "}
                 <span className="text-yellow-300 font-semibold">
                   {freeChatsLeft}

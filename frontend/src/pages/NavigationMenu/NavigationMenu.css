@@ -84,7 +84,7 @@
 }
 
 .nav-user {
-  padding: 20px 24px;
+  padding: 20px 0;
   display: flex;
   align-items: center;
   gap: 16px;
@@ -98,8 +98,8 @@
 }
 
 .user-avatar {
-  width: 48px;
-  height: 48px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   background: linear-gradient(45deg, #fbbf24, #f59e0b);
   display: flex;
@@ -367,5 +367,89 @@
   .navigation.collapsed .nav-items,
   .navigation.collapsed .nav-footer {
     padding: 20px 16px;
+  }
+}
+
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  .dashboard-content {
+    margin-left: 0 !important; /* No margin on mobile */
+    width: 100%;
+  }
+  
+  .dashboard-container {
+    padding: 20px 16px !important; /* Less padding on mobile */
+    max-width: 100%;
+  }
+  
+  .welcome-section {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+  
+  .welcome-title {
+    font-size: 1.8rem !important;
+  }
+  
+  .insights-section {
+    margin-bottom: 20px !important;
+    padding: 16px !important;
+  }
+  
+  .birth-details-grid {
+    grid-template-columns: 1fr !important; /* Single column on mobile */
+    gap: 12px !important;
+  }
+  
+  .charts-grid {
+    grid-template-columns: 1fr !important; /* Single column for charts */
+    gap: 16px !important;
+  }
+  
+  .chart-container {
+    height: 200px !important; /* Smaller chart height on mobile */
+  }
+  
+  .planetary-positions {
+    gap: 12px !important;
+  }
+  
+  .planetary-item {
+    padding: 12px !important;
+  }
+  
+  .chat-section {
+    margin: 20px 0 !important;
+    padding: 16px !important;
+  }
+}
+
+/* Tablet styles */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .dashboard-content {
+    margin-left: 80px; /* Collapsed nav width on tablet */
+  }
+  
+  .charts-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  
+  .birth-details-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* Large screens */
+@media (min-width: 1200px) {
+  .dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px;
+  }
+  
+  .charts-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }

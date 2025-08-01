@@ -491,3 +491,434 @@
     margin-left: 0; /* Reset on mobile */
   }
 }
+
+/* Birth Details Grid */
+
+.birth-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.birth-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.detail-label {
+  color: #a0a0a0;
+  font-size: 0.9rem;
+}
+
+.detail-value {
+  color: #fff;
+  font-weight: 600;
+}
+
+.planetary-positions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.planetary-item {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+.planetary-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+}
+
+.planet-name {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+}
+
+.planet-icon {
+  width: 20px;
+  height: 20px;
+  color: #ffd700;
+}
+
+.planet-details {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.planet-degree {
+  color: #ffd700;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.planet-house, .planet-nakshatra {
+  color: #a0a0a0;
+  font-size: 0.9rem;
+}
+
+.planet-motion {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  width: fit-content;
+}
+
+.planet-motion.direct {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+}
+
+.planet-motion.retro {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.chart-item {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.chart-title {
+  color: #fff;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.chart-container {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.chart-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.chart-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  color: #a0a0a0;
+}
+
+.chart-placeholder-icon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 0.5rem;
+}
+
+/* Print button */
+
+/* Update your existing print media query */
+
+@media print {
+  /* Use both display and visibility for better browser compatibility */
+  .navigation-menu,
+  .print-button,
+  .chat-section,
+  .upgrade-cta,
+  .locked-insights-section,
+  .send-button,
+  .chat-input,
+  .stars,
+  .welcome-section button,
+  button[title="Print Dashboard"],
+  .chat-title,
+  .chat-messages,
+  .message,
+  .typing-indicator {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  /* More specific selectors for nested elements */
+  .dashboard-layout .navigation-menu,
+  .dashboard-content .chat-section,
+  .dashboard-container .chat-section,
+  .welcome-section .print-button {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* Hide any element with these classes more aggressively */
+  *[class*="navigation"],
+  *[class*="chat"],
+  .stars,
+  div.stars {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* Remove all borders from elements */
+  * {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: white !important;
+    -webkit-print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  /* Ensure the rest of your print styles remain the same */
+  .dashboard-layout {
+    display: block !important;
+    border: none !important;
+  }
+
+  .dashboard-content {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    border: none !important;
+  }
+
+  .dashboard-page {
+    background: white !important;
+    color: black !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+
+  .dashboard-container {
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 20px !important;
+    border: none !important;
+  }
+
+  .welcome-section {
+    margin-bottom: 20px !important;
+    text-align: center !important;
+    border: none !important;
+  }
+
+  .welcome-title {
+    color: black !important;
+    font-size: 24px !important;
+    margin-bottom: 10px !important;
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: black !important;
+    border: none !important;
+  }
+
+  .insights-section {
+    page-break-inside: avoid;
+    margin-bottom: 30px !important;
+    background: white !important;
+    border: none !important; /* Remove border */
+    border-radius: 0 !important; /* Remove border radius */
+    padding: 20px !important;
+    box-shadow: none !important;
+  }
+
+  .insights-title {
+    color: black !important;
+    font-size: 18px !important;
+    border: none !important; /* Remove border */
+    border-bottom: none !important; /* Remove bottom border */
+    padding-bottom: 5px !important;
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: black !important;
+  }
+
+  .chart-image {
+    max-width: 200px !important;
+    height: auto !important;
+    border: none !important; /* Remove image borders */
+  }
+
+  .charts-grid {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 20px !important;
+    justify-content: center !important;
+    border: none !important;
+  }
+
+  .chart-item {
+    flex: 1 !important;
+    min-width: 150px !important;
+    text-align: center !important;
+    background: white !important;
+    border: none !important; /* Remove chart item borders */
+    border-radius: 0 !important;
+  }
+
+  .chart-title {
+    color: black !important;
+    font-size: 14px !important;
+    margin-bottom: 10px !important;
+    border: none !important;
+  }
+
+  .planetary-item {
+    border: none !important; /* Remove planetary item borders */
+    padding: 10px !important;
+    margin-bottom: 10px !important;
+    background: white !important;
+    box-shadow: none !important;
+  }
+
+  .planet-name {
+    color: black !important;
+    font-weight: bold !important;
+    border: none !important;
+  }
+
+  .planet-details div {
+    color: black !important;
+    border: none !important;
+  }
+
+  .birth-details-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+    border: none !important;
+  }
+
+  .birth-detail {
+    border: none !important; /* Remove birth detail borders */
+    border-bottom: none !important;
+    padding-bottom: 5px !important;
+    background: white !important;
+  }
+
+  .detail-label {
+    color: black !important;
+    font-weight: bold !important;
+    border: none !important;
+  }
+
+  .detail-value {
+    color: black !important;
+    border: none !important;
+  }
+
+  /* Ensure all text is black and no borders */
+  p, span, div, h1, h2, h3, h4, h5, h6 {
+    color: black !important;
+    background: transparent !important;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: black !important;
+    border: none !important;
+    outline: none !important;
+  }
+
+  /* Remove any remaining borders from specific elements */
+  .chart-container,
+  .chart-placeholder,
+  .planetary-positions,
+  .insights-content,
+  .insights-header {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+}
+
+.print-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.05);
+  color: white;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-bottom: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border-bottom-right-radius: 0;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  margin-right: 3px;
+  float: right;
+  margin-top: 5px;
+}
+
+.print-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.print-button .icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* Add a separate media query for landscape specifically */
+@media print and (orientation: landscape) {
+  .navigation-menu,
+  .print-button,
+  .chat-section,
+  .upgrade-cta,
+  .locked-insights-section,
+  .send-button,
+  .chat-input,
+  .stars,
+  .welcome-section button {
+    display: none !important;
+    visibility: hidden !important;
+    position: absolute !important;
+    left: -9999px !important;
+    top: -9999px !important;
+  }
+
+  /* Remove borders in landscape mode as well */
+  * {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+}

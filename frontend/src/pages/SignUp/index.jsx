@@ -16,6 +16,8 @@ import "./SignUp.css";
 import { saveUserData } from "../../api/user"; // Adjust the import path as needed
 import { useNavigate } from "react-router-dom";
 import AppContext from "../../context/AppContext";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SignUp = () => {
   const [address, setAddress] = useState("");
@@ -102,75 +104,103 @@ const SignUp = () => {
     return `${hoursStr}:${minutesStr}`;
   };
 
+  // const onFinish = async (values) => {
+  //   if (!coordinates.lat || !coordinates.lng) {
+  //     setMessage("Please select a valid address.");
+  //     return;
+  //   }
+
+  //   const formattedTime = values.timeOfBirth
+  //     ? values.timeOfBirth.format("HH:mm")
+  //     : null; // 24-hour format
+  //   const formattedDate = values.dob ? values.dob.format("YYYY-MM-DD") : null;
+
+  //   // Calculate GMT offset in different formats
+  //   const totalOffsetSeconds =
+  //     (coordinates.rawOffset || 0) + (coordinates.dstOffset || 0);
+  //   const gmtOffsetHours = totalOffsetSeconds / 3600;
+  //   const gmtOffsetString = formatGMTOffset(gmtOffsetHours);
+
+  //   const userDetails = {
+  //     ...values,
+  //     address,
+  //     timeOfBirth: formattedTime,
+  //     dob: formattedDate,
+  //     latitude: coordinates.lat,
+  //     longitude: coordinates.lng,
+  //     gmtOffset: gmtOffsetString, // e.g., "GMT-05:00" or "GMT+05:30"
+  //   };
+
+  //   console.log("Form Submitted:", userDetails);
+
+  //   try {
+  //     setLoading(true);
+
+  //     const response = await saveUserData(userDetails);
+  //     console.log("user details", userDetails);
+  //     console.log("Response from server:", response);
+  //     localStorage.setItem("token", response.token);
+  //     localStorage.setItem("user", JSON.stringify(response.user));
+  //     if (response.locationData) {
+  //       localStorage.setItem(
+  //         "locationData",
+  //         JSON.stringify(response.locationData)
+  //       );
+  //     }
+
+  //     // Store insights if returned from signup
+  //     if (response.astrologyInsights) {
+  //       localStorage.setItem(
+  //         "insights",
+  //         JSON.stringify(response.astrologyInsights)
+  //       );
+  //     }
+  //     setUser(response.user);
+
+  //     navigate("/dashboard");
+  //   } catch (error) {
+  //     console.error("Signup Error:", error.response?.data || error.message);
+  //     setMessage(
+  //       error.response?.data?.message || "Signup failed. Please try again."
+  //     );
+  //   } finally {
+  //     setLoading(false);
+  //   }
+
+  //   setLoading(true);
+
+  //   // Trigger payment with user details
+  //   // handlePayment(199, userDetails);
+
+  //   setLoading(false);
+  // };
+
   const onFinish = async (values) => {
-    if (!coordinates.lat || !coordinates.lng) {
-      setMessage("Please select a valid address.");
-      return;
-    }
-
-    const formattedTime = values.timeOfBirth
-      ? values.timeOfBirth.format("HH:mm")
-      : null; // 24-hour format
-    const formattedDate = values.dob ? values.dob.format("YYYY-MM-DD") : null;
-
-    // Calculate GMT offset in different formats
-    const totalOffsetSeconds =
-      (coordinates.rawOffset || 0) + (coordinates.dstOffset || 0);
-    const gmtOffsetHours = totalOffsetSeconds / 3600;
-    const gmtOffsetString = formatGMTOffset(gmtOffsetHours);
-
-    const userDetails = {
-      ...values,
-      address,
-      timeOfBirth: formattedTime,
-      dob: formattedDate,
-      latitude: coordinates.lat,
-      longitude: coordinates.lng,
-      gmtOffset: gmtOffsetString, // e.g., "GMT-05:00" or "GMT+05:30"
-    };
-
-    console.log("Form Submitted:", userDetails);
-
+    setLoading(true);
     try {
-      setLoading(true);
-
-      const response = await saveUserData(userDetails);
-      console.log("user details", userDetails);
-      console.log("Response from server:", response);
-      localStorage.setItem("token", response.token);
-      localStorage.setItem("user", JSON.stringify(response.user));
-      if (response.locationData) {
-        localStorage.setItem(
-          "locationData",
-          JSON.stringify(response.locationData)
-        );
+      const response = await saveUserData(values);
+      if (response && response.success) {
+        setLoading(false);
+        console.log("Response from server:", response);
+        localStorage.setItem("token", response.token);
+        //localStorage.setItem("user", JSON.stringify(response.user));
+        toast.success("User data saved successfully", {
+          position: "top-right",
+          autoClose: 3000,
+        });
+        setTimeout(() => {
+          navigate("/login");
+        }, 3000);
+        form.setFieldsValue();
       }
-
-      // Store insights if returned from signup
-      if (response.astrologyInsights) {
-        localStorage.setItem(
-          "insights",
-          JSON.stringify(response.astrologyInsights)
-        );
-      }
-      setUser(response.user);
-
-      navigate("/dashboard");
-    } catch (error) {
-      console.error("Signup Error:", error.response?.data || error.message);
-      setMessage(
-        error.response?.data?.message || "Signup failed. Please try again."
-      );
-    } finally {
+      setLoading(false);
+    } catch (err) {
+      toast.error("Error saving user data. Please try again.", {
+        position: "top-right",
+        autoClose: 3000,
+      });
       setLoading(false);
     }
-
-    setLoading(true);
-
-    // Trigger payment with user details
-    // handlePayment(199, userDetails);
-
-    setLoading(false);
   };
 
   return (
@@ -385,6 +415,18 @@ const SignUp = () => {
           </p>
         </motion.div>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        // hideProgressBar={false}
+        // newestOnTop={false}
+        // closeOnClick
+        // rtl={false}
+        // pauseOnFocusLoss
+        // draggable
+        // pauseOnHover
+        // theme="dark" // or "light" based on your design
+      />
     </section>
   );
 };

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import AppContext from "../../context/AppContext";
 import { userLogin } from "../../api/UserLogin";
+import { convertHtmlToAstrologyJson } from "../../utilityFunction/utilityFunction";
 
 const { Text } = Typography;
 
@@ -20,8 +21,19 @@ const Login = () => {
     try {
       setLoading(true);
       const data = await userLogin(values);
+      console.log("Login successful:", data);
+      const parsedAstrologyData = convertHtmlToAstrologyJson(
+        data.astrologyData.data
+      );
+      console.log("Parsed astrology data:", parsedAstrologyData);
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
+      if (parsedAstrologyData) {
+        localStorage.setItem(
+          "astrologyData",
+          JSON.stringify(parsedAstrologyData)
+        );
+      }
       setUser(data.user);
       navigate("/dashboard");
     } catch (error) {

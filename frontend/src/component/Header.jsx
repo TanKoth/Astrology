@@ -113,7 +113,13 @@ const Header = () => {
             <span>
               <Button
                 type="text"
-                icon={<UserOutlined />}
+                icon={
+                  <div className="nav-user">
+                    <div className="user-avatar">
+                      {user?.name?.charAt(0)?.toUpperCase() || "U"}
+                    </div>
+                  </div>
+                }
                 style={{
                   color: "#ffd700",
                   fontWeight: "bold",
