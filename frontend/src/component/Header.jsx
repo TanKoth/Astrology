@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { color, hover, motion } from "framer-motion";
 import { Menu, Dropdown, Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import AppContext from "../context/AppContext";
 import "./Header.css";
-//import Kundali_Logo from "../img/kundali_logo.png";
 import Kundali_Logo from "../img/kundli2.png";
-//import Kundali from "../img/kundli1.png";
+import { KeyRound, Pencil, Crown, LogOut } from "lucide-react";
+
 const Header = () => {
   const { user, setUser } = useContext(AppContext);
   const [scrolled, setScrolled] = useState(false);
@@ -41,14 +41,25 @@ const Header = () => {
   const profileMenu = (
     <Menu className="profile-dropdown">
       <Menu.Item key="user-details">
-        <a href="/profile">User Details</a>
+        <a href="/editUserDetails">
+          <Pencil size={16} className="pencil-icon" />
+          Edit User Details
+        </a>
+      </Menu.Item>
+      <Menu.Item key="update-password">
+        <a href="/reset-password/${encodeURIComponent(values.email)}">
+          <KeyRound size={16} className="key-icon" />
+          Update Password
+        </a>
       </Menu.Item>
       <Menu.Item key="subscription">
+        <Crown size={16} className="subscription-icon" />
         <a href="/subscription">Subscription</a>
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item key="logout" onClick={handleLogout}>
-        Logout
+        <LogOut size={16} className="logout-icon" />
+        <a href="/">Logout</a>
       </Menu.Item>
     </Menu>
   );
@@ -127,7 +138,7 @@ const Header = () => {
                   fontSize: "1.1rem",
                 }}
               >
-                {user.name || "Profile"}
+                {user.name || "User"}
               </Button>
             </span>
           </Dropdown>

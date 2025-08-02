@@ -102,3 +102,37 @@ nav a:hover {
 .ant-dropdown-menu-item a:hover {
   color: #fff !important;
 }
+
+
+.subscription-icon {
+  margin-right: 5px;
+  color: #ffd700;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.pencil-icon {
+ margin-right: 5px;
+  color: #ffd700;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+.key-icon {
+  margin-right: 5px;
+  color: #ffd700;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+.logout-icon {
+  margin-right: 5px;
+  color: #ffd700;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.ant-dropdown-menu-item:hover .subscription-icon,
+.ant-dropdown-menu-item:hover .pencil-icon,
+.ant-dropdown-menu-item:hover .key-icon,
+.ant-dropdown-menu-item:hover .logout-icon {
+  color: #fff !important; /* Change to white on hover */
+}

@@ -11,6 +11,7 @@ import Header from './component/Header';
 import ContactUs from './pages/ContactUs/ContactUs';
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 import ResetPassword from './pages/ResetPassword/ResetPassword';
+import EditUserDetails from './pages/EditUserDetails/EditUserDetails';
 
 
 function AppRoutes() {
@@ -29,7 +30,8 @@ function AppRoutes() {
           <Route path = {"/dashboard"} element = {<Dashboard/>} />
           <Route path = {"/contactUS"} element = {<ContactUs/>} />
           <Route path = {"/forgot-password"} element = {<ForgotPassword/>} />
-          <Route path = {"/reset-password/:email"} element = {<ResetPassword/>} />  
+          <Route path = {"/reset-password/:email"} element = {<ResetPassword/>} /> 
+          <Route path = {"/editUserDetails"} element= {<EditUserDetails/>} />
         </Routes>
       
       </div>

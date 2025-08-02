@@ -61,114 +61,20 @@ const Dashboard = () => {
   const [isTyping, setIsTyping] = useState(false);
   const navigate = useNavigate();
 
-  //Print the Astrology Data
-  // const handlePrint = () => {
-  //   const printContent = `
-  // <html>
-  //   <head>
-  //     <title>Astrology Report - ${user?.name}</title>
-  //     <style>
-  //       @media print {
-  //         * {
-  //           -webkit-print-color-adjust: exact !important;
-  //           color-adjust: exact !important;
-  //         }
-  //       }
-  //       body {
-  //         font-family: Arial, sans-serif;
-  //         margin: 20px;
-  //         color: #000;
-  //       }
-  //       .chart-item img {
-  //         max-width: 100px !important;
-  //         height: 200px !important;
-  //         border: 1px solid #000;
-  //         display: block !important;
-  //         margin: 10px auto !important;
-  //       }
-  //       .no-break { page-break-inside: avoid; }
-  //       h1, h2 { color: #000; }
-
-  //       body { font-family: Arial, sans-serif; margin: 40px; color: #333; }
-  //         h1, h2 { color: #4a5568; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
-  //         .section { margin-bottom: 30px; page-break-inside: avoid; }
-  //         .birth-detail { margin: 8px 0; }
-  //         .chart-section { display: flex; flex-wrap: wrap; gap: 20px; }
-  //         .chart-item { text-align: center; }
-  //         .chart-item img { max-width: 200px; height: auto; border: 1px solid #ddd; }
-  //         .planetary-item { border: 1px solid #e2e8f0; padding: 12px; margin: 8px 0; border-radius: 4px; }
-  //         @media print { body { margin: 20px; } }
-  //     </style>
-  //   </head>
-  //   <body onload="setTimeout(function(){ window.print(); window.close(); }, 2000);">
-  //     <!-- Your existing content here -->
-  //     <h1>Astrology Report for ${user?.name}</h1>
-  //     <p><em>Generated on ${new Date().toLocaleDateString()}</em></p>
-
-  //       <div class="section">
-  //         <h2>Birth Details</h2>
-  //         <div class="birth-detail"><strong>Date of Birth:</strong> ${
-  //           astrologyData.personalInfo.birthDetails["Date Of Birth"]
-  //         }</div>
-  //         <div class="birth-detail"><strong>Birth Time:</strong> ${
-  //           astrologyData.personalInfo.birthDetails["Birth Time"]
-  //         }</div>
-  //         <div class="birth-detail"><strong>Nakshatra:</strong> ${astrologyData.personalInfo.birthDetails.Nakshtra.split(
-  //           " "
-  //         )[0]
-  //           .replace(/[0-9]/g, "")
-  //           .trim()}</div>
-  //         <div class="birth-detail"><strong>Nakshatra Lord:</strong> ${
-  //           astrologyData.personalInfo.birthDetails["Nakshtra-Lord"]
-  //         }</div>
-  //         <div class="birth-detail"><strong>Gana:</strong> ${
-  //           astrologyData.personalInfo.birthDetails.Gana
-  //         }</div>
-  //         <div class="birth-detail"><strong>Yoni:</strong> ${
-  //           astrologyData.personalInfo.birthDetails.Yoni
-  //         }</div>
-  //       </div>
-
-  //     <div class="no-break">
-  //       <h2>Astrology Charts</h2>
-  //       ${astrologyData.charts
-  //         .slice(0, 3)
-  //         .map(
-  //           (chart, index) => `
-  //           <div class="chart-item no-break">
-  //             <strong>${
-  //               chartNameMapping[index] || `Chart ${index + 1}`
-  //             }</strong>
-  //             <img src="${chart.url}" alt="${
-  //             chartNameMapping[index] || `Chart ${index + 1}`
-  //           }" />
-  //           </div>
-  //         `
-  //         )
-  //         .join("")}
-  //     </div>
-  //     <div class="section">
-  //         <h2>Planetary Positions</h2>
-  //         ${astrologyData.planetaryPositions
-  //           .map(
-  //             (position) => `
-  //           <div class="planetary-item">
-  //             <strong>${position.planet}:</strong> ${position.degreeSign}, House ${position.house}, ${position.nakshatra}, ${position.motion}
-  //           </div>
-  //         `
-  //           )
-  //           .join("")}
-  //       </div>
-  //   </body>
-  // </html>
-  // `;
-
-  //   const printWindow = window.open("", "_blank");
-  //   printWindow.document.write(printContent);
-  //   printWindow.document.close();
-  // };
   const handlePrint = () => {
-    window.print();
+    const originalTitle = document.title;
+    const userName = user?.name || "User";
+    document.title = `${userName}-Astrology Report`;
+
+    // Small delay to ensure title is set
+    setTimeout(() => {
+      window.print();
+
+      // Restore original title after printing
+      setTimeout(() => {
+        document.title = originalTitle;
+      }, 1000);
+    }, 100);
   };
 
   useEffect(() => {
