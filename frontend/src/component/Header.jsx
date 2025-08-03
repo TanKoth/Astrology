@@ -38,6 +38,14 @@ const Header = () => {
     navigate("/");
   };
 
+  const handleUpdatePassword = () => {
+    if (user && user.email) {
+      navigate(`/forgot-password`, {
+        state: { fromDashboard: true },
+      });
+    }
+  };
+
   const profileMenu = (
     <Menu className="profile-dropdown">
       <Menu.Item key="user-details">
@@ -46,17 +54,17 @@ const Header = () => {
           Edit User Details
         </a>
       </Menu.Item>
-      <Menu.Item key="update-password">
-        <a href="/reset-password/${encodeURIComponent(values.email)}">
+      <Menu.Item key="update-password" onClick={handleUpdatePassword}>
+        <span>
           <KeyRound size={16} className="key-icon" />
           Update Password
-        </a>
+        </span>
       </Menu.Item>
       <Menu.Item key="subscription">
         <Crown size={16} className="subscription-icon" />
         <a href="/subscription">Subscription</a>
       </Menu.Item>
-      <Menu.Divider />
+
       <Menu.Item key="logout" onClick={handleLogout}>
         <LogOut size={16} className="logout-icon" />
         <a href="/">Logout</a>

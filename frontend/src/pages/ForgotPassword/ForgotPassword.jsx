@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Form, Input, Typography } from "antd";
 import { forgotPassword } from "../../api/UserLogin"; // adjust path if needed
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./ForgotPassword.css";
+import { toast, ToastContainer } from "react-toastify";
 
 const { Title, Text } = Typography;
 
@@ -10,6 +11,8 @@ const ForgotPassword = () => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const isFromDashboard = location.state?.fromDashboard;
 
   // const onFinish = async (values) => {
   //   setLoading(true);
@@ -29,21 +32,52 @@ const ForgotPassword = () => {
   // };
 
   const onFinish = async (values) => {
+    setLoading(true);
+    setMessage("");
     console.log(values);
     try {
-      const response = await forgotPassword(values);
-      if (response.success) {
-        setMessage(
-          "✅ OTP sent to " + values.email + ". Please check your email."
-        );
-        // window.location.href = "/reset";
-        // navigate(`/reset/${encodeURIComponent(values.email)}`);
-        setTimeout(
-          () => navigate(`/reset-password/${encodeURIComponent(values.email)}`),
-          3000
-        );
+      let response;
+      if (isFromDashboard) {
+        response = await forgotPassword(values);
+        if (response.success) {
+          toast.success(
+            "✅ OTP sent to " + values.email + ". Please check your email.",
+            { position: "top-right", autoClose: 3000, color: "green" }
+          );
+          // window.location.href = "/reset";
+          // navigate(`/reset/${encodeURIComponent(values.email)}`);
+          setTimeout(
+            () =>
+              navigate(`/reset-password/${encodeURIComponent(values.email)}`, {
+                state: { fromDashboard: true },
+              }),
+            3000
+          );
+        } else {
+          toast.error(response.message || "❌ Something went wrong.", {
+            position: "top-right",
+            autoClose: 3000,
+            color: "red",
+          });
+          setMessage(response.message);
+          console.log("Error sending OTP:", response.message);
+        }
       } else {
-        setMessage(response?.data?.message || "❌ Something went wrong.");
+        response = await forgotPassword(values);
+        if (response.success) {
+          setMessage(
+            "✅ OTP sent to " + values.email + ". Please check your email."
+          );
+          // window.location.href = "/reset";
+          // navigate(`/reset/${encodeURIComponent(values.email)}`);
+          setTimeout(
+            () =>
+              navigate(`/reset-password/${encodeURIComponent(values.email)}`),
+            3000
+          );
+        } else {
+          setMessage(response?.data?.message || "❌ Something went wrong.");
+        }
       }
     } catch (err) {
       setMessage(err.response?.data?.message || "❌ Something went wrong.");
@@ -53,15 +87,17 @@ const ForgotPassword = () => {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("token")) {
+    if (!isFromDashboard && localStorage.getItem("token")) {
       navigate("/");
     }
-  }, []);
+  }, [isFromDashboard]);
 
   return (
     <div className="reset-container">
       <div className="reset-box">
-        <Title className="reset-title">Forgot Password</Title>
+        <Title className="reset-title">
+          {isFromDashboard ? "Update Password" : "Forgot Password"}
+        </Title>
 
         <Form layout="vertical" onFinish={onFinish}>
           <Form.Item
@@ -86,6 +122,7 @@ const ForgotPassword = () => {
           </Text>
         )}
       </div>
+      <ToastContainer />
     </div>
   );
 };

@@ -16,7 +16,7 @@ import EditUserDetails from './pages/EditUserDetails/EditUserDetails';
 
 function AppRoutes() {
   const location = useLocation();
-  const hideHeaderRoutes = ["/signup"];
+  const hideHeaderRoutes = ["/signup","/editUserDetails"];
 
   return (
     <AppProvider>

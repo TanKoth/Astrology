@@ -1,10 +1,11 @@
 const express = require('express');
 const userDetailRoute = express.Router();
 
-const {createUser} = require('../controllers/userDetailsController');
+const {createUser,updateUserDetails,getUserDetails} = require('../controllers/userDetailsController');
 
 
 userDetailRoute.post('/save', createUser);
-//userDetailRoute.get('/details/:userId', getUserDetails);
+userDetailRoute.put('/update/:userId', updateUserDetails);
+userDetailRoute.get('/details/:userId', getUserDetails);
 
 module.exports = userDetailRoute;

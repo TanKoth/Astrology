@@ -14,6 +14,32 @@ export const saveUserData = async (userData) => {
   }
 };
 
+export const updateUserData = async (values) => {
+  try {
+    console.log("Updating user data with values:", values);
+    const response = await axiosInstance.put(
+      "/api/users/update/" + values.userId,
+      values
+    );
+    console.log("User data updated successfully:", response.data);
+    return response.data;
+  } catch (err) {
+    console.error("Error updating user data:", err);
+    throw err;
+  }
+};
+
+export const getUserDetails = async (userId) => {
+  try {
+    const response = await axiosInstance.get(`/api/users/details/${userId}`);
+    console.log("User details fetched successfully:", response.data);
+    return response.data;
+  } catch (err) {
+    console.error("Error fetching user details:", err);
+    throw err;
+  }
+};
+
 //fetch user astrology insights
 
 // export const getUserInsights = async (userId, locationData) => {

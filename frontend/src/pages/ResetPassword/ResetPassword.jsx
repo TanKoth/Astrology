@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { Form, Input, Button, Typography } from "antd";
 import { resetPassword } from "../../api/UserLogin";
+//import { updatePassword } from "../../api/user";
+import { toast, ToastContainer } from "react-toastify";
 import "./ResetPassword.css";
 
 const { Title, Text } = Typography;
@@ -12,52 +14,117 @@ const ResetPassword = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const { email } = useParams(); // Extract email from URL parameters
-  console.log("email", email);
+  const location = useLocation();
+  const [form] = Form.useForm();
+
+  const isFromDashboard =
+    window.location.pathname.includes("/dashboard") ||
+    location.state?.fromDashboard;
+
+  const validateNewPassword = (_, value) => {
+    const currentPassword = form.getFieldValue("currentPassword");
+
+    if (
+      isFromDashboard &&
+      value &&
+      currentPassword &&
+      value === currentPassword
+    ) {
+      return Promise.reject(
+        new Error("New password cannot be the same as current password!")
+      );
+    }
+    return Promise.resolve();
+  };
 
   //const token = searchParams.get("token");
 
-  // const onFinish = async (values) => {
-  //   setLoading(true);
-  //   setMessage("");
-
-  //   try {
-  //     await resetPassword(token, values.password);
-  //     setMessage("✅ Password reset successful! Redirecting to login...");
-  //     setTimeout(() => navigate("/login"), 2000);
-  //   } catch (err) {
-  //     setMessage(err.response?.data?.message || "❌ Error resetting password.");
-  //   }
-
-  //   setLoading(false);
-  // };
-
   const onFinish = async (values) => {
+    setLoading(true);
+    setMessage("");
+
+    // Additional check before API call
+    if (isFromDashboard && values.password === values.currentPassword) {
+      toast.error("New password cannot be the same as current password!", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+      setLoading(false);
+      return;
+    }
     try {
-      const response = await resetPassword(values, email);
-      if (response.success) {
-        setMessage("✅ Password reset successful! Redirecting to login...");
-        // window.location.href = "/login";
-        setTimeout(() => navigate("/login"), 2000);
+      let response;
+      if (isFromDashboard) {
+        response = await resetPassword(
+          {
+            ...values,
+            currentPassword: values.currentPassword,
+          },
+          email
+        );
+        if (response && response.success) {
+          toast.success(
+            "✅ Password updated successfully! Redirecting to dashboard...",
+            { position: "top-right", autoClose: 2000, color: "green" }
+          );
+          setTimeout(() => navigate("/dashboard"), 2000);
+        } else {
+          toast.error(response.message || "❌ Error updating password.", {
+            position: "top-right",
+            autoClose: 2000,
+            color: "red",
+          });
+          setMessage(response.message);
+          console.log("Error updating password:", response.message);
+        }
       } else {
-        setMessage(response.message);
+        response = await resetPassword(values, email);
+        if (response.success) {
+          setMessage("✅ Password reset successful! Redirecting to login...");
+          // window.location.href = "/login";
+          setTimeout(() => navigate("/login"), 2000);
+        } else {
+          setMessage(response.message);
+        }
       }
     } catch (err) {
       setMessage(err.response?.data?.message || "❌ Error resetting password.");
     }
     setLoading(false);
   };
+
   useEffect(() => {
-    if (localStorage.getItem("token")) {
+    if (!isFromDashboard && localStorage.getItem("token")) {
       navigate("/");
     }
-  }, []);
+  }, [isFromDashboard]);
 
   return (
     <div className="reset-container">
       <div className="reset-box">
-        <h1 className="reset-title">Reset Password</h1>
+        <h1 className="reset-title">
+          {isFromDashboard ? "Update Password" : "Reset Password"}
+        </h1>
 
-        <Form layout="vertical" onFinish={onFinish}>
+        <Form layout="vertical" onFinish={onFinish} form={form}>
+          {isFromDashboard && (
+            <Form.Item
+              label={<span className="reset-label">Current Password</span>}
+              name="currentPassword"
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter your current password!",
+                },
+              ]}
+            >
+              <Input.Password
+                className="reset-input"
+                placeholder="Enter current password"
+              />
+            </Form.Item>
+          )}
+
           <Form.Item
             label={<span className="reset-label">OTP</span>}
             name="otp"
@@ -71,6 +138,7 @@ const ResetPassword = () => {
             rules={[
               { required: true, message: "Please enter your new password!" },
               { min: 6, message: "Minimum 6 characters required." },
+              { validator: validateNewPassword },
             ]}
           >
             <Input.Password
@@ -79,8 +147,13 @@ const ResetPassword = () => {
             />
           </Form.Item>
 
+          {!isFromDashboard && (
+            <button type="submit" className="reset-button" disabled={loading}>
+              {loading ? "Resetting..." : "Reset Password"}
+            </button>
+          )}
           <button type="submit" className="reset-button" disabled={loading}>
-            {loading ? "Resetting..." : "Reset Password"}
+            {loading ? "Updating..." : "Update Password"}
           </button>
         </Form>
 
@@ -90,6 +163,7 @@ const ResetPassword = () => {
           </Text>
         )}
       </div>
+      <ToastContainer />
     </div>
   );
 };

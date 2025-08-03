@@ -4,6 +4,8 @@ require('dotenv').config();
 const ASTROLOGY_API_KEY = process.env.ASTROLOGY_API_KEY;
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const encodedParams = new URLSearchParams();
+const EmailHelper = require('../utils/emailHelper');
 
 // const createUser = async (req, res) =>{
 //   try{
@@ -207,4 +209,84 @@ const createUser = async (req, res) =>{
   }
 }
 
-module.exports = {createUser};
+const getUserDetails =async(req,res) => {
+  try{
+    const user = await UserDetails.findById(req.params.userId).select('-password');
+    if(!user){
+      return res.status(404).json({success: false, message: "User not found"});
+    }
+    res.status(200).json({success: true, message: "User details fetched successfully", user: user});
+  }catch(err){
+    return res.status(500).json({success: false, message: "Error fetching user details", error: err.message});
+  }
+}
+
+const updateUserDetails = async (req,res) => {
+  try{
+    const updateDetails = await UserDetails.findByIdAndUpdate(req.params.userId,req.body, {new: true}).select('-password');
+    const dateFormat = (date) =>{
+      const d = new Date(date);
+      const day = String(d.getDate()).padStart(2, '0');
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const year = d.getFullYear();
+      return `${day}-${month}-${year}`;
+    }
+
+    const formatedCity = () => {
+      const cityName = updateDetails.placeOfBirth.split(',')[0].trim();
+      const city = cityName.replace(/,/g, "");
+      return city
+    }
+    const userData = {
+      name: updateDetails.name,
+      birthdate: dateFormat(updateDetails.dob),
+      birthtime: updateDetails.timeOfBirth,
+      City: formatedCity(),
+    }
+    
+    console.log("Fetching astrology insights for user:", userData);
+    // Fetch astrology insights
+    const astrologyData = await fetchData(userData);
+
+    return res.status(200).json({success:true, message: "User details updated successfully", user: updateDetails, astrologyData: astrologyData});
+  }catch(err){
+    return res.status(500).json({success: false, message: "Error fetching user details", error: err.message});
+  }
+}
+
+const options = {
+  method: 'POST',
+  url: 'https://kundli1.p.rapidapi.com/',
+  headers: {
+    'x-rapidapi-key': '1f3feabd46mshd3f973c25234bb8p1be3e5jsn3a22ee6cee4b',
+    'x-rapidapi-host': 'kundli1.p.rapidapi.com',
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'Accept': 'application/json'
+  },
+  data: encodedParams,
+};
+
+async function fetchData(userData) {
+  try {
+    encodedParams.set('name', userData.name);
+    encodedParams.set('birthdate', userData.birthdate);
+    encodedParams.set('birthtime', userData.birthtime);
+    encodedParams.set('City', userData.City);
+    encodedParams.set('format', 'json');
+
+    const response = await axios.request(options);
+    console.log("Astrology data fetched successfully:", response.data);
+    return {
+      success: true,
+      data: response.data,
+      status: response.status,
+      contentType: response.headers['content-type']
+    };
+  } catch (error) {
+    console.error(error);
+    return { success: false, message: "Error fetching astrology data", error: error.message};
+  }
+}
+
+
+module.exports = {createUser, updateUserDetails,getUserDetails};

@@ -123,6 +123,10 @@ nav a:hover {
   cursor: pointer;
   transition: color 0.3s ease;
 }
+.update-password:hover {
+  color: #fff !important; /* Change to white on hover */
+}
+
 .logout-icon {
   margin-right: 5px;
   color: #ffd700;
@@ -135,4 +139,7 @@ nav a:hover {
 .ant-dropdown-menu-item:hover .key-icon,
 .ant-dropdown-menu-item:hover .logout-icon {
   color: #fff !important; /* Change to white on hover */
+}
+.ant-dropdown-menu-item:hover {
+  color: #fff !important;
 }

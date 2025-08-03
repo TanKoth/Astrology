@@ -69,11 +69,6 @@ const Dashboard = () => {
     // Small delay to ensure title is set
     setTimeout(() => {
       window.print();
-
-      // Restore original title after printing
-      setTimeout(() => {
-        document.title = originalTitle;
-      }, 1000);
     }, 100);
   };
 
@@ -237,6 +232,15 @@ const Dashboard = () => {
                                 "Birth Time"
                               ]
                             }
+                          </span>
+                        </div>
+                        <div className="birth-detail">
+                          <span className="detail-label">Birth Place:</span>
+                          <span className="detail-value">
+                            {user?.placeOfBirth ||
+                              astrologyData.personalInfo.birthDetails[
+                                "Birth Place"
+                              ]}
                           </span>
                         </div>
                         <div className="birth-detail">
