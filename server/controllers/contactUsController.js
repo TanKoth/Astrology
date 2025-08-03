@@ -1,4 +1,5 @@
 const contactUsModel = require('../models/contactUsModel');
+const contactUsEmailHelper = require('../utils/contactUsEmailHelper');
 
 const createContactUs = async (req, res) => {
   try{
@@ -42,6 +43,13 @@ const createContactUs = async (req, res) => {
     };
 
     const createContactUs = await contactUsModel.create(contactUsData);
+    await contactUsEmailHelper("contactUs.html", contactUsData.email, {
+      name: contactUsData.name,
+      email: contactUsData.email,
+      phone: contactUsData.phone,
+      message: contactUsData.message
+    });
+
     res.status(200).json({success: true, message: "ContactUs entry created successfully. Our team member will get back to you as soon as possible.", data: createContactUs});
   }catch(err){
     res.status(500).json({success: false, message: "Cannot create contactUs entry", error: err.message})

@@ -116,9 +116,9 @@ const Dashboard = () => {
   };
 
   const chartNameMapping = {
-    0: "Lagna Chart (D1)",
-    1: "Chandra Chart (Rasi)",
-    2: "Navamsa Chart (D9)",
+    0: "Lagna Chart",
+    1: "Chandra Chart",
+    2: "Navamsa Chart", // D9 Chart
   };
 
   const sendMessage = async () => {
