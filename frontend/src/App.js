@@ -18,6 +18,7 @@ import Dosh from './pages/Dosh/Dosh';
 import Prediction from './pages/Prediction/Prediction';
 import LalKitab from './pages/LalKitab/LalKitab';
 import Dasha from './pages/Dasha/Dasha';
+import Favorable from './pages/Favorable/Favorable';
 
 
 function AppRoutes() {
@@ -45,6 +46,7 @@ function AppRoutes() {
           <Route path= {"/prediction"} element= {<Prediction/>} />
           <Route path= {"/lalkitab"} element= {<LalKitab/>} />
           <Route path= {"/dasha"} element={<Dasha/>} />
+          <Route path= {"/favorable"} element={<Favorable/>} />
         </Routes>
       
       </div>

@@ -1,7 +1,7 @@
 "use frontend";
 
 import { useState, useEffect, useContext } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, color } from "framer-motion";
 import {
   ChevronDown,
   ChevronUp,
@@ -191,7 +191,11 @@ const Dashboard = () => {
                   title="Translate"
                 >
                   <Languages className="icon" />
-                  {language === "en" ? "हिंदी" : "English"}
+                  {language === "en"
+                    ? "हिंदी"
+                    : language === "hi"
+                    ? "मराठी"
+                    : "English"}
                 </button>
                 <button
                   className="print-button"
@@ -512,7 +516,10 @@ const Dashboard = () => {
               <h2 className="chat-title">
                 <MessageCircle className="icon" /> {t("chatWithAI")}
               </h2>
-              <p className="text-sm text-gray-400 mb-2">
+              <p
+                className="text-sm text-gray-400 mb-2"
+                style={{ color: "white" }}
+              >
                 Free chats left today:{" "}
                 <span className="text-yellow-300 font-semibold">
                   {freeChatsLeft}

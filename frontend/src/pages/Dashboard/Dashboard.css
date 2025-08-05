@@ -502,23 +502,54 @@
 }
 
 .birth-detail {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.75rem;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
+ background: rgba(255, 255, 255, 0.08);
+  border-radius: 15px;
+  padding: 1.5rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden; 
 }
 
+.birth-detail::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #ffd700, #ffed4e, #fff);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.birth-detail:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.birth-detail:hover::before {
+  opacity: 1;
+}
+
+
 .detail-label {
-  color: #a0a0a0;
+  display: block;
   font-size: 0.9rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.75rem;
 }
 
 .detail-value {
-  color: #fff;
-  font-weight: 600;
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #f8f9fa;
+  text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
 }
 
 .planetary-positions {

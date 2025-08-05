@@ -45,4 +45,21 @@ export const hi = {
   trimsamshaChart: "त्रिम्समांश (दुर्भाग्य - D30)",
   khavedamshaChart: "खवेदमांश (शुभ परिणाम - D40)",
   shashtiamshaChart: "शष्ठियामांश (सामान्य कल्याण - D60)",
+
+  // Favorable Gemstone Section
+  favorableGemstone: "अनुकूल रत्न",
+  luckyGemstone: "भाग्यशाली रत्न",
+  beneficGemstone: "कल्याणकारी रत्न",
+  lifeGemstone: "जीवन रत्न",
+  gemStones: "रत्न",
+  ruby: "माणिक",
+  emerald: "पन्ना",
+  diamond: "हीरा",
+  pearl: "मोती",
+  coral: "मूंगा",
+  yellowsapphire: "पुखराज",
+  bluesapphire: "नीलम",
+  hessonite: "गोमेद",
+  cateye: "लहसुनिया",
+  redcoral: "लाल मूंगा",
 };

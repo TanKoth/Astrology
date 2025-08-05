@@ -45,4 +45,21 @@ export const en = {
   trimsamshaChart: "Trimsamsha (Misfortune - D30)",
   khavedamshaChart: "Khavedamsha (Auspicious Results - D40)",
   shashtiamshaChart: "Shashtiamsha (General Well-being - D60)",
+
+  // Favorable Gemstone Section
+  favorableGemstone: "Favorable Gemstone",
+  luckyGemstone: "Lucky Gemstone",
+  beneficGemstone: "Benefic Gemstone",
+  lifeGemstone: "Life Gemstone",
+  gemStones: "Gemstones",
+  ruby: "Ruby",
+  emerald: "Emerald",
+  diamond: "Diamond",
+  pearl: "Pearl",
+  coral: "Coral",
+  yellowsapphire: "Yellow Sapphire",
+  bluesapphire: "Blue Sapphire",
+  hessonite: "Hessonite",
+  cateye: "Cat's Eye",
+  redcoral: "Red Coral",
 };

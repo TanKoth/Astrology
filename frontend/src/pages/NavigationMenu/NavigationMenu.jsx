@@ -17,6 +17,7 @@ import {
   UserSearch,
   Search,
   View,
+  Gem,
 } from "lucide-react";
 import { FaRobot, FaBook } from "react-icons/fa";
 //import { FaMagnifyingGlass } from "react-icons/fa6";
@@ -58,6 +59,11 @@ const NavigationMenu = () => {
       subItems: [
         { path: "/panchang/daily", icon: Calendar, label: "Daily Panchang" },
       ],
+    },
+    {
+      path: "/favorable",
+      icon: Gem,
+      label: "Favorable",
     },
     {
       path: "/prediction",
@@ -184,7 +190,10 @@ const NavigationMenu = () => {
                   className={`nav-item ${isActive ? "active" : ""}`}
                   onClick={() => {
                     if (hasSubMenu) {
-                      toggleSubMenu(item.path);
+                      handleNavigation(item.path);
+                      setTimeout(() => {
+                        toggleSubMenu(item.path);
+                      }, 20);
                     } else {
                       handleNavigation(item.path);
                     }

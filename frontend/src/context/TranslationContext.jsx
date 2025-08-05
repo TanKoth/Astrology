@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext } from "react";
 import { en } from "../utilityFunction/EnglishTranslator";
 import { hi } from "../utilityFunction/HindiTranslator";
+import { ma } from "../utilityFunction/MarathiTranslator";
 
 const TranslationContext = createContext();
 
@@ -18,6 +19,7 @@ export const TranslationProvider = ({ children }) => {
   const translations = {
     en,
     hi,
+    ma,
   };
 
   const t = (key) => {
@@ -25,7 +27,9 @@ export const TranslationProvider = ({ children }) => {
   };
 
   const toggleLanguage = () => {
-    setLanguage((prevLang) => (prevLang === "en" ? "hi" : "en"));
+    setLanguage((prevLang) =>
+      prevLang === "en" ? "hi" : prevLang === "hi" ? "ma" : "en"
+    );
   };
 
   return (
