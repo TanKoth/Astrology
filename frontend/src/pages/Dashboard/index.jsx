@@ -212,7 +212,7 @@ const Dashboard = () => {
                   <p>{t("completeProfile")}</p>
                   <button
                     className="generate-button"
-                    onClick={() => navigate("/profile")}
+                    onClick={() => navigate("/login")}
                   >
                     {t("completeProfileButton")}
                   </button>

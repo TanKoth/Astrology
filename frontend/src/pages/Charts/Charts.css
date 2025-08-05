@@ -6,34 +6,6 @@
   overflow: hidden;
 }
 
-.dashboard-layout {
-  display: flex;
-  min-height: 100vh;
-}
-
-.dashboard-content {
-  flex: 1;
-  margin-left: 12rem;
-  transition: margin-left 0.3s ease;
-}
-
-
-/* When navigation is collapsed */
-.navigation.collapsed ~ .dashboard-content {
-  margin-left: 80px;
-}
-
-@media (max-width: 768px) {
-  .dashboard-content {
-    margin-left: 0;
-    padding-top: 60px;
-  }
-  
-  .navigation.collapsed ~ .dashboard-content {
-    margin-left: 0; /* Reset on mobile */
-  }
-}
-
 .stars {
   position: absolute;
   top: 0;
@@ -73,6 +45,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 0.5rem;
+  margin-top: 1rem;
 }
 
 .welcome-subtitle {
@@ -93,8 +66,8 @@
 .insights-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
+  /* justify-content: space-between;
+  cursor: pointer; */
   padding: 1rem;
   transition: all 0.3s ease;
   border-radius: 12px;
@@ -123,7 +96,7 @@
 
 .insights-title {
   color: #ffd700;
-  font-size: 1.5rem;
+  font-size: 5rem !important;
   font-weight: 600;
   display: flex;
   align-items: center;
@@ -148,63 +121,46 @@
   margin-bottom: 0.5rem;
 }
 
-.charts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
-  margin-top: 1rem;
-}
-
-.chart-item {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 1rem;
+.upgrade-cta {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 215, 0, 0.1),
+    rgba(255, 140, 0, 0.1)
+  );
+  border-radius: 16px;
+  padding: 2rem;
   text-align: center;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  margin-bottom: 2rem;
 }
 
-.chart-title {
-  color: #fff;
+.upgrade-title {
+  font-size: 1.5rem;
+  background: linear-gradient(45deg, #ffd700, #ff8c00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   margin-bottom: 1rem;
-  font-size: 1.1rem;
-  font-weight: 600;
 }
 
-.chart-container {
-  position: relative;
-  width: 100%;
-  height: 250px;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.chart-image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  background: rgba(0, 0, 0, 0.3);
-}
-
-.chart-placeholder {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+.upgrade-button {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.5);
-  color: #a0a0a0;
+  gap: 0.5rem;
+  background: linear-gradient(90deg, #ffd700, #ff8c00);
+  color: #1a1a2e;
+  border: none;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.chart-placeholder-icon {
-  width: 40px;
-  height: 40px;
-  margin-bottom: 0.5rem;
+.upgrade-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
 }
-
 
 .chat-section {
   background: rgba(255, 255, 255, 0.05);
@@ -231,6 +187,7 @@
   background: rgba(0, 0, 0, 0.2);
   border-radius: 8px;
   margin-bottom: 1rem;
+  color: rgb(226, 232, 240);
 }
 
 .message {
@@ -459,7 +416,7 @@
   }
 }
 /* Locked Insights Section */
-.locked-insights-section {
+/* .locked-insights-section {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 16px;
   backdrop-filter: blur(10px);
@@ -502,6 +459,641 @@
 }
 .unlock-description {
   color: #e2e8f0; /* Light grayish-white for better visibility */
-  font-size: 1rem;
+  /* font-size: 1rem;
   margin-top: 0.5rem;
+} */ 
+
+.dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.dashboard-content {
+  flex: 1;
+  margin-left: 12rem;
+  transition: margin-left 0.3s ease;
+}
+
+
+/* When navigation is collapsed */
+.navigation.collapsed ~ .dashboard-content {
+  margin-left: 80px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .dashboard-content {
+    margin-left: 0;
+    padding-top: 60px;
+  }
+  
+  .navigation.collapsed ~ .dashboard-content {
+    margin-left: 0; /* Reset on mobile */
+  }
+}
+
+/* Birth Details Grid */
+
+.birth-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.birth-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.detail-label {
+  color: #a0a0a0;
+  font-size: 0.9rem;
+}
+
+.detail-value {
+  color: #fff;
+  font-weight: 600;
+}
+
+.planetary-positions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.planetary-item {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+.planetary-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+}
+
+.planet-name {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+}
+
+.planet-icon {
+  width: 20px;
+  height: 20px;
+  color: #ffd700;
+}
+
+.planet-details {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.planet-degree {
+  color: #ffd700;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.planet-house, .planet-nakshatra {
+  color: #a0a0a0;
+  font-size: 0.9rem;
+}
+
+.planet-motion {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  width: fit-content;
+}
+
+.planet-motion.direct {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+}
+
+.planet-motion.retro {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.chart-item {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.chart-title {
+  color: #fff;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.chart-container {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.chart-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.chart-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  color: #a0a0a0;
+}
+
+.chart-placeholder-icon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 0.5rem;
+}
+
+/* Print button */
+
+/* Update your existing print media query */
+
+@media print {
+  /* Hide all non-essential elements */
+  .navigation-menu,
+  .print-button,
+  .chat-section,
+  .upgrade-cta,
+  .locked-insights-section,
+  .send-button,
+  .chat-input,
+  .stars,
+  .welcome-section button,
+  button[title="Print Dashboard"],
+  .chat-title,
+  .chat-messages,
+  .message,
+  .user-profile,
+  .user-name,
+  .user-logo,
+  .user-avatar,
+  .profile-dropdown,
+  .ant-dropdown,
+  .typing-indicator,
+   /* Add these navigation toggle related elements */
+  .navigation-toggle,
+  .nav-toggle,
+  .menu-toggle,
+  .hamburger,
+  .hamburger-menu,
+  .mobile-menu-toggle,
+  .sidebar-toggle,
+  .nav-toggle-button,
+  .menu-button,
+  .navigation-button,
+  .navigation-menu-toggle,
+  .nav-menu-toggle{
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  /* More specific selectors for nested elements */
+  .dashboard-layout .navigation-menu,
+  .dashboard-content .chat-section,
+  .dashboard-container .chat-section,
+  .welcome-section .print-button {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* Hide any element with these classes more aggressively */
+  *[class*="navigation"],
+  *[class*="chat"],
+  *[class*="user"],
+  *[class*="profile"],
+  *[class*="toggle"],
+  *[class*="menu"],
+  *[class*="hamburger"],
+  .stars,
+  div.stars {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* Hide specific header elements that might contain navigation toggles */
+  /* .header,
+  .app-header,
+  .main-header,
+  .top-header,
+  .navigation-header {
+    display: none !important;
+    visibility: hidden !important;
+  } */
+
+  /* Hide any Ant Design header components */
+  .ant-layout-header,
+  .ant-menu,
+  .ant-dropdown,
+  .ant-avatar,
+  .ant-button {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* Hide any button elements in headers */
+  /* header button,
+  .header button,
+  .app-header button,
+  .navigation-header button {
+    display: none !important;
+    visibility: hidden !important;
+  } */
+
+  /* Hide SVG icons that might be navigation toggles */
+  .header svg,
+  header svg,
+  .navigation svg[class*="menu"],
+  .navigation svg[class*="toggle"],
+  svg[class*="hamburger"],
+  svg[class*="menu-icon"] {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* Rest of your existing print styles... */
+  /* Base print styles */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Page setup - NO fixed borders */
+  @page {
+    margin: 0.5in !important;
+    size: A4 !important;
+    
+    /* Add border using margin box */
+    /* border: 2px solid #2c3e50 !important; */
+    
+    @bottom-center {
+      content: "Page " counter(page) !important;
+      font-size: 12px !important;
+      color: #7f8c8d !important;
+      margin-bottom: 10px !important;
+    }
+  }
+
+  /* Prevent blank first page */
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .dashboard-layout {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .dashboard-content {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  .dashboard-page {
+    background: white !important;
+    color: #2c3e50 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: auto !important;
+    page-break-before: avoid !important;
+  }
+
+  /* Main container with border for each page */
+  .dashboard-container {
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 30px !important;
+    /* border: 2px solid #2c3e50 !important; */
+    /* border-radius: 8px !important; */
+    background: white !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Welcome section - starts immediately */
+  .welcome-section {
+    text-align: center !important;
+    margin: 0 0 30px 0 !important;
+    padding: 20px 0 !important;
+    border-bottom: 2px solid #3498db !important;
+    page-break-before: avoid !important;
+    page-break-after: avoid !important;
+  }
+
+  .welcome-title {
+    color: #2c3e50 !important;
+    font-size: 28px !important;
+    font-weight: bold !important;
+    margin-top: 2rem!important;
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: #2c3e50 !important;
+  }
+
+  .welcome-subtitle {
+    color: #7f8c8d !important;
+    font-size: 14px !important;
+    margin: 0 !important;
+  }
+
+  /* Section styling */
+  .insights-section {
+    page-break-inside: avoid !important;
+    margin-bottom: 25px !important;
+    background: white !important;
+    border: 1px solid #ddd !important;
+    padding: 20px !important;
+    /* border-radius: 6px !important; */
+  }
+
+  .insights-title {
+    color: #2c3e50 !important;
+    font-size: 20px !important;
+    font-weight: bold !important;
+    margin-bottom: 15px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  /* Charts grid */
+  .charts-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+    gap: 20px !important;
+    margin-top: 15px !important;
+  }
+
+  .chart-item {
+    background: white !important;
+    border: 1px solid #2c3e50 !important;
+    border-radius: 8px !important;
+    padding: 15px !important;
+    text-align: center !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .chart-title {
+    color: #2c3e50 !important;
+    font-size: 16px !important;
+    font-weight: bold !important;
+    margin-bottom: 10px !important;
+  }
+
+  .chart-container {
+    border-radius: 4px !important;
+    overflow: hidden !important;
+    background: #f8f9fa !important;
+    padding: 5px !important;
+    height: 200px !important;
+  }
+
+  .chart-image {
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: 180px !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    object-fit: contain !important;
+  }
+
+  /* Birth details */
+  .birth-details-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    margin-top: 15px !important;
+  }
+
+  .birth-detail {
+    background: #f8f9fa !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    padding: 10px !important;
+  }
+
+  .detail-label {
+    color: #555 !important;
+    font-weight: 600 !important;
+    font-size: 12px !important;
+    display: block !important;
+    margin-bottom: 3px !important;
+  }
+
+  .detail-value {
+    color: #2c3e50 !important;
+    font-weight: bold !important;
+    font-size: 14px !important;
+  }
+
+  /* Remove any pseudo-elements that might cause issues */
+  .welcome-section::before,
+  .welcome-section::after,
+  .insights-content::before,
+  .chart-item::before {
+    display: none !important;
+  }
+
+  /* Print optimization */
+  .chart-item {
+    break-inside: avoid !important;
+  }
+  /* Ensure text is always black */
+  p, span, div, h1, h2, h3, h4, h5, h6 {
+    color: #2c3e50 !important;
+    background: transparent !important;
+  }
+
+  /* Remove any remaining borders from specific elements */
+  .chart-container,
+  .chart-placeholder,
+  .insights-content,
+  .insights-header {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+}
+
+/* Landscape print optimization */
+/* Add this specific rule for landscape orientation as well */
+@media print and (orientation: landscape) {
+  .navigation-menu,
+  .print-button,
+  .chat-section,
+  .upgrade-cta,
+  .locked-insights-section,
+  .send-button,
+  .chat-input,
+  .stars,
+  .welcome-section button,
+  /* Add navigation toggle elements for landscape too */
+  .navigation-toggle,
+  .nav-toggle,
+  .menu-toggle,
+  .hamburger,
+  .hamburger-menu,
+  .mobile-menu-toggle,
+  .sidebar-toggle,
+  .navigation-header,
+  header {
+    display: none !important;
+    visibility: hidden !important;
+    position: absolute !important;
+    left: -9999px !important;
+    top: -9999px !important;
+  }
+
+  /* Remove borders in landscape mode as well */
+  * {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+}
+.print-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.05);
+  color: white;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-bottom: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border-bottom-right-radius: 0;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  margin-right: 3px;
+  float: right;
+  margin-top: 5px;
+}
+
+.print-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.print-button .icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* Add a separate media query for landscape specifically */
+@media print and (orientation: landscape) {
+  .navigation-menu,
+  .print-button,
+  .chat-section,
+  .upgrade-cta,
+  .locked-insights-section,
+  .send-button,
+  .chat-input,
+  .stars,
+  .welcome-section button {
+    display: none !important;
+    visibility: hidden !important;
+    position: absolute !important;
+    left: -9999px !important;
+    top: -9999px !important;
+  }
+
+  /* Remove borders in landscape mode as well */
+  * {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+}
+
+.welcome-subtitle::before {
+  display: none !important;
+  content: none !important;
+}
+
+
+/* Translate */
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  float: right; 
+}
+.translate-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.translate-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.translate-button .icon {
+  width: 18px;
+  height: 18px;
 }
