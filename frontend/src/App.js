@@ -12,6 +12,12 @@ import ContactUs from './pages/ContactUs/ContactUs';
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 import ResetPassword from './pages/ResetPassword/ResetPassword';
 import EditUserDetails from './pages/EditUserDetails/EditUserDetails';
+import{TranslationProvider} from './context/TranslationContext';
+import Charts from './pages/Charts/Charts';
+import Dosh from './pages/Dosh/Dosh';
+import Prediction from './pages/Prediction/Prediction';
+import LalKitab from './pages/LalKitab/LalKitab';
+import Dasha from './pages/Dasha/Dasha';
 
 
 function AppRoutes() {
@@ -19,6 +25,8 @@ function AppRoutes() {
   const hideHeaderRoutes = ["/signup","/editUserDetails"];
 
   return (
+    <TranslationProvider>
+      {/* Translation context provider wraps the entire app to provide translation functionality */}
     <AppProvider>
       <div className="App">
         {!hideHeaderRoutes.includes(location.pathname) && <Header />}
@@ -32,10 +40,16 @@ function AppRoutes() {
           <Route path = {"/forgot-password"} element = {<ForgotPassword/>} />
           <Route path = {"/reset-password/:email"} element = {<ResetPassword/>} /> 
           <Route path = {"/editUserDetails"} element= {<EditUserDetails/>} />
+          <Route path= {"/charts"} element= {<Charts/>} />
+          <Route path= {"/dosh"} element= {<Dosh/>} />
+          <Route path= {"/prediction"} element= {<Prediction/>} />
+          <Route path= {"/lalkitab"} element= {<LalKitab/>} />
+          <Route path= {"/dasha"} element={<Dasha/>} />
         </Routes>
       
       </div>
     </AppProvider>
+    </TranslationProvider>
   );
 }
 

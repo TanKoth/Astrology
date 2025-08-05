@@ -41,7 +41,14 @@ const NavigationMenu = () => {
       icon: Search,
       label: "Horoscope",
       hasSubMenu: true,
-      subItems: [{ icon: UserSearch, label: "Planet-Details" }],
+      subItems: [
+        {
+          path: "/charts",
+          icon: Kundali_Logo,
+          iconType: "image",
+          label: "Charts",
+        },
+      ],
     },
     {
       path: "/panchang",
@@ -66,12 +73,26 @@ const NavigationMenu = () => {
       icon: FaBook,
       label: "Lalkitab Remedies",
     },
-    { path: "/chat", icon: FaRobot, label: "AI Chat" },
+    {
+      path: "/dashboard?section=chat-section",
+      icon: FaRobot,
+      label: "AI Chat",
+    },
   ];
 
   const handleNavigation = (path) => {
     navigate(path);
     setIsMobileMenuOpen(false);
+
+    //scroll to chat section if navigating to chat
+    if (path.includes("section=chat-section")) {
+      setTimeout(() => {
+        const chatSection = document.getElementById("chat-section");
+        if (chatSection) {
+          chatSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 300);
+    }
   };
 
   const handleLogout = () => {
@@ -211,7 +232,15 @@ const NavigationMenu = () => {
                           }`}
                           onClick={() => handleNavigation(subItem.path)}
                         >
-                          <SubIcon className="nav-icon" />
+                          {subItem.iconType === "image" ? (
+                            <img
+                              src={SubIcon}
+                              alt={subItem.label}
+                              className="nav-icon nav-image"
+                            />
+                          ) : (
+                            <SubIcon className="nav-icon" />
+                          )}
                           <span className="nav-label">{subItem.label}</span>
                         </button>
                       );

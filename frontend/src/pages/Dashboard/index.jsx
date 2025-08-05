@@ -19,15 +19,17 @@ import {
   Sun,
   Activity,
   Printer,
+  Languages,
 } from "lucide-react";
 import AppContext from "../../context/AppContext";
 import { userLogin } from "../../api/UserLogin";
 //import { sendMessageToAI } from "../../api/chatApi";
 import "./Dashboard.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import NavigationMenu from "../NavigationMenu/NavigationMenu";
 import { convertHtmlToAstrologyJson } from "../../utilityFunction/utilityFunction";
+import { useTranslation } from "../../context/TranslationContext";
 
 const TypingIndicator = () => (
   <div className="message ai">
@@ -60,6 +62,27 @@ const Dashboard = () => {
   const [isPlanetaryOpen, setIsPlanetaryOpen] = useState(true);
   const [isTyping, setIsTyping] = useState(false);
   const navigate = useNavigate();
+  const { t, toggleLanguage, language } = useTranslation();
+
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    const scrollToChat = searchParams.get("section");
+
+    if (scrollToChat === "chat-section") {
+      const timer = setTimeout(() => {
+        const chatSection = document.getElementById("chat-section");
+        if (chatSection) {
+          chatSection.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }
+      }, 300);
+
+      return () => clearTimeout(timer);
+    }
+  }, [searchParams]);
 
   const handlePrint = () => {
     const originalTitle = document.title;
@@ -116,9 +139,9 @@ const Dashboard = () => {
   };
 
   const chartNameMapping = {
-    0: "Lagna Chart",
-    1: "Chandra Chart",
-    2: "Navamsa Chart", // D9 Chart
+    0: t("lagnaChart"), // Lagna Chart
+    1: t("chandraChart"), // Chandra Chart
+    2: t("navamsaChart"), // Navamsa Chart
   };
 
   const sendMessage = async () => {
@@ -159,35 +182,39 @@ const Dashboard = () => {
           <div className="dashboard-container">
             <div className="welcome-section">
               <motion.h1 className="welcome-title">
-                Welcome {user?.name}
+                {t("welcome")} {user?.name}
               </motion.h1>
-              <button
-                className="print-button"
-                onClick={handlePrint}
-                title="Print Dashboard"
-              >
-                <Printer className="icon" />
-                Print
-              </button>
-              {/* <motion.p className="welcome-subtitle">
-                Your cosmic journey continues...
-              </motion.p> */}
+              <div className="action-buttons">
+                <button
+                  className="translate-button"
+                  onClick={toggleLanguage}
+                  title="Translate"
+                >
+                  <Languages className="icon" />
+                  {language === "en" ? "हिंदी" : "English"}
+                </button>
+                <button
+                  className="print-button"
+                  onClick={handlePrint}
+                  title="Print Dashboard"
+                >
+                  <Printer className="icon" />
+                  {t("print")}
+                </button>
+              </div>
             </div>
 
             {!astrologyData && !isLoadingChart && (
               <motion.div className="no-data-section">
                 <div className="no-data-message">
                   <Star className="icon" />
-                  <h3>No Astrology Data Available</h3>
-                  <p>
-                    Please complete your profile to generate your cosmic
-                    insights.
-                  </p>
+                  <h3>{t("noDataAvailable")}</h3>
+                  <p>{t("completeProfile")}</p>
                   <button
                     className="generate-button"
                     onClick={() => navigate("/profile")}
                   >
-                    Complete Profile
+                    {t("completeProfileButton")}
                   </button>
                 </div>
               </motion.div>
@@ -201,7 +228,7 @@ const Dashboard = () => {
                   onClick={() => setIsPlanetaryOpen(!isPlanetaryOpen)}
                 >
                   <h2 className="insights-title">
-                    <Calendar className="icon" /> Birth Details
+                    <Calendar className="icon" /> {t("birthDetails")}
                   </h2>
                   {isPlanetaryOpen ? (
                     <ChevronUp className="icon" />
@@ -215,7 +242,9 @@ const Dashboard = () => {
                     <motion.div className="insights-content">
                       <div className="birth-details-grid">
                         <div className="birth-detail">
-                          <span className="detail-label">Date of Birth:</span>
+                          <span className="detail-label">
+                            {t("dateOfBirth")}
+                          </span>
                           <span className="detail-value">
                             {
                               astrologyData.personalInfo.birthDetails[
@@ -225,7 +254,7 @@ const Dashboard = () => {
                           </span>
                         </div>
                         <div className="birth-detail">
-                          <span className="detail-label">Birth Time:</span>
+                          <span className="detail-label">{t("birthTime")}</span>
                           <span className="detail-value">
                             {
                               astrologyData.personalInfo.birthDetails[
@@ -235,7 +264,9 @@ const Dashboard = () => {
                           </span>
                         </div>
                         <div className="birth-detail">
-                          <span className="detail-label">Birth Place:</span>
+                          <span className="detail-label">
+                            {t("birthPlace")}
+                          </span>
                           <span className="detail-value">
                             {user?.placeOfBirth ||
                               astrologyData.personalInfo.birthDetails[
@@ -244,7 +275,7 @@ const Dashboard = () => {
                           </span>
                         </div>
                         <div className="birth-detail">
-                          <span className="detail-label">Nakshatra:</span>
+                          <span className="detail-label">{t("nakshatra")}</span>
                           <span className="detail-value">
                             {astrologyData.personalInfo.birthDetails.Nakshtra.split(
                               " "
@@ -255,7 +286,9 @@ const Dashboard = () => {
                           </span>
                         </div>
                         <div className="birth-detail">
-                          <span className="detail-label">Nakshatra Lord:</span>
+                          <span className="detail-label">
+                            {t("nakshatraLord")}
+                          </span>
                           <span className="detail-value">
                             {
                               astrologyData.personalInfo.birthDetails[
@@ -265,13 +298,13 @@ const Dashboard = () => {
                           </span>
                         </div>
                         <div className="birth-detail">
-                          <span className="detail-label">Gana:</span>
+                          <span className="detail-label">{t("gana")}</span>
                           <span className="detail-value">
                             {astrologyData.personalInfo.birthDetails.Gana}
                           </span>
                         </div>
                         <div className="birth-detail">
-                          <span className="detail-label">Yoni:</span>
+                          <span className="detail-label">{t("yoni")}</span>
                           <span className="detail-value">
                             {astrologyData.personalInfo.birthDetails.Yoni}
                           </span>
@@ -288,14 +321,11 @@ const Dashboard = () => {
               <motion.div className="insights-section">
                 <div className="insights-header">
                   <h2 className="insights-title">
-                    <Navigation className="icon" /> Astrology Charts
+                    <Navigation className="icon" /> {t("astrologyCharts")}
                   </h2>
                 </div>
                 <motion.p className="welcome-subtitle">
-                  Kundli is the term is used for Birth Chart in Vedic Astrology.
-                  Twelve houses of Kundli show ascendant and planet position in
-                  various zodiac signs at the time of birth. The birth place,
-                  date, and time are crucial for accurate Kundli creation.
+                  {t("chartsDescription")}
                 </motion.p>
                 <div className="insights-content">
                   <div className="charts-grid">
@@ -321,7 +351,7 @@ const Dashboard = () => {
                             style={{ display: "none" }}
                           >
                             <Star className="chart-placeholder-icon" />
-                            <span>Chart Loading...</span>
+                            <span>{t("chartLoading")}</span>
                           </div>
                         </div>
                       </div>
@@ -339,7 +369,7 @@ const Dashboard = () => {
                   onClick={() => setIsChartsOpen(!isChartsOpen)}
                 >
                   <h2 className="insights-title">
-                    <Sun className="icon" /> Planetary Positions
+                    <Sun className="icon" /> {t("planetaryPositions")}
                   </h2>
                   {isChartsOpen ? (
                     <ChevronUp className="icon" />
@@ -348,14 +378,7 @@ const Dashboard = () => {
                   )}
                 </div>
                 <motion.p className="welcome-subtitle">
-                  Planetary position play an important role in determining
-                  various aspects of a person's life. The alignment of planets
-                  and other celestial bodies is a crucial factor that decides
-                  individual horoscopes as well. These positions are also
-                  helpful in determining the auspicious and inauspicious timings
-                  of a particular day. Also, today's planetary position gives
-                  the degree and the duration of a planet transiting in a
-                  particular zodiac sign on the given day.
+                  {t("planetaryDescription")}
                 </motion.p>
 
                 <AnimatePresence>
@@ -383,7 +406,7 @@ const Dashboard = () => {
                                   {position.degreeSign}
                                 </div>
                                 <div className="planet-house">
-                                  House {position.house}
+                                  {t("house")} {position.house}
                                 </div>
                                 <div className="planet-nakshatra">
                                   {position.nakshatra}
@@ -485,9 +508,9 @@ const Dashboard = () => {
         </motion.div>  */}
 
             {/* Chat Section */}
-            <motion.div className="chat-section">
+            <motion.div className="chat-section" id="chat-section">
               <h2 className="chat-title">
-                <MessageCircle className="icon" /> Chat with AI Astrologer
+                <MessageCircle className="icon" /> {t("chatWithAI")}
               </h2>
               <p className="text-sm text-gray-400 mb-2">
                 Free chats left today:{" "}
@@ -499,8 +522,7 @@ const Dashboard = () => {
               <div className="chat-messages">
                 {messages.length === 0 ? (
                   <div className="text-center text-gray-400 mt-4">
-                    <Sparkles className="mx-auto mb-2" /> Ask me anything about
-                    your cosmic journey!
+                    <Sparkles className="mx-auto mb-2" /> {t("askQuestion")}
                   </div>
                 ) : (
                   <>
@@ -519,7 +541,7 @@ const Dashboard = () => {
               <div className="chat-input">
                 <input
                   type="text"
-                  placeholder="Type your question..."
+                  placeholder={t("typeQuestion")}
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
                 />
@@ -532,7 +554,7 @@ const Dashboard = () => {
                     "Sending..."
                   ) : (
                     <>
-                      <Send className="icon" /> Send
+                      <Send className="icon" /> {t("send")}
                     </>
                   )}
                 </button>

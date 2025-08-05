@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const encodedParams = new URLSearchParams();
 const EmailHelper = require('../utils/emailHelper');
+const{extractTimeOnly, formatDate} = require('../utils/timeUtils');
 
 // const createUser = async (req, res) =>{
 //   try{
@@ -198,8 +199,13 @@ const createUser = async (req, res) =>{
     const saltRounds = 10;
     const hashPassword = await bcrypt.hash(req.body.password,saltRounds);
 
+    const userData ={
+      ...req.body,
+      password: hashPassword,
+      timeOfBirth: extractTimeOnly(req.body.timeOfBirth) // Ensure timeOfBirth is in HH:MM format
+    }
     // create user
-    const user = await UserDetails.create({...req.body, password: hashPassword});
+    const user = await UserDetails.create(userData);
     // Remove password from response for security
     const userResponse = { ...user.toObject() }; 
     delete userResponse.password;
@@ -224,13 +230,13 @@ const getUserDetails =async(req,res) => {
 const updateUserDetails = async (req,res) => {
   try{
     const updateDetails = await UserDetails.findByIdAndUpdate(req.params.userId,req.body, {new: true}).select('-password');
-    const dateFormat = (date) =>{
-      const d = new Date(date);
-      const day = String(d.getDate()).padStart(2, '0');
-      const month = String(d.getMonth() + 1).padStart(2, '0');
-      const year = d.getFullYear();
-      return `${day}-${month}-${year}`;
-    }
+    // const dateFormat = (date) =>{
+    //   const d = new Date(date);
+    //   const day = String(d.getDate()).padStart(2, '0');
+    //   const month = String(d.getMonth() + 1).padStart(2, '0');
+    //   const year = d.getFullYear();
+    //   return `${day}-${month}-${year}`;
+    // }
 
     const formatedCity = () => {
       const cityName = updateDetails.placeOfBirth.split(',')[0].trim();
@@ -239,8 +245,8 @@ const updateUserDetails = async (req,res) => {
     }
     const userData = {
       name: updateDetails.name,
-      birthdate: dateFormat(updateDetails.dob),
-      birthtime: updateDetails.timeOfBirth,
+      birthdate: formatDate(updateDetails.dob),
+      birthtime: extractTimeOnly(updateDetails.timeOfBirth),
       City: formatedCity(),
     }
     

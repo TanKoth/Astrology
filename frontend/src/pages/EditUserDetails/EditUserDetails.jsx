@@ -135,11 +135,11 @@ const EditUserDetails = () => {
         ...values,
         userId: user._id, // Get userId from stored user data, not form values
         // coordinates: coordinates,
-        // dob: values.dob ? values.dob.format("YYYY-MM-DD") : null,
-        // timeOfBirth: values.timeOfBirth
-        //   ? values.timeOfBirth.format("HH:mm")
-        //   : null,
-        // placeOfBirth: address, // Use the address state value
+        dob: values.dob ? values.dob.format("YYYY-MM-DD") : null,
+        timeOfBirth: values.timeOfBirth
+          ? values.timeOfBirth.format("HH:mm")
+          : null,
+        placeOfBirth: address, // Use the address state value
       };
 
       const response = await updateUserData(updateData);
@@ -330,8 +330,8 @@ const EditUserDetails = () => {
                 ]}
               >
                 <TimePicker
-                  use12Hours
-                  format="h:mm a"
+                  use24Hours
+                  format="hh:mm a"
                   className="cosmic-input"
                   placeholder="Select Time"
                 />

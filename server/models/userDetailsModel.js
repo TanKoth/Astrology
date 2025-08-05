@@ -36,11 +36,6 @@ const userSchema = new mongoose.Schema({
   },
   otpExpiry: {
     type: Date,
-  },
-  updatedAt:{
-    type: Date,
-    default: Date.now,
-    format: 'YYYY-MM-DD HH:mm:ss',
   }
 });
 

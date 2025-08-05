@@ -1,0 +1,33 @@
+export const en = {
+  welcome: "Welcome",
+  print: "Print",
+  noDataAvailable: "No Astrology Data Available",
+  completeProfile:
+    "Please complete your profile to generate your cosmic insights.",
+  completeProfileButton: "Complete Profile",
+  birthDetails: "Birth Details",
+  dateOfBirth: "Date of Birth:",
+  birthTime: "Birth Time:",
+  birthPlace: "Birth Place:",
+  nakshatra: "Nakshatra:",
+  nakshatraLord: "Nakshatra Lord:",
+  gana: "Gana:",
+  yoni: "Yoni:",
+  astrologyCharts: "Astrology Charts",
+  chartsDescription:
+    "Kundli is the term is used for Birth Chart in Vedic Astrology. Twelve houses of Kundli show ascendant and planet position in various zodiac signs at the time of birth. The birth place, date, and time are crucial for accurate Kundli creation.",
+  planetaryPositions: "Planetary Positions",
+  planetaryDescription:
+    "Planetary position play an important role in determining various aspects of a person's life. The alignment of planets and other celestial bodies is a crucial factor that decides individual horoscopes as well.",
+  chatWithAI: "Chat with AI Astrologer",
+  freeChatsLeft: "Free chats left today:",
+  askQuestion: "Ask me anything about your cosmic journey!",
+  typeQuestion: "Type your question...",
+  send: "Send",
+  sending: "Sending...",
+  house: "House",
+  chartLoading: "Chart Loading...",
+  lagnaChart: "Lagna Chart",
+  chandraChart: "Chandra Chart",
+  navamsaChart: "Navamsa Chart",
+};

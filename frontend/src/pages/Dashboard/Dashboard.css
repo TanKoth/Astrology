@@ -667,6 +667,12 @@
   .chat-title,
   .chat-messages,
   .message,
+  .user-profile,
+  .user-name,
+  .user-logo,
+  .user-avatar,
+  .profile-dropdown,
+  .ant-dropdown,
   .typing-indicator {
     display: none !important;
     visibility: hidden !important;
@@ -690,8 +696,20 @@
   /* Hide any element with these classes more aggressively */
   *[class*="navigation"],
   *[class*="chat"],
+  *[class*="user"],
+  *[class*="profile"],
+
   .stars,
   div.stars {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* Hide any Ant Design header components */
+  .ant-layout-header,
+  .ant-menu,
+  .ant-dropdown,
+  .ant-avatar {
     display: none !important;
     visibility: hidden !important;
   }
@@ -702,6 +720,37 @@
     -webkit-print-color-adjust: exact !important;
     color-adjust: exact !important;
     print-color-adjust: exact !important;
+  }
+
+   /* Force content to start on first page */
+  .insights-section:first-of-type {
+    page-break-before: avoid !important;
+    margin-top: 0 !important;
+  }
+
+  /* Page settings to prevent blank first page */
+  @page {
+    margin: 0.75in !important;
+    @bottom-center {
+      content: "Page " counter(page) !important;
+      font-size: 12px !important;
+      color: #7f8c8d !important;
+    }
+  }
+
+  /* Ensure first page content starts immediately */
+  @page :first {
+    margin-top: 0.5in !important;
+  }
+
+  /* Remove any top margins that might cause blank page */
+  * {
+    margin-top: 0 !important;
+  }
+
+  .insights-section:first-child {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
   }
 
   body {
@@ -758,6 +807,7 @@
   }
 
   .welcome-title {
+    /* content: "Astrology Report "  !important; */
     color: #2c3e50 !important;
     font-size: 36px !important;
     font-weight: bold !important;
@@ -1423,4 +1473,42 @@
     outline: none !important;
     box-shadow: none !important;
   }
+}
+
+.welcome-subtitle::before {
+  display: none !important;
+  content: none !important;
+}
+
+
+/* Translate */
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  float: right; 
+}
+.translate-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.translate-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.translate-button .icon {
+  width: 18px;
+  height: 18px;
 }
