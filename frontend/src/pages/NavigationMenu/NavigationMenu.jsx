@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
   Home,
@@ -18,11 +18,13 @@ import {
   Search,
   View,
   Gem,
+  Moon,
+  ScrollText,
 } from "lucide-react";
 import { FaRobot, FaBook } from "react-icons/fa";
 //import { FaMagnifyingGlass } from "react-icons/fa6";
-import { GiLouvrePyramid } from "react-icons/gi";
-import { RiPlanetFill } from "react-icons/ri";
+import { GiLouvrePyramid, GiStarSattelites } from "react-icons/gi";
+import { RiPlanetFill, RiAlipayLine } from "react-icons/ri";
 import { useState } from "react";
 import AppContext from "../../context/AppContext";
 import "./NavigationMenu.css";
@@ -35,6 +37,27 @@ const NavigationMenu = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [expandedSubMenus, setExpandedSubMenus] = useState({});
+
+  // Auto-expand parent menus when submenu items are active
+  useEffect(() => {
+    const currentPath = location.pathname;
+
+    // Check which parent menu should be expanded based on active submenu
+    navigationItems.forEach((item) => {
+      if (item.hasSubMenu && item.subItems) {
+        const hasActiveSubItem = item.subItems.some(
+          (subItem) => subItem.path === currentPath
+        );
+
+        if (hasActiveSubItem) {
+          setExpandedSubMenus((prev) => ({
+            ...prev,
+            [item.path]: true,
+          }));
+        }
+      }
+    });
+  }, [location.pathname]);
 
   const navigationItems = [
     {
@@ -69,6 +92,25 @@ const NavigationMenu = () => {
       path: "/prediction",
       icon: View,
       label: "Prediction",
+      hasSubMenu: true,
+      subItems: [
+        {
+          path: "/rasi-prediction",
+          icon: RiAlipayLine,
+          label: "Rasi Prediction",
+        },
+        { path: "/moon-prediction", icon: Moon, label: "Moon Prediction" },
+        {
+          path: "/nakshatra-prediction",
+          icon: GiStarSattelites,
+          label: "Nakshatra Prediction",
+        },
+        {
+          path: "/panchang-prediction",
+          icon: ScrollText,
+          label: "Panchang Prediction",
+        },
+      ],
     },
     // { path: "/subscription", icon: Crown, label: "Premium" },
     // { path: "/settings", icon: Settings, label: "Settings" },
@@ -184,16 +226,22 @@ const NavigationMenu = () => {
             const hasSubMenu = item.hasSubMenu && item.subItems;
             const isExpanded = expandedSubMenus[item.path];
 
+            // Check if any submenu item is active
+            const hasActiveSubItem =
+              hasSubMenu &&
+              item.subItems.some(
+                (subItem) => location.pathname === subItem.path
+              );
+
             return (
               <div key={item.path} className="nav-item-container">
                 <button
-                  className={`nav-item ${isActive ? "active" : ""}`}
+                  className={`nav-item ${isActive ? "active" : ""}${
+                    hasSubMenu ? "has-submenu" : ""
+                  }`}
                   onClick={() => {
                     if (hasSubMenu) {
                       handleNavigation(item.path);
-                      setTimeout(() => {
-                        toggleSubMenu(item.path);
-                      }, 20);
                     } else {
                       handleNavigation(item.path);
                     }
@@ -214,7 +262,13 @@ const NavigationMenu = () => {
                     <>
                       <span className="nav-label">{item.label}</span>
                       {hasSubMenu && (
-                        <span className="submenu-arrow">
+                        <span
+                          className="submenu-arrow"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleSubMenu(item.path);
+                          }}
+                        >
                           {isExpanded ? (
                             <ChevronDown size={16} />
                           ) : (

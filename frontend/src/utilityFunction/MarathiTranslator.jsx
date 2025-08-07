@@ -65,6 +65,6 @@ export const ma = {
 
   // Other translations
   noDataAvailable: "कोणता डेटा उपलब्ध नाही",
-  completeProfile: "चार्ट तयार करण्यासाठी कृपया आपले प्रोफाइल पूर्ण करा",
+  // completeProfile: "चार्ट तयार करण्यासाठी कृपया आपले प्रोफाइल पूर्ण करा",
   goToLogin: "लॉगिनवर जा",
 };
