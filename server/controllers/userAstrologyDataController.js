@@ -3,7 +3,7 @@ const axios = require('axios');
 const ASTROLOGY_API_KEY = process.env.ASTROLOGY_API_KEY;
 const{extractTimeOnly, formatDate} = require('../utils/timeUtils');
 
-const moonPrediction = async (req, res) => {
+const getAstrologyPrediction = async (req, res,apiEndPoint,predictionType) => {
   try{
     const userId = req.params.userId;
 
@@ -37,24 +37,24 @@ const moonPrediction = async (req, res) => {
       lang: "en",
     }
     console.log('User Birth Details:', birthDetails);
-    const astrologyInsights = await getAstrologyInsights(birthDetails);
-    console.log('Astrology Insights:', astrologyInsights);
-    res.status(200).json({success: true, message: 'Astrology insights for moon prediction retrieved successfully', astrologyInsights: astrologyInsights});
+    const astrologyInsights = await getAstrologyInsights(birthDetails,apiEndPoint);
+    console.log(` ${predictionType}Insights:', astrologyInsights`);
+    res.status(200).json({success: true, message: `Astrology insights for ${predictionType} retrieved successfully`, astrologyInsights: astrologyInsights});
 
   }catch(err){
-    console.log('Error in creating moon prediction:', err.message);
-    res.status(400).json({success: false, message: 'Error in creating Astrology insights for moon prediction'});
+    console.log(`Error in creating ${predictionType}:`, err.message);
+    res.status(400).json({success: false, message: `Error in creating Astrology insights for ${predictionType}`, error: err.message});
   }
 }
 
-const getAstrologyInsights = async (birthDetails) =>{
+const getAstrologyInsights = async (birthDetails, endpoint) =>{
     try{
       if(!ASTROLOGY_API_KEY){
         throw new Error("Astrology API key is not set in environment variables");
       }
       console.log("API_KEY:", ASTROLOGY_API_KEY);
-      const baseUrl = 'https://api.jyotishamastroapi.com/api/prediction/moon';
-
+      const baseUrl = `https://api.jyotishamastroapi.com/api/prediction/${endpoint}`;
+      console.log("Base URL:", baseUrl);
       let timeZone = birthDetails.timeZone;
       if(timeZone.includes(':')){
         timeZone = timeZone.replace(':','.');
@@ -87,4 +87,25 @@ const getAstrologyInsights = async (birthDetails) =>{
     }
   }
 
-  module.exports ={moonPrediction};
+  // Controller for Moon Prediction
+  const moonPrediction = async (req, res) => {
+    return getAstrologyPrediction(req, res, 'moon', 'Moon Prediction');
+  }
+
+  // Controller for Rasi(ascendant) Prediction
+  const rasiPrediction = async(req, res) =>{
+    return getAstrologyPrediction(req,res,'ascendant','Rasi(ascendant) Prediction');
+  }
+
+  // Controller for Nakshatra Prediction
+  const nakshatraPrediction = async(req, res) =>{
+    return getAstrologyPrediction(req,res,'nakshatra','Nakshatra Prediction');
+  }
+
+  // Controller for Panchang Prediction
+  const panchangPrediction = async(req, res) =>{
+    return getAstrologyPrediction(req,res,'panchang','Panchang Prediction');
+  }
+
+
+  module.exports ={moonPrediction,rasiPrediction,nakshatraPrediction,panchangPrediction};

@@ -5,18 +5,15 @@ import {
   ChevronUp,
   Star,
   Lock,
-  MessageCircle,
-  Crown,
-  Send,
   Sparkles,
-  Navigation,
   Printer,
   Languages,
-  Moon,
+  ScrollText,
 } from "lucide-react";
+import { RiAlipayLine } from "react-icons/ri";
 import AppContext from "../../context/AppContext";
 import NavigationMenu from "../NavigationMenu/NavigationMenu";
-import { getMoonPrediction } from "../../api/UserAstrologyData";
+import { getPanchangPrediction } from "../../api/UserAstrologyData";
 import { getUserDetails } from "../../api/user";
 import "./Prediction.css";
 import { useNavigate } from "react-router-dom";
@@ -44,17 +41,19 @@ const TypingIndicator = () => (
   </div>
 );
 
-const MoonPrediction = () => {
+const PanchangPrediction = () => {
   const { user } = useContext(AppContext);
   //const { t, toggleLanguage, language } = useTranslation();
-  const [moonPredictionData, setMoonPredictionData] = useState(null);
-  const [isLoadingMoonPrediction, setIsLoadingMoonPrediction] = useState(false);
-  const [isMoonPredictionOpen, setIsMoonPredictionOpen] = useState(true);
+  const [panchangPredictionData, setPanchangPredictionData] = useState(null);
+  const [isLoadingPanchangPrediction, setIsLoadingPanchangPrediction] =
+    useState(false);
+  const [isPanchangPredictionOpen, setIsPanchangPredictionOpen] =
+    useState(true);
   const navigate = useNavigate(); // Initialize navigation
 
   const handlePrint = () => {
     const userName = user?.name || "User";
-    document.title = `Moon-Prediction Report - ${userName}`;
+    document.title = `Panchang-Prediction Report - ${userName}`;
 
     setTimeout(() => {
       window.print();
@@ -68,28 +67,28 @@ const MoonPrediction = () => {
   }, [user]);
 
   const fetchInsights = async () => {
-    setIsLoadingMoonPrediction(true);
+    setIsLoadingPanchangPrediction(true);
 
     try {
-      const storedData = localStorage.getItem("moonPredictionData");
+      const storedData = localStorage.getItem("panchangPredictionData");
       if (storedData) {
-        setMoonPredictionData(JSON.parse(storedData));
-        setIsLoadingMoonPrediction(false);
+        setPanchangPredictionData(JSON.parse(storedData));
+        setIsLoadingPanchangPrediction(false);
       } else {
         //Get user's astrology data from database
         const userData = await getUserDetails(user._id);
-        console.log("Fetched user data:", userData);
+        //console.log("Fetched user data:", userData);
 
         if (!userData) {
           toast.error("No user data found. Please complete your profile.");
-          setIsLoadingMoonPrediction(false);
+          setIsLoadingPanchangPrediction(false);
           return;
         }
 
         //Check if birth place exists
         if (!userData.user.placeOfBirth) {
           toast.error("Birth place not found. Please update your profile.");
-          setIsLoadingMoonPrediction(false);
+          setIsLoadingPanchangPrediction(false);
           return;
         }
 
@@ -97,7 +96,7 @@ const MoonPrediction = () => {
         const locationData = await fetchLocationData(
           userData.user.placeOfBirth
         );
-        console.log("Fetched location data:", locationData);
+        //console.log("Fetched location data:", locationData);
 
         if (
           !locationData ||
@@ -109,7 +108,7 @@ const MoonPrediction = () => {
           toast.error(
             "Could not fetch complete location data for birth place. Please check your birth place format."
           );
-          setIsLoadingMoonPrediction(false);
+          setIsLoadingPanchangPrediction(false);
           return;
         }
         //Prepare data for API call
@@ -123,30 +122,30 @@ const MoonPrediction = () => {
           //userId: userData.user._id,
         };
 
-        console.log("API Parameters:", apiParams);
-        console.log("User ID:", userData.user._id);
+        //console.log("API Parameters:", apiParams);
+        //console.log("User ID:", userData.user._id);
 
-        //Call your moon prediction API
-        const moonPrediction = await getMoonPrediction(
+        //Call your panchang prediction API
+        const panchangPrediction = await getPanchangPrediction(
           userData.user._id,
           apiParams
         );
-        console.log("Moon Prediction Data:", moonPrediction);
+        //console.log("Panchang Prediction Data:", panchangPrediction);
         localStorage.setItem(
-          "moonPredictionData",
-          JSON.stringify(moonPrediction)
+          "panchangPredictionData",
+          JSON.stringify(panchangPrediction)
         );
-        // toast.success("Moon prediction data fetched successfully");
+        // toast.success("Panchang prediction data fetched successfully");
 
-        setMoonPredictionData(moonPrediction);
-        setIsLoadingMoonPrediction(false);
+        setPanchangPredictionData(panchangPrediction);
+        setIsLoadingPanchangPrediction(false);
       }
     } catch (error) {
-      console.error("Failed to fetch moon prediction:", error);
-      toast.error("Failed to load moon prediction. Please try again.");
-      setIsLoadingMoonPrediction(false);
+      console.error("Failed to fetch panchang prediction:", error);
+      toast.error("Failed to load panchang prediction. Please try again.");
+      setIsLoadingPanchangPrediction(false);
     } finally {
-      setIsLoadingMoonPrediction(false);
+      setIsLoadingPanchangPrediction(false);
     }
   };
 
@@ -159,7 +158,7 @@ const MoonPrediction = () => {
   //     : prediction;
   // };
 
-  if (isLoadingMoonPrediction) {
+  if (isLoadingPanchangPrediction) {
     return (
       <div className="dashboard-layout">
         <NavigationMenu />
@@ -167,7 +166,7 @@ const MoonPrediction = () => {
           <div className="dashboard-page">
             <div className="loading-container">
               <Star className="loading-icon" />
-              <p>Loading Moon Prediction Data........ </p>
+              <p>Loading Panchang Prediction Data........ </p>
             </div>
           </div>
         </div>
@@ -184,7 +183,7 @@ const MoonPrediction = () => {
           <div className="dashboard-container">
             <div className="welcome-section">
               <motion.h1 className="welcome-title">
-                {"Moon Prediction"}
+                {"Panchang Prediction"}
               </motion.h1>
               <div className="action-buttons">
                 {/* <button
@@ -210,7 +209,7 @@ const MoonPrediction = () => {
               </div>
             </div>
 
-            {!moonPredictionData && !isLoadingMoonPrediction && (
+            {!panchangPredictionData && !isLoadingPanchangPrediction && (
               <motion.div className="no-data-section">
                 <div className="no-data-message">
                   <Star className="icon" />
@@ -229,16 +228,18 @@ const MoonPrediction = () => {
               </motion.div>
             )}
 
-            {moonPredictionData && (
+            {panchangPredictionData && (
               <motion.div className="prediction-section">
                 <div
                   className="prediction-header"
-                  onClick={() => setIsMoonPredictionOpen(!isMoonPredictionOpen)}
+                  onClick={() =>
+                    setIsPanchangPredictionOpen(!isPanchangPredictionOpen)
+                  }
                 >
                   <h2 className="prediction-title">
                     <Star className="icon" /> {"Prediction Insights"}
                   </h2>
-                  {isMoonPredictionOpen ? (
+                  {isPanchangPredictionOpen ? (
                     <ChevronUp className="icon" />
                   ) : (
                     <ChevronDown className="icon" />
@@ -246,47 +247,70 @@ const MoonPrediction = () => {
                 </div>
 
                 <AnimatePresence>
-                  {isMoonPredictionOpen && (
+                  {isPanchangPredictionOpen && (
                     <motion.div className="prediction-content">
                       <div className="prediction-detail">
                         <span className="prediction-label">
-                          {"Zodiac Sign"}:
+                          {"Explanation"} :
                         </span>
                         <span className="prediction-value">
-                          {moonPredictionData?.astrologyInsights?.response
-                            ?.zodiac || "N/A"}
+                          {panchangPredictionData?.astrologyInsights?.response
+                            ?.explantion || "N/A"}
                         </span>
                       </div>
                       <div className="prediction-detail">
                         <span className="prediction-label">
-                          {"Explanation"}:
+                          {"Karan"} :{" "}
+                          {panchangPredictionData?.astrologyInsights?.response
+                            ?.karan?.name || "N/A"}
                         </span>
                         <span className="prediction-value">
-                          {moonPredictionData?.astrologyInsights?.response
-                            ?.explanation || "N/A"}
-                        </span>
-                      </div>
-                      <div className="prediction-detail">
-                        <span className="prediction-label">{"Health"}:</span>
-                        <span className="prediction-value">
-                          {moonPredictionData?.astrologyInsights?.response
-                            ?.health || "N/A"}
-                        </span>
-                      </div>
-                      <div className="prediction-detail">
-                        <span className="prediction-label">{"Physical"}:</span>
-                        <span className="prediction-value">
-                          {moonPredictionData?.astrologyInsights?.response
-                            ?.physical || "N/A"}
+                          {panchangPredictionData?.astrologyInsights?.response
+                            ?.karan?.prediction || "N/A"}
                         </span>
                       </div>
                       <div className="prediction-detail">
                         <span className="prediction-label">
-                          {"Temperature"}:
+                          {"Nakshatra"} :{" "}
+                          {panchangPredictionData?.astrologyInsights?.response
+                            ?.nakshatra?.name || "N/A"}
                         </span>
                         <span className="prediction-value">
-                          {moonPredictionData?.astrologyInsights?.response
-                            ?.temp || "N/A"}
+                          {panchangPredictionData?.astrologyInsights?.response
+                            ?.nakshatra?.prediction || "N/A"}
+                        </span>
+                      </div>
+                      <div className="prediction-detail">
+                        <span className="prediction-label">
+                          {"Tithi"} :{" "}
+                          {panchangPredictionData?.astrologyInsights?.response
+                            ?.tithi?.name || "N/A"}
+                        </span>
+                        <span className="prediction-value">
+                          {panchangPredictionData?.astrologyInsights?.response
+                            ?.tithi?.prediction || "N/A"}
+                        </span>
+                      </div>
+                      <div className="prediction-detail">
+                        <span className="prediction-label">
+                          {"Weekday"} : {"  "}
+                          {panchangPredictionData?.astrologyInsights?.response
+                            ?.weekday?.name || "N/A"}
+                        </span>
+                        <span className="prediction-value">
+                          {panchangPredictionData?.astrologyInsights?.response
+                            ?.weekday?.prediction || "N/A"}
+                        </span>
+                      </div>
+                      <div className="prediction-detail">
+                        <span className="prediction-label">
+                          {"Yoga"} : {"  "}
+                          {panchangPredictionData?.astrologyInsights?.response
+                            ?.yoga?.name || "N/A"}
+                        </span>
+                        <span className="prediction-value">
+                          {panchangPredictionData?.astrologyInsights?.response
+                            ?.yoga?.prediction || "N/A"}
                         </span>
                       </div>
                     </motion.div>
@@ -302,4 +326,4 @@ const MoonPrediction = () => {
   );
 };
 
-export default MoonPrediction;
+export default PanchangPrediction;

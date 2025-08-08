@@ -12,11 +12,12 @@ import {
   Navigation,
   Printer,
   Languages,
-  Moon,
 } from "lucide-react";
+import { GiStarSattelites } from "react-icons/gi";
+import { RiAlipayLine } from "react-icons/ri";
 import AppContext from "../../context/AppContext";
 import NavigationMenu from "../NavigationMenu/NavigationMenu";
-import { getMoonPrediction } from "../../api/UserAstrologyData";
+import { getRasiPrediction } from "../../api/UserAstrologyData";
 import { getUserDetails } from "../../api/user";
 import "./Prediction.css";
 import { useNavigate } from "react-router-dom";
@@ -44,17 +45,17 @@ const TypingIndicator = () => (
   </div>
 );
 
-const MoonPrediction = () => {
+const RasiPrediction = () => {
   const { user } = useContext(AppContext);
   //const { t, toggleLanguage, language } = useTranslation();
-  const [moonPredictionData, setMoonPredictionData] = useState(null);
-  const [isLoadingMoonPrediction, setIsLoadingMoonPrediction] = useState(false);
-  const [isMoonPredictionOpen, setIsMoonPredictionOpen] = useState(true);
+  const [rasiPredictionData, setRasiPredictionData] = useState(null);
+  const [isLoadingRasiPrediction, setIsLoadingRasiPrediction] = useState(false);
+  const [isRasiPredictionOpen, setIsRasiPredictionOpen] = useState(true);
   const navigate = useNavigate(); // Initialize navigation
 
   const handlePrint = () => {
     const userName = user?.name || "User";
-    document.title = `Moon-Prediction Report - ${userName}`;
+    document.title = `Rasi-Prediction Report - ${userName}`;
 
     setTimeout(() => {
       window.print();
@@ -68,28 +69,28 @@ const MoonPrediction = () => {
   }, [user]);
 
   const fetchInsights = async () => {
-    setIsLoadingMoonPrediction(true);
+    setIsLoadingRasiPrediction(true);
 
     try {
-      const storedData = localStorage.getItem("moonPredictionData");
+      const storedData = localStorage.getItem("rasiPredictionData");
       if (storedData) {
-        setMoonPredictionData(JSON.parse(storedData));
-        setIsLoadingMoonPrediction(false);
+        setRasiPredictionData(JSON.parse(storedData));
+        setIsLoadingRasiPrediction(false);
       } else {
         //Get user's astrology data from database
         const userData = await getUserDetails(user._id);
-        console.log("Fetched user data:", userData);
+        //console.log("Fetched user data:", userData);
 
         if (!userData) {
           toast.error("No user data found. Please complete your profile.");
-          setIsLoadingMoonPrediction(false);
+          setIsLoadingRasiPrediction(false);
           return;
         }
 
         //Check if birth place exists
         if (!userData.user.placeOfBirth) {
           toast.error("Birth place not found. Please update your profile.");
-          setIsLoadingMoonPrediction(false);
+          setIsLoadingRasiPrediction(false);
           return;
         }
 
@@ -97,7 +98,7 @@ const MoonPrediction = () => {
         const locationData = await fetchLocationData(
           userData.user.placeOfBirth
         );
-        console.log("Fetched location data:", locationData);
+        //console.log("Fetched location data:", locationData);
 
         if (
           !locationData ||
@@ -109,7 +110,7 @@ const MoonPrediction = () => {
           toast.error(
             "Could not fetch complete location data for birth place. Please check your birth place format."
           );
-          setIsLoadingMoonPrediction(false);
+          setIsLoadingRasiPrediction(false);
           return;
         }
         //Prepare data for API call
@@ -123,30 +124,30 @@ const MoonPrediction = () => {
           //userId: userData.user._id,
         };
 
-        console.log("API Parameters:", apiParams);
-        console.log("User ID:", userData.user._id);
+        //console.log("API Parameters:", apiParams);
+        //console.log("User ID:", userData.user._id);
 
-        //Call your moon prediction API
-        const moonPrediction = await getMoonPrediction(
+        //Call your rasi prediction API
+        const rasiPrediction = await getRasiPrediction(
           userData.user._id,
           apiParams
         );
-        console.log("Moon Prediction Data:", moonPrediction);
+        //console.log("Rasi Prediction Data:", rasiPrediction);
         localStorage.setItem(
-          "moonPredictionData",
-          JSON.stringify(moonPrediction)
+          "rasiPredictionData",
+          JSON.stringify(rasiPrediction)
         );
-        // toast.success("Moon prediction data fetched successfully");
+        // toast.success("Rasi prediction data fetched successfully");
 
-        setMoonPredictionData(moonPrediction);
-        setIsLoadingMoonPrediction(false);
+        setRasiPredictionData(rasiPrediction);
+        setIsLoadingRasiPrediction(false);
       }
     } catch (error) {
-      console.error("Failed to fetch moon prediction:", error);
-      toast.error("Failed to load moon prediction. Please try again.");
-      setIsLoadingMoonPrediction(false);
+      console.error("Failed to fetch rasi prediction:", error);
+      toast.error("Failed to load rasi prediction. Please try again.");
+      setIsLoadingRasiPrediction(false);
     } finally {
-      setIsLoadingMoonPrediction(false);
+      setIsLoadingRasiPrediction(false);
     }
   };
 
@@ -159,7 +160,7 @@ const MoonPrediction = () => {
   //     : prediction;
   // };
 
-  if (isLoadingMoonPrediction) {
+  if (isLoadingRasiPrediction) {
     return (
       <div className="dashboard-layout">
         <NavigationMenu />
@@ -167,7 +168,7 @@ const MoonPrediction = () => {
           <div className="dashboard-page">
             <div className="loading-container">
               <Star className="loading-icon" />
-              <p>Loading Moon Prediction Data........ </p>
+              <p>Loading Rasi Prediction Data........ </p>
             </div>
           </div>
         </div>
@@ -184,7 +185,7 @@ const MoonPrediction = () => {
           <div className="dashboard-container">
             <div className="welcome-section">
               <motion.h1 className="welcome-title">
-                {"Moon Prediction"}
+                {"Rasi Prediction"}
               </motion.h1>
               <div className="action-buttons">
                 {/* <button
@@ -210,7 +211,7 @@ const MoonPrediction = () => {
               </div>
             </div>
 
-            {!moonPredictionData && !isLoadingMoonPrediction && (
+            {!rasiPredictionData && !isLoadingRasiPrediction && (
               <motion.div className="no-data-section">
                 <div className="no-data-message">
                   <Star className="icon" />
@@ -229,16 +230,16 @@ const MoonPrediction = () => {
               </motion.div>
             )}
 
-            {moonPredictionData && (
+            {rasiPredictionData && (
               <motion.div className="prediction-section">
                 <div
                   className="prediction-header"
-                  onClick={() => setIsMoonPredictionOpen(!isMoonPredictionOpen)}
+                  onClick={() => setIsRasiPredictionOpen(!isRasiPredictionOpen)}
                 >
                   <h2 className="prediction-title">
                     <Star className="icon" /> {"Prediction Insights"}
                   </h2>
-                  {isMoonPredictionOpen ? (
+                  {isRasiPredictionOpen ? (
                     <ChevronUp className="icon" />
                   ) : (
                     <ChevronDown className="icon" />
@@ -246,14 +247,14 @@ const MoonPrediction = () => {
                 </div>
 
                 <AnimatePresence>
-                  {isMoonPredictionOpen && (
+                  {isRasiPredictionOpen && (
                     <motion.div className="prediction-content">
                       <div className="prediction-detail">
                         <span className="prediction-label">
                           {"Zodiac Sign"}:
                         </span>
                         <span className="prediction-value">
-                          {moonPredictionData?.astrologyInsights?.response
+                          {rasiPredictionData?.astrologyInsights?.response
                             ?.zodiac || "N/A"}
                         </span>
                       </div>
@@ -262,21 +263,21 @@ const MoonPrediction = () => {
                           {"Explanation"}:
                         </span>
                         <span className="prediction-value">
-                          {moonPredictionData?.astrologyInsights?.response
+                          {rasiPredictionData?.astrologyInsights?.response
                             ?.explanation || "N/A"}
                         </span>
                       </div>
                       <div className="prediction-detail">
                         <span className="prediction-label">{"Health"}:</span>
                         <span className="prediction-value">
-                          {moonPredictionData?.astrologyInsights?.response
+                          {rasiPredictionData?.astrologyInsights?.response
                             ?.health || "N/A"}
                         </span>
                       </div>
                       <div className="prediction-detail">
                         <span className="prediction-label">{"Physical"}:</span>
                         <span className="prediction-value">
-                          {moonPredictionData?.astrologyInsights?.response
+                          {rasiPredictionData?.astrologyInsights?.response
                             ?.physical || "N/A"}
                         </span>
                       </div>
@@ -285,7 +286,7 @@ const MoonPrediction = () => {
                           {"Temperature"}:
                         </span>
                         <span className="prediction-value">
-                          {moonPredictionData?.astrologyInsights?.response
+                          {rasiPredictionData?.astrologyInsights?.response
                             ?.temp || "N/A"}
                         </span>
                       </div>
@@ -302,4 +303,4 @@ const MoonPrediction = () => {
   );
 };
 
-export default MoonPrediction;
+export default RasiPrediction;

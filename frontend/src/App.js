@@ -20,6 +20,9 @@ import LalKitab from './pages/LalKitab/LalKitab';
 import Dasha from './pages/Dasha/Dasha';
 import Favorable from './pages/Favorable/Favorable';
 import MoonPrediction from './pages/Prediction/MoonPrediction';
+import NakshatraPrediction from './pages/Prediction/NakshatraPrediction';
+import RasiPrediction from './pages/Prediction/RasiPrediction';
+import PanchangPrediction from './pages/Prediction/PanchangPrediction';
 
 
 function AppRoutes() {
@@ -49,6 +52,9 @@ function AppRoutes() {
           <Route path= {"/dasha"} element={<Dasha/>} />
           <Route path= {"/favorable"} element={<Favorable/>} />
           <Route path= {"/moon-prediction"} element={<MoonPrediction/>} />
+          <Route path= {"/nakshatra-prediction"} element={<NakshatraPrediction/>} />
+          <Route path= {"/rasi-prediction"} element={<RasiPrediction/>} />
+          <Route path= {"/panchang-prediction"} element={<PanchangPrediction/>} />
         </Routes>
       
       </div>

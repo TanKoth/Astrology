@@ -12,17 +12,19 @@ import {
   Navigation,
   Printer,
   Languages,
-  Moon,
 } from "lucide-react";
+import { GiStarSattelites } from "react-icons/gi";
 import AppContext from "../../context/AppContext";
 import NavigationMenu from "../NavigationMenu/NavigationMenu";
-import { getMoonPrediction } from "../../api/UserAstrologyData";
+import { getNakshatraPrediction } from "../../api/UserAstrologyData";
 import { getUserDetails } from "../../api/user";
 import "./Prediction.css";
 import { useNavigate } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 //import { useTranslation } from "../../context/TranslationContext";
 import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import {
   fetchLocationData,
   formateDate,
@@ -44,17 +46,19 @@ const TypingIndicator = () => (
   </div>
 );
 
-const MoonPrediction = () => {
+const NakshatraPrediction = () => {
   const { user } = useContext(AppContext);
   //const { t, toggleLanguage, language } = useTranslation();
-  const [moonPredictionData, setMoonPredictionData] = useState(null);
-  const [isLoadingMoonPrediction, setIsLoadingMoonPrediction] = useState(false);
-  const [isMoonPredictionOpen, setIsMoonPredictionOpen] = useState(true);
+  const [nakshatraPredictionData, setNakshatraPredictionData] = useState(null);
+  const [isLoadingNakshatraPrediction, setIsLoadingNakshatraPrediction] =
+    useState(false);
+  const [isNakshatraPredictionOpen, setIsNakshatraPredictionOpen] =
+    useState(true);
   const navigate = useNavigate(); // Initialize navigation
 
   const handlePrint = () => {
     const userName = user?.name || "User";
-    document.title = `Moon-Prediction Report - ${userName}`;
+    document.title = `Nakshatra-Prediction Report - ${userName}`;
 
     setTimeout(() => {
       window.print();
@@ -68,28 +72,28 @@ const MoonPrediction = () => {
   }, [user]);
 
   const fetchInsights = async () => {
-    setIsLoadingMoonPrediction(true);
+    setIsLoadingNakshatraPrediction(true);
 
     try {
-      const storedData = localStorage.getItem("moonPredictionData");
+      const storedData = localStorage.getItem("nakshatraPredictionData");
       if (storedData) {
-        setMoonPredictionData(JSON.parse(storedData));
-        setIsLoadingMoonPrediction(false);
+        setNakshatraPredictionData(JSON.parse(storedData));
+        setIsLoadingNakshatraPrediction(false);
       } else {
         //Get user's astrology data from database
         const userData = await getUserDetails(user._id);
-        console.log("Fetched user data:", userData);
+        //console.log("Fetched user data:", userData);
 
         if (!userData) {
           toast.error("No user data found. Please complete your profile.");
-          setIsLoadingMoonPrediction(false);
+          setIsLoadingNakshatraPrediction(false);
           return;
         }
 
         //Check if birth place exists
         if (!userData.user.placeOfBirth) {
           toast.error("Birth place not found. Please update your profile.");
-          setIsLoadingMoonPrediction(false);
+          setIsLoadingNakshatraPrediction(false);
           return;
         }
 
@@ -97,7 +101,7 @@ const MoonPrediction = () => {
         const locationData = await fetchLocationData(
           userData.user.placeOfBirth
         );
-        console.log("Fetched location data:", locationData);
+        //console.log("Fetched location data:", locationData);
 
         if (
           !locationData ||
@@ -109,7 +113,7 @@ const MoonPrediction = () => {
           toast.error(
             "Could not fetch complete location data for birth place. Please check your birth place format."
           );
-          setIsLoadingMoonPrediction(false);
+          setIsLoadingNakshatraPrediction(false);
           return;
         }
         //Prepare data for API call
@@ -123,30 +127,30 @@ const MoonPrediction = () => {
           //userId: userData.user._id,
         };
 
-        console.log("API Parameters:", apiParams);
-        console.log("User ID:", userData.user._id);
+        //console.log("API Parameters:", apiParams);
+        //console.log("User ID:", userData.user._id);
 
-        //Call your moon prediction API
-        const moonPrediction = await getMoonPrediction(
+        //Call your nakshatra prediction API
+        const nakshatraPrediction = await getNakshatraPrediction(
           userData.user._id,
           apiParams
         );
-        console.log("Moon Prediction Data:", moonPrediction);
+        //console.log("Nakshatra Prediction Data:", nakshatraPrediction);
         localStorage.setItem(
-          "moonPredictionData",
-          JSON.stringify(moonPrediction)
+          "nakshatraPredictionData",
+          JSON.stringify(nakshatraPrediction)
         );
-        // toast.success("Moon prediction data fetched successfully");
+        // toast.success("Nakshatra prediction data fetched successfully");
 
-        setMoonPredictionData(moonPrediction);
-        setIsLoadingMoonPrediction(false);
+        setNakshatraPredictionData(nakshatraPrediction);
+        setIsLoadingNakshatraPrediction(false);
       }
     } catch (error) {
-      console.error("Failed to fetch moon prediction:", error);
-      toast.error("Failed to load moon prediction. Please try again.");
-      setIsLoadingMoonPrediction(false);
+      console.error("Failed to fetch nakshatra prediction:", error);
+      toast.error("Failed to load nakshatra prediction. Please try again.");
+      setIsLoadingNakshatraPrediction(false);
     } finally {
-      setIsLoadingMoonPrediction(false);
+      setIsLoadingNakshatraPrediction(false);
     }
   };
 
@@ -159,7 +163,7 @@ const MoonPrediction = () => {
   //     : prediction;
   // };
 
-  if (isLoadingMoonPrediction) {
+  if (isLoadingNakshatraPrediction) {
     return (
       <div className="dashboard-layout">
         <NavigationMenu />
@@ -167,7 +171,7 @@ const MoonPrediction = () => {
           <div className="dashboard-page">
             <div className="loading-container">
               <Star className="loading-icon" />
-              <p>Loading Moon Prediction Data........ </p>
+              <p>Loading Rasi Prediction Data........ </p>
             </div>
           </div>
         </div>
@@ -184,7 +188,7 @@ const MoonPrediction = () => {
           <div className="dashboard-container">
             <div className="welcome-section">
               <motion.h1 className="welcome-title">
-                {"Moon Prediction"}
+                {"Nakshatra Prediction"}
               </motion.h1>
               <div className="action-buttons">
                 {/* <button
@@ -210,7 +214,7 @@ const MoonPrediction = () => {
               </div>
             </div>
 
-            {!moonPredictionData && !isLoadingMoonPrediction && (
+            {!nakshatraPredictionData && !isLoadingNakshatraPrediction && (
               <motion.div className="no-data-section">
                 <div className="no-data-message">
                   <Star className="icon" />
@@ -229,16 +233,18 @@ const MoonPrediction = () => {
               </motion.div>
             )}
 
-            {moonPredictionData && (
+            {nakshatraPredictionData && (
               <motion.div className="prediction-section">
                 <div
                   className="prediction-header"
-                  onClick={() => setIsMoonPredictionOpen(!isMoonPredictionOpen)}
+                  onClick={() =>
+                    setIsNakshatraPredictionOpen(!isNakshatraPredictionOpen)
+                  }
                 >
                   <h2 className="prediction-title">
                     <Star className="icon" /> {"Prediction Insights"}
                   </h2>
-                  {isMoonPredictionOpen ? (
+                  {isNakshatraPredictionOpen ? (
                     <ChevronUp className="icon" />
                   ) : (
                     <ChevronDown className="icon" />
@@ -246,15 +252,15 @@ const MoonPrediction = () => {
                 </div>
 
                 <AnimatePresence>
-                  {isMoonPredictionOpen && (
+                  {isNakshatraPredictionOpen && (
                     <motion.div className="prediction-content">
                       <div className="prediction-detail">
                         <span className="prediction-label">
-                          {"Zodiac Sign"}:
+                          {"Nakshatra Name"}:
                         </span>
                         <span className="prediction-value">
-                          {moonPredictionData?.astrologyInsights?.response
-                            ?.zodiac || "N/A"}
+                          {nakshatraPredictionData?.astrologyInsights?.response
+                            ?.name || "N/A"}
                         </span>
                       </div>
                       <div className="prediction-detail">
@@ -262,31 +268,31 @@ const MoonPrediction = () => {
                           {"Explanation"}:
                         </span>
                         <span className="prediction-value">
-                          {moonPredictionData?.astrologyInsights?.response
+                          {nakshatraPredictionData?.astrologyInsights?.response
                             ?.explanation || "N/A"}
                         </span>
                       </div>
                       <div className="prediction-detail">
-                        <span className="prediction-label">{"Health"}:</span>
+                        <span className="prediction-label">{"Education"}:</span>
                         <span className="prediction-value">
-                          {moonPredictionData?.astrologyInsights?.response
-                            ?.health || "N/A"}
+                          {nakshatraPredictionData?.astrologyInsights?.response
+                            ?.education || "N/A"}
                         </span>
                       </div>
                       <div className="prediction-detail">
-                        <span className="prediction-label">{"Physical"}:</span>
+                        <span className="prediction-label">{"Family"}:</span>
                         <span className="prediction-value">
-                          {moonPredictionData?.astrologyInsights?.response
-                            ?.physical || "N/A"}
+                          {nakshatraPredictionData?.astrologyInsights?.response
+                            ?.family || "N/A"}
                         </span>
                       </div>
                       <div className="prediction-detail">
                         <span className="prediction-label">
-                          {"Temperature"}:
+                          {"Prediction"}:
                         </span>
                         <span className="prediction-value">
-                          {moonPredictionData?.astrologyInsights?.response
-                            ?.temp || "N/A"}
+                          {nakshatraPredictionData?.astrologyInsights?.response
+                            ?.prediction || "N/A"}
                         </span>
                       </div>
                     </motion.div>
@@ -302,4 +308,4 @@ const MoonPrediction = () => {
   );
 };
 
-export default MoonPrediction;
+export default NakshatraPrediction;

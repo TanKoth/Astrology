@@ -1,3 +1,5 @@
+import { Moon } from "lucide-react";
+
 export const ma = {
   welcome: "स्वागत आहे",
   print: "प्रिंट",
@@ -64,7 +66,34 @@ export const ma = {
   redcoral: "लाल मूंगा",
 
   // Other translations
-  noDataAvailable: "कोणता डेटा उपलब्ध नाही",
+  // noDataAvailable: "कोणता डेटा उपलब्ध नाही",
   // completeProfile: "चार्ट तयार करण्यासाठी कृपया आपले प्रोफाइल पूर्ण करा",
   goToLogin: "लॉगिनवर जा",
+
+  MoonPrediction: "चंद्र भविष्यवाणी",
+  RasiPrediction: "राशि भविष्यवाणी",
+  NakshatraPrediction: "नक्षत्र भविष्यवाणी",
+  panchangPrediction: "पंचांग भविष्यवाणी",
+  panchangExplanation:
+    "वैदिक ज्योतिषशास्त्र कुंडलीसाठी सूर्य राशींपेक्षा चंद्र राशींना जास्त महत्त्व देते. खरं तर, वैदिक ज्योतिषशास्त्र असे घोषित करते की जर चंद्र लग्नापेक्षा बलवान असेल तर लग्न किंवा उदय राशीऐवजी चंद्र राशीला जन्मकुंडलीचा केंद्र मानले पाहिजे. चंद्र राशीच्या कुंडली व्यक्तिमत्त्वाचे अनेक लपलेले रहस्य उघड करतात जे सूर्य राशींद्वारे उघड केले जाऊ शकत नाहीत.",
+
+  explanation: "स्पष्टीकरण",
+  predictionInsights: "भविष्यवाणी अंतर्दृष्टि",
+  zodiacSign: "रास",
+  health: "आरोग्य",
+  physical: "शारीरिक",
+  temp: "तापमान",
+
+  libra: "तूळ",
+  scorpio: "वृश्चिक",
+  sagittarius: "धनु",
+  capricorn: "मकर",
+  aquarius: "कुंभ",
+  pisces: "मीन",
+  aries: "मेष",
+  taurus: "वृषभ",
+  gemini: "मिथुन",
+  cancer: "कर्क",
+  leo: "सिंह",
+  virgo: "कन्या",
 };

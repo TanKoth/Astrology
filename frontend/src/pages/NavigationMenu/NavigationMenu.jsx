@@ -89,7 +89,7 @@ const NavigationMenu = () => {
       label: "Favorable",
     },
     {
-      path: "/prediction",
+      // path: "/prediction",
       icon: View,
       label: "Prediction",
       hasSubMenu: true,

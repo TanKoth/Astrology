@@ -1,3 +1,6 @@
+import MoonPrediction from "../pages/Prediction/MoonPrediction";
+import RasiPrediction from "../pages/Prediction/RasiPrediction";
+
 export const en = {
   welcome: "Welcome",
   print: "Print",
@@ -9,7 +12,7 @@ export const en = {
   dateOfBirth: "Date of Birth:",
   birthTime: "Birth Time:",
   birthPlace: "Birth Place:",
-  nakshatra: "Nakshatra:",
+  nakshatra: "Nakshatra",
   nakshatraLord: "Nakshatra Lord:",
   gana: "Gana:",
   yoni: "Yoni:",
@@ -62,4 +65,39 @@ export const en = {
   hessonite: "Hessonite",
   cateye: "Cat's Eye",
   redcoral: "Red Coral",
+
+  moonPrediction: "Moon Prediction",
+  rasiPrediction: "Rasi Prediction",
+  nakshatraPrediction: "Nakshatra Prediction",
+  panchangPrediction: "Panchang Prediction",
+  zodiacSign: "Zodiac Sign",
+  panchangExplanation:
+    "Vedic astrology gives more importance to the Moon Signs than the Sun signs for horoscopes. In fact, Vedic astrology declares that the Moon sign should be treated as the center of birth chart in place of ascendant or rising sign, in case the Moon is stronger than the ascendant. Moon Sign horoscopes reveals many hidden secrets of personality which cannot be disclosed by Sun signs.",
+
+  explanation: "Explanation",
+  predictionInsights: "Prediction Insights",
+  health: "Health",
+  physical: "Physical",
+  temp: "Temperature",
+  nakshatraName: "Nakshatra Name",
+  education: "Education",
+  family: "Family",
+  prediction: "Prediction",
+  karana: "Karana",
+  taitila: "Taitila",
+  tithi: "Tithi",
+  shashthi: "Shashthi",
+
+  libra: "Libra",
+  scorpio: "Scorpio",
+  sagittarius: "Sagittarius",
+  capricorn: "Capricorn",
+  aquarius: "Aquarius",
+  pisces: "Pisces",
+  aries: "Aries",
+  taurus: "Taurus",
+  gemini: "Gemini",
+  cancer: "Cancer",
+  leo: "Leo",
+  virgo: "Virgo",
 };

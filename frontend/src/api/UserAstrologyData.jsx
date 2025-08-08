@@ -1,8 +1,8 @@
 import axiosInstance from ".";
 
-export const getUserAstrologyData = async (userId, params) => {
-  console.log("Fetching user insights for userId:", userId);
-  console.log("Params received:", params);
+export const fetchAstrologyData = async (userId, params, endpoint) => {
+  //console.log("Fetching user insights for userId:", userId);
+  //console.log("Params received:", params);
   try {
     // Validate all required parameters
     if (!params.dob) {
@@ -32,12 +32,28 @@ export const getUserAstrologyData = async (userId, params) => {
     });
 
     const response = await axiosInstance.get(
-      `/api/astrologyData/moon-prediction/${userId}?${urlParams.toString()}`
+      `/api/astrologyData/${endpoint}/${userId}?${urlParams.toString()}`
     );
-    console.log("Response from moon prediction API:", response.data);
+    // console.log("Response prediction API:", response.data);
     return response.data;
   } catch (error) {
     console.error("Moon prediction API error:", error);
     throw error;
   }
+};
+
+export const getMoonPrediction = async (userId, params) => {
+  return fetchAstrologyData(userId, params, "moon-prediction");
+};
+
+export const getRasiPrediction = async (userId, params) => {
+  return fetchAstrologyData(userId, params, "rasi-prediction");
+};
+
+export const getNakshatraPrediction = async (userId, params) => {
+  return fetchAstrologyData(userId, params, "nakshatra-prediction");
+};
+
+export const getPanchangPrediction = async (userId, params) => {
+  return fetchAstrologyData(userId, params, "panchang-prediction");
 };
