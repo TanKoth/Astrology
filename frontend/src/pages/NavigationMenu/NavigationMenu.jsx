@@ -20,6 +20,8 @@ import {
   Gem,
   Moon,
   ScrollText,
+  CalendarDays,
+  HeartHandshake,
 } from "lucide-react";
 import { FaRobot, FaBook } from "react-icons/fa";
 //import { FaMagnifyingGlass } from "react-icons/fa6";
@@ -72,6 +74,26 @@ const NavigationMenu = () => {
           iconType: "image",
           label: "Charts",
         },
+        {
+          path: "/daily-horoscope",
+          icon: CalendarDays,
+          label: "Daily Horoscope",
+        },
+        {
+          path: "/weekly-horoscope ",
+          icon: CalendarDays,
+          label: "Weekly Horoscope",
+        },
+        {
+          path: "/monthly-horoscope",
+          icon: CalendarDays,
+          label: "Monthly Horoscope",
+        },
+        {
+          path: "/yearly-horoscope",
+          icon: CalendarDays,
+          label: "Yearly Horoscope",
+        },
       ],
     },
     {
@@ -89,7 +111,7 @@ const NavigationMenu = () => {
       label: "Favorable",
     },
     {
-      // path: "/prediction",
+      path: "",
       icon: View,
       label: "Prediction",
       hasSubMenu: true,
@@ -112,8 +134,8 @@ const NavigationMenu = () => {
         },
       ],
     },
-    // { path: "/subscription", icon: Crown, label: "Premium" },
-    // { path: "/settings", icon: Settings, label: "Settings" },
+
+    { path: "/matching", icon: HeartHandshake, label: "Matching" },
     { path: "/dasha", icon: RiPlanetFill, label: "Dasha" },
     { path: "/dosh", icon: GiLouvrePyramid, label: "Dosh" },
     {

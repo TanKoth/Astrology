@@ -15,7 +15,7 @@ import EditUserDetails from './pages/EditUserDetails/EditUserDetails';
 import{TranslationProvider} from './context/TranslationContext';
 import Charts from './pages/Charts/Charts';
 import Dosh from './pages/Dosh/Dosh';
-import Prediction from './pages/Prediction/Prediction';
+//import Prediction from './pages/Prediction/Prediction';
 import LalKitab from './pages/LalKitab/LalKitab';
 import Dasha from './pages/Dasha/Dasha';
 import Favorable from './pages/Favorable/Favorable';
@@ -23,7 +23,10 @@ import MoonPrediction from './pages/Prediction/MoonPrediction';
 import NakshatraPrediction from './pages/Prediction/NakshatraPrediction';
 import RasiPrediction from './pages/Prediction/RasiPrediction';
 import PanchangPrediction from './pages/Prediction/PanchangPrediction';
-
+import DailyHoroscope from './pages/Horoscope/DailyPlanner';
+import WeeklyHoroscope from './pages/Horoscope/WeeklyPlanner';
+import MonthlyHoroscope from './pages/Horoscope/MontlyPlanner';
+import YearlyHoroscope from './pages/Horoscope/YearlyPlanner';
 
 function AppRoutes() {
   const location = useLocation();
@@ -47,7 +50,7 @@ function AppRoutes() {
           <Route path = {"/editUserDetails"} element= {<EditUserDetails/>} />
           <Route path= {"/charts"} element= {<Charts/>} />
           <Route path= {"/dosh"} element= {<Dosh/>} />
-          <Route path= {"/prediction"} element= {<Prediction/>} />
+          {/* <Route path= {"/prediction"} element= {<Prediction/>} /> */}
           <Route path= {"/lalkitab"} element= {<LalKitab/>} />
           <Route path= {"/dasha"} element={<Dasha/>} />
           <Route path= {"/favorable"} element={<Favorable/>} />
@@ -55,6 +58,10 @@ function AppRoutes() {
           <Route path= {"/nakshatra-prediction"} element={<NakshatraPrediction/>} />
           <Route path= {"/rasi-prediction"} element={<RasiPrediction/>} />
           <Route path= {"/panchang-prediction"} element={<PanchangPrediction/>} />
+          <Route path= {"/weekly-horoscope"} element={<WeeklyHoroscope/>} />
+          <Route path= {"/daily-horoscope"} element={<DailyHoroscope/>} />
+          <Route path= {"/monthly-horoscope"} element={<MonthlyHoroscope/>} />
+          <Route path= {"/yearly-horoscope"} element={<YearlyHoroscope/>} />
         </Routes>
       
       </div>
