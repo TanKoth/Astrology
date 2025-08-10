@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
-const mongooseSanitize = require('express-mongo-sanitize');
+
 const PORT = process.env.PORT || 8081;
 
 const userDetailRoute = require('./routes/userDetailRoute');
@@ -26,9 +26,10 @@ const limiter = rateLimit({
 });
 app.use('/api/', limiter);
 app.use(helmet());
-app.use(mongooseSanitize());
+
 
 app.use(express.json());
+
 app.use('/api/users', userDetailRoute);
 app.use('/api/contactUs', contactUsRoute);
 app.use('/api/user', userLoginRoute);
