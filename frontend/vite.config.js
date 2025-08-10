@@ -9,6 +9,10 @@ export default defineConfig({
     port: 5173,
     host: true
   },
+  build: {
+    sourcemap: false,
+    outDir: 'build'
+  },
   esbuild: {
     loader: 'jsx',
     include: /src\/.*\.[jt]sx?$/,
