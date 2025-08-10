@@ -41,7 +41,7 @@ const TypingIndicator = () => (
   </div>
 );
 
-const Favorable = () => {
+const Gemstone = () => {
   const { user } = useContext(AppContext);
   const { t, toggleLanguage, language } = useTranslation();
   const [astrologyData, setAstrologyData] = useState(null);
@@ -232,4 +232,4 @@ const Favorable = () => {
   );
 };
 
-export default Favorable;
+export default Gemstone;

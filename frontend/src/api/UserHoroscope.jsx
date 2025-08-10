@@ -1,7 +1,7 @@
 import axiosInstance from ".";
 
 const horoscope = async (zodiac, day, year, endpoint) => {
-  console.log("Fetching daily horoscope...", zodiac, day);
+  console.log(`Fetching ${endpoint} horoscope...`, zodiac, day, year);
   try {
     if (endpoint === "daily") {
       const response = await axiosInstance.post(`/api/horoscope/${endpoint}`, {
@@ -27,7 +27,12 @@ const horoscope = async (zodiac, day, year, endpoint) => {
       return response.data;
     }
   } catch (error) {
-    console.error(`Error fetching ${endpoint} horoscope:`, error);
+    console.error(`Error fetching ${endpoint} horoscope:`, {
+      message: error.message,
+      status: error.response?.status,
+      data: error.response?.data,
+      config: error.config,
+    });
     throw error;
   }
 };

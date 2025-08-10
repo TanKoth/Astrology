@@ -1,5 +1,5 @@
-import React from "react";
-import { useState, useContext } from "react";
+import React, { use } from "react";
+import { useState, useContext, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Atom,
@@ -28,6 +28,13 @@ const WeeklyHoroscope = () => {
   const [showForm, setShowForm] = useState(true);
   //const navigate = useNavigate();
   const { user } = useContext(AppContext);
+
+  useEffect(() => {
+    if (user) {
+      localStorage.removeItem("weeklyHoroscope");
+      // Load user-specific data or perform actions based on user context
+    }
+  }, [user]);
 
   const handleZodiacChange = (value) => {
     console.log("Selected Zodiac Sign:", value);

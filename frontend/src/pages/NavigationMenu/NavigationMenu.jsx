@@ -22,8 +22,11 @@ import {
   ScrollText,
   CalendarDays,
   HeartHandshake,
+  Diamond,
+  NotepadText,
 } from "lucide-react";
 import { FaRobot, FaBook } from "react-icons/fa";
+import { LiaStarOfDavidSolid, LiaStarOfLifeSolid } from "react-icons/lia";
 //import { FaMagnifyingGlass } from "react-icons/fa6";
 import { GiLouvrePyramid, GiStarSattelites } from "react-icons/gi";
 import { RiPlanetFill, RiAlipayLine } from "react-icons/ri";
@@ -76,22 +79,22 @@ const NavigationMenu = () => {
         },
         {
           path: "/daily-horoscope",
-          icon: CalendarDays,
+          icon: LiaStarOfDavidSolid,
           label: "Daily Horoscope",
         },
         {
           path: "/weekly-horoscope ",
-          icon: CalendarDays,
+          icon: LiaStarOfDavidSolid,
           label: "Weekly Horoscope",
         },
         {
           path: "/monthly-horoscope",
-          icon: CalendarDays,
+          icon: LiaStarOfDavidSolid,
           label: "Monthly Horoscope",
         },
         {
           path: "/yearly-horoscope",
-          icon: CalendarDays,
+          icon: LiaStarOfDavidSolid,
           label: "Yearly Horoscope",
         },
       ],
@@ -101,14 +104,25 @@ const NavigationMenu = () => {
       icon: Calendar,
       label: "Panchang",
       hasSubMenu: true,
+      subItems: [{ path: "/choghadiya", icon: Diamond, label: "Choghadiya" }],
+    },
+    {
+      path: "/gemstones",
+      icon: Gem, //gemstone-report
+      label: "Gemstones",
+      hasSubMenu: true,
       subItems: [
-        { path: "/panchang/daily", icon: Calendar, label: "Daily Panchang" },
+        {
+          path: "/gemstone-report",
+          icon: NotepadText,
+          label: "Gemstone Report",
+        },
       ],
     },
     {
-      path: "/favorable",
-      icon: Gem,
-      label: "Favorable",
+      path: "/sade-sati",
+      icon: RiPlanetFill,
+      label: "Sade Sati Report",
     },
     {
       path: "",
@@ -136,7 +150,7 @@ const NavigationMenu = () => {
     },
 
     { path: "/matching", icon: HeartHandshake, label: "Matching" },
-    { path: "/dasha", icon: RiPlanetFill, label: "Dasha" },
+    { path: "/dasha", icon: LiaStarOfLifeSolid, label: "Dasha" },
     { path: "/dosh", icon: GiLouvrePyramid, label: "Dosh" },
     {
       path: "/lalkitab",

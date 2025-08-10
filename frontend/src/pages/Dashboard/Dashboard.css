@@ -482,15 +482,400 @@
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
+  .stars {
+    position: fixed !important; /* Changed from absolute to fixed */
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important; /* Ensure full viewport width */
+    height: 100vh !important; /* Ensure full viewport height */
+    background-size: 100px 100px !important;
+    opacity: 0.05 !important;
+    animation: twinkle 3s infinite !important;
+    z-index: 0 !important; /* Ensure it's behind content */
+  }
+  
+  .dashboard-page {
+    padding: 60px 10px 20px;
+    position: relative;
+    overflow-x: hidden;
+    min-height: 100vh !important; /* Ensure full height */
+    background: linear-gradient(135deg, #0a0f29 0%, #1a1a2e 100%) !important; /* Fallback background */
+  }
+
+  .dashboard-container {
+    padding: 0;
+    margin: 0;
+    position: relative;
+    z-index: 1 !important; /* Ensure content is above stars */
+  }
+
   .dashboard-content {
     margin-left: 0;
     padding-top: 60px;
+    width: 100%;
+    position: relative;
+    z-index: 1 !important; /* Ensure content is above stars */
   }
   
   .navigation.collapsed ~ .dashboard-content {
-    margin-left: 0; /* Reset on mobile */
+    margin-left: 0;
+  }
+
+  /* Welcome Section */
+  .welcome-section {
+    margin-bottom: 2rem;
+    padding: 1rem 0;
+  }
+
+  .welcome-title {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .welcome-subtitle {
+    font-size: 1rem;
+  }
+
+  /* Action Buttons */
+  .action-buttons {
+    flex-direction: column;
+    gap: 0.5rem;
+    float: none;
+    margin: 1rem 0;
+  }
+
+  .print-button,
+  .translate-button {
+    width: 100%;
+    justify-content: center;
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  /* Insights Section */
+  .insights-section {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    border-radius: 12px;
+  }
+
+  .insights-header {
+    padding: 0.75rem;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .insights-title {
+    font-size: 1.2rem;
+  }
+
+  .insights-header svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Birth Details Grid */
+  .birth-details-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .birth-detail {
+    padding: 1rem;
+  }
+
+  .detail-label {
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .detail-value {
+    font-size: 1.1rem;
+  }
+
+  /* Planetary Positions */
+  .planetary-positions {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .planetary-item {
+    padding: 0.75rem;
+  }
+
+  .planet-name {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .planet-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .planet-degree {
+    font-size: 1rem;
+  }
+
+  .planet-house,
+  .planet-nakshatra {
+    font-size: 0.8rem;
+  }
+
+  .planet-motion {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.4rem;
+  }
+
+  /* Charts Grid */
+  .charts-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .chart-item {
+    padding: 1rem;
+  }
+
+  .chart-title {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .chart-container {
+    height: 200px;
+  }
+
+  /* Chat Section */
+  .chat-section {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .chat-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .chat-messages {
+    height: 250px;
+    padding: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .message-content {
+    max-width: 95%;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .chat-input {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .chat-input input {
+    padding: 0.75rem;
+    font-size: 1rem;
+  }
+
+  .send-button {
+    width: 100%;
+    justify-content: center;
+    padding: 0.75rem;
+  }
+
+  /* Upgrade CTA */
+  .upgrade-cta {
+    padding: 1.5rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .upgrade-title {
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .upgrade-button {
+    width: 100%;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  /* Typography adjustments */
+  .planetary-aspect {
+    padding: 0.5rem 0.75rem;
+    margin: 0.5rem 0;
+  }
+
+  .aspect-title {
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .aspect-content {
+    font-size: 0.85rem;
   }
 }
+
+/* Extra small devices */
+@media (max-width: 480px) {
+  .stars {
+    position: fixed !important; /* Fixed positioning for extra small devices too */
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background-size: 80px 80px !important;
+    opacity: 0.03 !important;
+    z-index: 0 !important;
+    background-image: radial-gradient(
+        1px 1px at 15px 25px,
+        #eee,
+        rgba(0, 0, 0, 0)
+      ),
+      radial-gradient(1px 1px at 30px 50px, #fff, rgba(0, 0, 0, 0)),
+      radial-gradient(1px 1px at 40px 120px, #ddd, rgba(0, 0, 0, 0)),
+      radial-gradient(1px 1px at 70px 30px, #fff, rgba(0, 0, 0, 0)),
+      radial-gradient(1px 1px at 100px 60px, #fff, rgba(0, 0, 0, 0));
+  }
+
+  .dashboard-page {
+    padding: 60px 5px 15px;
+    min-height: 100vh !important;
+    position: relative;
+    background: linear-gradient(135deg, #0a0f29 0%, #1a1a2e 100%) !important; /* Ensure background */
+  }
+
+  .welcome-title {
+    font-size: 1.5rem;
+  }
+
+  .welcome-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .insights-section {
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .insights-title {
+    font-size: 1.1rem;
+  }
+
+  .birth-detail {
+    padding: 0.75rem;
+  }
+
+  .detail-label {
+    font-size: 0.75rem;
+  }
+
+  .detail-value {
+    font-size: 1rem;
+  }
+
+  .planetary-item {
+    padding: 0.5rem;
+  }
+
+  .planet-name {
+    font-size: 0.9rem;
+  }
+
+  .planet-degree {
+    font-size: 0.9rem;
+  }
+
+  .planet-house,
+  .planet-nakshatra {
+    font-size: 0.75rem;
+  }
+
+  .chart-container {
+    height: 180px;
+  }
+
+  .chat-messages {
+    height: 200px;
+  }
+
+  .message-content {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .action-buttons {
+    gap: 0.4rem;
+  }
+
+  .print-button,
+  .translate-button {
+    padding: 0.6rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* Landscape orientation on mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .stars {
+    position: fixed !important; /* Fixed for landscape too */
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background-size: 120px 120px !important;
+    opacity: 0.06 !important;
+    z-index: 0 !important;
+  }
+
+  .dashboard-page {
+    padding: 40px 10px 20px;
+    min-height: 100vh !important;
+    background: linear-gradient(135deg, #0a0f29 0%, #1a1a2e 100%) !important;
+  }
+
+  .welcome-section {
+    margin-bottom: 1.5rem;
+    padding: 0.75rem 0;
+  }
+
+  .welcome-title {
+    font-size: 1.6rem;
+  }
+
+  .birth-details-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .planetary-positions {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .charts-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .chart-container {
+    height: 150px;
+  }
+
+  .chat-messages {
+    height: 200px;
+  }
+}
+
 
 /* Birth Details Grid */
 

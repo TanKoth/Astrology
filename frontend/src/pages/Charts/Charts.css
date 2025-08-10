@@ -490,6 +490,14 @@
   .navigation.collapsed ~ .dashboard-content {
     margin-left: 0; /* Reset on mobile */
   }
+  .action-buttons{
+    flex-direction: row !important;
+    width: 35% !important;
+    margin-right: 3.7rem !important;
+  }
+  .translate-button{
+    visibility: hidden !important;
+  }
 }
 
 /* Birth Details Grid */

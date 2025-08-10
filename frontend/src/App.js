@@ -18,7 +18,8 @@ import Dosh from './pages/Dosh/Dosh';
 //import Prediction from './pages/Prediction/Prediction';
 import LalKitab from './pages/LalKitab/LalKitab';
 import Dasha from './pages/Dasha/Dasha';
-import Favorable from './pages/Favorable/Favorable';
+import Gemstone from './pages/Gemstone/Gemstone';
+import GemstoneReport from './pages/Gemstone/GemstoneReport'
 import MoonPrediction from './pages/Prediction/MoonPrediction';
 import NakshatraPrediction from './pages/Prediction/NakshatraPrediction';
 import RasiPrediction from './pages/Prediction/RasiPrediction';
@@ -27,6 +28,9 @@ import DailyHoroscope from './pages/Horoscope/DailyPlanner';
 import WeeklyHoroscope from './pages/Horoscope/WeeklyPlanner';
 import MonthlyHoroscope from './pages/Horoscope/MontlyPlanner';
 import YearlyHoroscope from './pages/Horoscope/YearlyPlanner';
+import SadeSati from './pages/SadeSati/SadeSati';
+import Panchang from './pages/Panchang/Panchang';
+import Choghadiya from './pages/Panchang/Choghadiya';
 
 function AppRoutes() {
   const location = useLocation();
@@ -53,7 +57,8 @@ function AppRoutes() {
           {/* <Route path= {"/prediction"} element= {<Prediction/>} /> */}
           <Route path= {"/lalkitab"} element= {<LalKitab/>} />
           <Route path= {"/dasha"} element={<Dasha/>} />
-          <Route path= {"/favorable"} element={<Favorable/>} />
+          <Route path= {"/gemstones"} element={<Gemstone/>} />
+          <Route path= {"/gemstone-report"} element={<GemstoneReport/>} />
           <Route path= {"/moon-prediction"} element={<MoonPrediction/>} />
           <Route path= {"/nakshatra-prediction"} element={<NakshatraPrediction/>} />
           <Route path= {"/rasi-prediction"} element={<RasiPrediction/>} />
@@ -62,6 +67,9 @@ function AppRoutes() {
           <Route path= {"/daily-horoscope"} element={<DailyHoroscope/>} />
           <Route path= {"/monthly-horoscope"} element={<MonthlyHoroscope/>} />
           <Route path= {"/yearly-horoscope"} element={<YearlyHoroscope/>} />
+          <Route path= {"/sade-sati"} element={<SadeSati/>} />
+          <Route path= {"/panchang"} element={<Panchang/>} />
+          <Route path= {"/choghadiya"} element={<Choghadiya/>} />
         </Routes>
       
       </div>

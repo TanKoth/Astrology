@@ -138,7 +138,7 @@ const yearlyHoroscope = async (req, res) => {
   const { zodiac, year } = req.body;
 
   try {
-    const yearlyHoroscopeData = await horoscope("yearly", zodiac, year);
+    const yearlyHoroscopeData = await horoscope("yearly", zodiac, null, year);
     res.status(200).json({ success: true, message: "Yearly horoscope fetched successfully", data: yearlyHoroscopeData });
   } catch (error) {
     console.error("Error fetching yearly horoscope:", error.message);

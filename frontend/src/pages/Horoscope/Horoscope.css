@@ -514,3 +514,61 @@
   background-color: #e6c200;
 }
 
+
+.year-warning {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+
+/* phase style */
+.phase-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  cursor: pointer;
+  /* background: rgba(255, 255, 255, 0.05); */
+  transition: all 0.3s ease;
+  /* border-bottom: 1px solid rgba(255, 255, 255, 0.1); */
+   border-radius: 12px;
+}
+
+.phase-header .icon {
+  width: 20px;
+  height: 20px;
+  color: gold;
+  transition: transform 0.3s ease;
+}
+
+.phase-header .icon:hover{
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+  cursor: pointer;
+}
+
+.phase-title {
+  -webkit-text-fill-color: rgba(0, 0, 0, 0);
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    text-shadow: rgba(255, 215, 0, 0.3) 0px 0px 30px;
+    background: linear-gradient(45deg, gold, rgb(255, 140, 0)) text;
+}
+
+.phase-title .icon {
+  width: 24px;
+  height: 24px;
+  color: #ffd700;
+}
+
+.phase-detail {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 15px;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
