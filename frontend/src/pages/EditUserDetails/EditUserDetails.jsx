@@ -63,7 +63,11 @@ const EditUserDetails = () => {
     const formData = {
       name: userData.name || "",
       email: userData.email || "",
-      dob: userData.dob ? moment(userData.dob) : null,
+      dob: userData.dob
+        ? moment(userData.dob)
+        : userData.dob
+        ? moment(userData.dob, "YYYY-MM-DD")
+        : null,
       timeOfBirth: userData.timeOfBirth
         ? moment(userData.timeOfBirth, "HH:mm")
         : null,
@@ -134,9 +138,13 @@ const EditUserDetails = () => {
         ...values,
         userId: user._id, // Get userId from stored user data, not form values
         // coordinates: coordinates,
-        dob: values.dob ? values.dob.format("YYYY-MM-DD") : null,
+        dob: values.dob
+          ? moment(values.dob)
+          : values.dob
+          ? moment(values.dob, "YYYY-MM-DD")
+          : null,
         timeOfBirth: values.timeOfBirth
-          ? values.timeOfBirth.format("HH:mm")
+          ? moment(values.timeOfBirth, "HH:mm")
           : null,
         placeOfBirth: address, // Use the address state value
       };
