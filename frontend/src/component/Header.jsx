@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { color, hover, motion } from "framer-motion";
 import { Menu, Dropdown, Button } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import AppContext from "../context/AppContext";
 import "./Header.css";
 import Kundali_Logo from "../img/kundli2.png";
@@ -48,10 +48,10 @@ const Header = () => {
   const profileMenu = (
     <Menu className="profile-dropdown">
       <Menu.Item key="user-details">
-        <a href="/editUserDetails">
+        <Link to="/editUserDetails">
           <Pencil size={16} className="pencil-icon" />
           Edit User Details
-        </a>
+        </Link>
       </Menu.Item>
       <Menu.Item key="update-password" onClick={handleUpdatePassword}>
         <span>
@@ -61,12 +61,12 @@ const Header = () => {
       </Menu.Item>
       <Menu.Item key="subscription">
         <Crown size={16} className="subscription-icon" />
-        <a href="/subscription">Subscription</a>
+        <Link to="/subscription">Subscription</Link>
       </Menu.Item>
 
       <Menu.Item key="logout" onClick={handleLogout}>
         <LogOut size={16} className="logout-icon" />
-        <a href="/">Logout</a>
+        <Link to="/">Logout</Link>
       </Menu.Item>
     </Menu>
   );

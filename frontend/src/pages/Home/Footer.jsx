@@ -5,7 +5,7 @@ import {
   FaMobileAlt,
 } from "react-icons/fa";
 import "./home_css/Footer.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 const Footer = () => {
   const navigate = useNavigate();
 
@@ -30,18 +30,18 @@ const Footer = () => {
           <h3>Quick Links</h3>
           <ul>
             <li>
-              <a href="#home">Home</a>
+              <Link to="#home">Home</Link>
             </li>
             <li>
-              <a href="#why-us">Why Us</a>
+              <Link to="#why-us">Why Us</Link>
             </li>
             <li>
-              <a href="#features">Features</a>
+              <Link to="#features">Features</Link>
             </li>
             <li>
-              <a href="#" onClick={handleClick}>
+              <Link to="#" onClick={handleClick}>
                 Contact
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -58,25 +58,25 @@ const Footer = () => {
             +91 9421406323
           </h4>
           <h4 className="email-link">
-            <a
-              href="https://mail.google.com/mail/?view=cm&fs=1&to=sangeeta.kothale@gmail.com"
+            <Link
+              to="https://mail.google.com/mail/?view=cm&fs=1&to=sangeeta.kothale@gmail.com"
               target="_blank"
               rel="noopener noreferrer"
             >
               <FaEnvelope style={{ marginRight: "8px" }} />
               sangeeta.kothale@gmail.com
-            </a>
+            </Link>
           </h4>
         </div>
         <div className="footer-section">
           <h3>Follow Us</h3>
           <div className="social-icons">
-            <a href="#" className="social-icon">
+            <Link to="#" className="social-icon">
               <FaFacebookF />
-            </a>
-            <a href="#" className="social-icon">
+            </Link>
+            <Link to="#" className="social-icon">
               <FaInstagram />
-            </a>
+            </Link>
           </div>
         </div>
       </div>

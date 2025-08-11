@@ -3,7 +3,7 @@ import { useState, useContext } from "react";
 import { motion } from "framer-motion";
 import { FaUser, FaLock } from "react-icons/fa";
 import { Form, Button, Input, Typography } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./Login.css";
 import AppContext from "../../context/AppContext";
 import { userLogin } from "../../api/UserLogin";
@@ -95,9 +95,9 @@ const Login = () => {
           </Button>
           <Text className="signup-link">
             Forgot password?{" "}
-            <a href="/forgot-password" className="signup-link-text">
+            <Link to="/forgot-password" className="signup-link-text">
               Reset here
-            </a>
+            </Link>
           </Text>
 
           {message && <p className="error-message">{message}</p>}
@@ -105,9 +105,9 @@ const Login = () => {
           {/* New User? Sign Up Link */}
           <Text className="signup-link">
             New user?{" "}
-            <a href="/signup" className="signup-link-text">
+            <Link to="/signup" className="signup-link-text">
               Sign up here
-            </a>
+            </Link>
           </Text>
         </Form>
       </motion.div>
