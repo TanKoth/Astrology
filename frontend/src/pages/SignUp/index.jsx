@@ -260,8 +260,8 @@ const SignUp = () => {
                 ]}
               >
                 <TimePicker
-                  use12Hours
-                  format="h:mm a"
+                  use24Hours
+                  format="HH:mm"
                   className="cosmic-input"
                   placeholder="Select Time"
                 />

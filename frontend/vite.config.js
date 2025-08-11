@@ -7,9 +7,11 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     port: 5173,
-    host: true
+    host: true,
+    historyApiFallback: true
   },
   build: {
+    outDir: 'dist',
     sourcemap: false, // Disable sourcemaps in production
     rollupOptions: {
       output: {

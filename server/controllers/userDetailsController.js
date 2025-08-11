@@ -8,186 +8,7 @@ const encodedParams = new URLSearchParams();
 const EmailHelper = require('../utils/emailHelper');
 const{extractTimeOnly, formatDate} = require('../utils/timeUtils');
 
-// const createUser = async (req, res) =>{
-//   try{
-//     const userExists = await UserDetails.findOne({email: req.body.email, name: req.body.name});
-//     if(userExists){
-//       return res.status(400).json({success:false, message: "User already exists with this email and name"});
-//     }
 
-//     // Hash the password before saving
-//     const saltRounds = 10;
-//     const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
-
-    
-//   //Create user data with basic info
-//   const userData = {
-//       name: req.body.name,
-//       email: req.body.email,
-//       password: hashedPassword,
-//       placeOfBirth: req.body.placeOfBirth,
-//       dob: req.body.dob,
-//       timeOfBirth: req.body.timeOfBirth
-//     };
-
-//     const user = await UserDetails.create(userData);
-
-//     // Remove password from response for security
-//     const userResponse = { ...user.toObject() };
-//     delete userResponse.password;
-
-//     // Prepare location data to send back to frontend
-//     const locationData = {
-//       latitude: req.body.latitude,
-//       longitude: req.body.longitude,
-//       gmtOffset: req.body.gmtOffset
-//     };
-
-//     // If location data is provided, fetch astrology insights immediately
-//     if(req.body.latitude && req.body.longitude && req.body.gmtOffset) {
-//       try {
-//          // Format date properly for the API
-//         const formatDate = (date) => {
-//           const d = new Date(date);
-//           const year = d.getFullYear();
-//           const month = String(d.getMonth() + 1).padStart(2, '0');
-//           const day = String(d.getDate()).padStart(2, '0');
-//           return `${year}/${month}/${day}`;
-//         };
-
-//         const birthDetails = {
-//           dateOfBirth: formatDate(user.dob),
-//           timeOfBirth: user.timeOfBirth,
-//           latitude: parseFloat(req.body.latitude),
-//           longitude: parseFloat(req.body.longitude),
-//           timeZone: req.body.gmtOffset,
-//           lang: "en",
-//         };
-        
-//         console.log("Fetching astrology insights for new user:", birthDetails);
-//         const astrologyInsights = await getAstrologyInsights(birthDetails);
-
-//         const token = jwt.sign({UserId: user._id},process.env.SECRET_KEY, {expiresIn: '1d'});
-//         console.log("Token generated for new user:", token);
-
-//         return res.status(200).json({
-//           success: true, 
-//           message: "User created successfully with astrology insights", 
-//           user: userResponse,
-//           locationData,
-//           token:token,
-//           astrologyInsights
-//         });
-        
-//       } catch (insightError) {
-//         console.error("Error fetching astrology insights:", insightError);
-//         // Still return user creation success even if insights fail
-//         // return res.status(200).json({
-//         //   success: true, 
-//         //   message: "User created successfully, but astrology insights failed", 
-//         //   user: userResponse,
-//         //   locationData,
-//         //   insightError: insightError.message
-//         // });
-//       }
-//     }
-//     return res.status(200).json({success: true, message: "User created successfully", user: userResponse, locationData, token: token});
-
-//   }catch(error){
-//     console.error("Error in createUser:", error); // Add more detailed logging
-//     return res.status(400).json({success: false, message: "Error creating user", error:error.message})
-//   }
-// }
-
-// //function to get astrology insights by using astrologu external API
-//   const getAstrologyInsights = async (birthDetails) =>{
-//     try{
-//       if(!ASTROLOGY_API_KEY){
-//         throw new Error("Astrology API key is not set in environment variables");
-//       }
-//       console.log("API_KEY:", ASTROLOGY_API_KEY);
-//       const baseUrl = 'https://api.jyotishamastroapi.com/api/horoscope/planet-details';
-
-//       let timeZone = birthDetails.timeZone;
-//       if(timeZone.includes(':')){
-//         timeZone = timeZone.replace(':','.');
-//       }
-//       console.log("Timezone:", timeZone);
-//       const queryParams = new URLSearchParams({
-//         date: birthDetails.dateOfBirth,
-//         time: birthDetails.timeOfBirth,
-//         latitude: birthDetails.latitude,
-//         longitude: birthDetails.longitude,
-//         tz: timeZone,
-//         lang: "en",
-//       });
-//       console.log("Query Params:", queryParams.toString());
-//       console.log("Making API call to :", `${baseUrl}?${queryParams.toString()}`);
-//       const response = await axios.get(`${baseUrl}?${queryParams.toString()}`,{
-//         headers:{
-//            'key': ASTROLOGY_API_KEY,
-//         }
-//       })
-
-//       if(response.status === 200){
-//         return response.data;
-//       } else {
-//         throw new Error("Failed to fetch astrology insights");
-//       }
-//     }catch(error){
-//       console.error("Error fetching astrology insights:", error.message);
-//       throw new Error("Failed to fetch astrology insights");
-//     }
-//   }
-
-// // fecth user astrology details
-
-// const getUserDetails = async(req,res) =>{
-//   try{
-//     const userId = req.params.userId;
-
-//     const {latitude, longitude, gmtOffset} = req.query;
-//     if(!userId){
-//       return res.status(400).json({success: false, message: "User ID is required"});
-//     }
-//     if(!latitude || !longitude || !gmtOffset){
-//       return res.status(400).json({success: false, message: "Location (lat, lng, gmtOffset) data is required"});
-//     }
-//     const user = await UserDetails.findById(userId);
-//     if(!user){
-//       return res.status(404).json({success: false, message: "User not found"});
-//     }
-//     // as soon as user is created we will create the user astrology insights by using user details as name, place of birth, date of birth, time of birth, latitude, longitude 
-//     // Format date properly for the API
-//         const formatDate = (date) => {
-//           const d = new Date(date);
-//           const year = d.getFullYear();
-//           const month = String(d.getMonth() + 1).padStart(2, '0');
-//           const day = String(d.getDate()).padStart(2, '0');
-//           return `${year}/${month}/${day}`;
-//         };
-//     const birthDetails = {
-//       //name: user.name,
-//       //placeofBirth: user.placeofBirth,
-//       dateOfBirth: formatDate(user.dob),
-//       timeOfBirth: user.timeOfBirth,
-//       latitude: parseFloat(latitude),
-//       longitude: parseFloat(longitude),
-//       timeZone: gmtOffset,
-//       lang: "en",
-//     }
-//     console.log("User birth details:", birthDetails);
-//     // get astrology insights using birth details
-//     const astrologyInsights = await getAstrologyInsights(birthDetails);
-//     console.log("User astrology insights:", astrologyInsights);
-//     // Generate token for user
-//     const token = jwt.sign({UserId: user._id},process.env.SECRET_KEY, {expiresIn: '1d'});
-//     console.log("Token generated for user:", token);
-//     return res.status(200).json({success: true, message: "User details fetched successfully", astrologyInsights, token: token});
-//   }catch(err){
-//     return res.status(400).json({success: false, message: "Error fetching user details", error: err.message});
-//   }
-// }
 
 const createUser = async (req, res) =>{
   try{
@@ -229,25 +50,50 @@ const getUserDetails =async(req,res) => {
 
 const updateUserDetails = async (req,res) => {
   try{
-    const updateDetails = await UserDetails.findByIdAndUpdate(req.params.userId,req.body, {new: true}).select('-password');
-    // const dateFormat = (date) =>{
-    //   const d = new Date(date);
-    //   const day = String(d.getDate()).padStart(2, '0');
-    //   const month = String(d.getMonth() + 1).padStart(2, '0');
-    //   const year = d.getFullYear();
-    //   return `${day}-${month}-${year}`;
-    // }
-
-    const formatedCity = () => {
-      const cityName = updateDetails.placeOfBirth.split(',')[0].trim();
-      const city = cityName.replace(/,/g, "");
-      return city
+    // get the current user data 
+    const currentUser = await UserDetails.findById(req.params.userId);
+    if (!currentUser) {
+      return res.status(404).json({success: false, message: "User not found"});
     }
+    const updateDetails = await UserDetails.findByIdAndUpdate(req.params.userId,req.body, {new: true}).select('-password');
+
+   const formatedCity = () => {
+      try {
+        const placeOfBirth = updateDetails.placeOfBirth || currentUser.placeOfBirth;
+        if (!placeOfBirth) {
+          throw new Error("Place of birth is required for astrology insights");
+        }
+        const cityName = placeOfBirth.split(',')[0].trim();
+        const city = cityName.replace(/,/g, "");
+        return city;
+      } catch (error) {
+        console.error("Error formatting city:", error);
+        return null;
+      }
+    }
+
+    const city = formatedCity();
+    if (!city) {
+      return res.status(400).json({
+        success: false, 
+        message: "Valid place of birth is required for astrology insights"
+      });
+    }
+
+    // Ensure we have all required fields for astrology API
     const userData = {
-      name: updateDetails.name,
-      birthdate: formatDate(updateDetails.dob),
-      birthtime: extractTimeOnly(updateDetails.timeOfBirth),
-      City: formatedCity(),
+      name: updateDetails.name || currentUser.name,
+      birthdate: formatDate(updateDetails.dob || currentUser.dob),
+      birthtime: extractTimeOnly(updateDetails.timeOfBirth || currentUser.timeOfBirth),
+      City: city,
+    }
+
+    // Validate required fields
+    if (!userData.name || !userData.birthdate || !userData.birthtime || !userData.City) {
+      return res.status(400).json({
+        success: false, 
+        message: "Missing required fields for astrology insights: name, dob, timeOfBirth, placeOfBirth"
+      });
     }
     
     console.log("Fetching astrology insights for user:", userData);

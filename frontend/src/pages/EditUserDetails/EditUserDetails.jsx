@@ -63,13 +63,10 @@ const EditUserDetails = () => {
     const formData = {
       name: userData.name || "",
       email: userData.email || "",
-      dob: userData.dob
-        ? moment(userData.dob)
-        : userData.dob
-        ? moment(userData.dob, "YYYY-MM-DD")
-        : null,
+      dob: userData.dob ? moment(userData.dob).local() : null,
+      // Fix: Handle time parsing more carefully
       timeOfBirth: userData.timeOfBirth
-        ? moment(userData.timeOfBirth, "HH:mm")
+        ? moment(userData.timeOfBirth, "HH:mm").local()
         : null,
       placeOfBirth: userData.placeOfBirth || "",
     };
@@ -138,26 +135,26 @@ const EditUserDetails = () => {
         ...values,
         userId: user._id, // Get userId from stored user data, not form values
         // coordinates: coordinates,
-        dob: values.dob
-          ? moment(values.dob)
-          : values.dob
-          ? moment(values.dob, "YYYY-MM-DD")
-          : null,
+        dob: values.dob ? values.dob.format("YYYY-MM-DD") : null,
+        // Fix: Ensure time is preserved as entered by user
         timeOfBirth: values.timeOfBirth
-          ? moment(values.timeOfBirth, "HH:mm")
+          ? values.timeOfBirth.format("HH:mm")
           : null,
         placeOfBirth: address, // Use the address state value
       };
+
+      // Clear existing astrology data before making the API call
+      localStorage.removeItem("astrologyData");
 
       const response = await updateUserData(updateData);
       console.log("Update Response:", response);
       if (response && response.success) {
         // Check if astrologyData exists and has data property
         let parsedAstrologyData = null;
-        if (response.user.astrologyData && response.user.astrologyData.data) {
+        if (response.astrologyData && response.astrologyData.data) {
           try {
             parsedAstrologyData = convertHtmlToAstrologyJson(
-              response.user.astrologyData.data
+              response.astrologyData.data
             );
             console.log("Parsed astrology data:", parsedAstrologyData);
           } catch (parseError) {
@@ -171,6 +168,9 @@ const EditUserDetails = () => {
             "astrologyData",
             JSON.stringify(parsedAstrologyData)
           );
+        } else {
+          // If no new astrology data, ensure old data stays removed
+          localStorage.removeItem("astrologyData");
         }
         if (window.confirm("Do you want to update your details?")) {
           setUser(response.user);
@@ -319,6 +319,7 @@ const EditUserDetails = () => {
                   className="cosmic-input"
                   placeholder="YYYY-MM-DD"
                   format="YYYY-MM-DD"
+                  showTime={false}
                 />
               </Form.Item>
               <Form.Item
@@ -338,9 +339,10 @@ const EditUserDetails = () => {
               >
                 <TimePicker
                   use24Hours
-                  format="hh:mm a"
+                  format="HH:mm"
                   className="cosmic-input"
                   placeholder="Select Time"
+                  showNow={false}
                 />
               </Form.Item>
             </div>

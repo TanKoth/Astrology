@@ -27,7 +27,6 @@ import ReactMarkdown from "react-markdown";
 import NavigationMenu from "../NavigationMenu/NavigationMenu";
 import { convertHtmlToAstrologyJson } from "../../utilityFunction/utilityFunction";
 import { useTranslation } from "../../context/TranslationContext";
-import moment from "moment";
 
 const TypingIndicator = () => (
   <div className="message ai">
@@ -47,26 +46,13 @@ const TypingIndicator = () => (
 
 const formatDate = (date) => {
   if (!date) return "";
-  try {
-    // Handle different date formats
-    const dateObj = new Date(date);
-
-    // Check if date is valid
-    if (isNaN(dateObj.getTime())) {
-      return date; // Return original if can't parse
-    }
-
-    // Use consistent date formatting
-    return dateObj.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      timeZone: "UTC",
-    });
-  } catch (error) {
-    console.error("Error formatting date:", error);
-    return date; // Return original date if formatting fails
-  }
+  // Fix the date formatting to show correct format
+  return new Date(date).toLocaleDateString("en-GB", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    timeZone: "UTC",
+  });
 };
 
 const Dashboard = () => {
@@ -282,11 +268,10 @@ const Dashboard = () => {
                         <div className="birth-detail">
                           <span className="detail-label">{t("birthTime")}</span>
                           <span className="detail-value">
-                            {
+                            {user?.timeOfBirth ||
                               astrologyData.personalInfo.birthDetails[
                                 "Birth Time"
-                              ]
-                            }
+                              ]}
                           </span>
                         </div>
                         <div className="birth-detail">
