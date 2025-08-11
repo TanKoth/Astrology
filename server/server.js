@@ -41,9 +41,9 @@ app.use('/api/horoscope', horoscopeRouter);
 
   
   // Handle React routing - return all requests to React app
-  app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist/index.html'));
-});
+//   app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'dist/index.html'));
+// });
 
 
 app.listen(PORT, ()=> {
