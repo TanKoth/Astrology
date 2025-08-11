@@ -10,10 +10,12 @@ export default defineConfig({
     host: true
   },
   build: {
-    sourcemap: true,
-    outDir: 'dist',
-    minify: 'esbuild',
-    
+    sourcemap: false, // Disable sourcemaps in production
+    rollupOptions: {
+      output: {
+        sourcemap: false
+      }
+    }
   },
   esbuild: {
     loader: 'jsx',
