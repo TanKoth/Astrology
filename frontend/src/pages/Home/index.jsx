@@ -1,6 +1,3 @@
-import React from "react";
-
-//import animation css
 import "./home_css/animation.css";
 import Feature from "./Feature";
 import Footer from "./Footer";

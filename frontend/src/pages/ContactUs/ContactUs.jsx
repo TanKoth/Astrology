@@ -1,5 +1,4 @@
 import { React, useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import { FaUser, FaLock, FaEnvelope, FaMobileAlt } from "react-icons/fa";
 import { FaFilePen } from "react-icons/fa6";
 import { Form, Button, Input, message } from "antd";

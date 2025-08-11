@@ -20,8 +20,6 @@ import { getMoonPrediction } from "../../api/UserAstrologyData";
 import { getUserDetails } from "../../api/user";
 import "./Prediction.css";
 import { useNavigate } from "react-router-dom";
-import ReactMarkdown from "react-markdown";
-//import { useTranslation } from "../../context/TranslationContext";
 import { toast, ToastContainer } from "react-toastify";
 import {
   fetchLocationData,

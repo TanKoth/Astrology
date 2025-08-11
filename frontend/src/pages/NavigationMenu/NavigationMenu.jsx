@@ -27,7 +27,6 @@ import {
 } from "lucide-react";
 import { FaRobot, FaBook } from "react-icons/fa";
 import { LiaStarOfDavidSolid, LiaStarOfLifeSolid } from "react-icons/lia";
-//import { FaMagnifyingGlass } from "react-icons/fa6";
 import { GiLouvrePyramid, GiStarSattelites } from "react-icons/gi";
 import { RiPlanetFill, RiAlipayLine } from "react-icons/ri";
 import { useState } from "react";
@@ -215,10 +214,6 @@ const NavigationMenu = () => {
       >
         {/* Logo Header */}
         <div className="nav-header">
-          {/* <div className="nav-logo">
-            <Star className="logo-icon" />
-            {!isCollapsed && <span className="logo-text">Vedic Vedang</span>}
-          </div> */}
           {/* Desktop Collapse Toggle */}
           <button
             className="collapse-toggle desktop-only"
@@ -240,19 +235,6 @@ const NavigationMenu = () => {
             )}
           </button>
         </div>
-
-        {/* User Section */}
-        {/* <div className="nav-user">
-          <div className="user-avatar">
-            {user?.name?.charAt(0)?.toUpperCase() || "U"}
-          </div>
-          {!isCollapsed && (
-            <div className="user-info">
-              <div className="user-name">{user?.name || "User"}</div>
-              <div className="user-email">{user?.email}</div>
-            </div>
-          )}
-        </div> */}
 
         {/* Navigation Items */}
         <div className="nav-items">

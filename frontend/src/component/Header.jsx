@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { color, hover, motion } from "framer-motion";
 import { Menu, Dropdown, Button } from "antd";
-import { UserOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import AppContext from "../context/AppContext";
 import "./Header.css";

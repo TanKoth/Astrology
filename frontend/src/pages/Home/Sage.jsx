@@ -1,4 +1,3 @@
-import React from "react";
 import { motion } from "framer-motion";
 import { FaOm } from "react-icons/fa";
 import "./home_css/Sage.css";

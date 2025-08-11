@@ -15,11 +15,8 @@ import {
 } from "lucide-react";
 import AppContext from "../../context/AppContext";
 import NavigationMenu from "../NavigationMenu/NavigationMenu";
-// import { getUserInsights } from "../../api/user";
-// import { sendMessageToAI } from "../../api/chatApi";
 import "./Prediction.css";
 import { useNavigate } from "react-router-dom";
-import ReactMarkdown from "react-markdown";
 
 const TypingIndicator = () => (
   <div className="message ai">

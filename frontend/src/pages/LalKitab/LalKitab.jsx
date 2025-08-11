@@ -15,11 +15,8 @@ import {
 } from "lucide-react";
 import AppContext from "../../context/AppContext";
 import NavigationMenu from "../NavigationMenu/NavigationMenu";
-// import { getUserInsights } from "../../api/user";
-// import { sendMessageToAI } from "../../api/chatApi";
 import "./LalKitab.css";
 import { useNavigate } from "react-router-dom";
-import ReactMarkdown from "react-markdown";
 
 const TypingIndicator = () => (
   <div className="message ai">
@@ -61,16 +58,7 @@ const LalKitab = () => {
     }
   }, [user]);
 
-  const fetchInsights = async () => {
-    // try {
-    //   const data = await getUserInsights(user._id);
-    //   setInsights(data);
-    //   setIsLoadingInsights(false);
-    // } catch (error) {
-    //   console.error("Failed to load insights.");
-    //   setIsLoadingInsights(false);
-    // }
-  };
+  const fetchInsights = async () => {};
 
   return (
     <div className="dashboard-layout">
@@ -100,24 +88,6 @@ const LalKitab = () => {
               </div>
             </div>
 
-            {/* {!astrologyData && !isLoadingChart && (
-              <motion.div className="no-data-section">
-                <div className="no-data-message">
-                  <Star className="icon" />
-                  <h3>{t("noDataAvailable")}</h3>
-                  <p>{t("completeProfile")}</p>
-                  <button
-                    className="generate-button"
-                    onClick={() => navigate("/profile")}
-                  >
-                    {t("completeProfileButton")}
-                  </button>
-                </div>
-              </motion.div>
-            )} */}
-
-            {/* Charts Section */}
-            {/* {astrologyData && ( */}
             <motion.div className="insights-section">
               <div className="insights-header">
                 <h2 className="insights-title">
@@ -130,38 +100,9 @@ const LalKitab = () => {
                 generate Dosh.
               </motion.p>
               <div className="insights-content">
-                <div className="charts-grid">
-                  {/* {astrologyData.charts.slice(0, 3).map((chart, index) => (
-                      <div key={index} className="chart-item">
-                        <h4 className="chart-title">
-                          {chartNameMapping[index] ||
-                            chart.name ||
-                            `Chart ${index + 1}`}
-                        </h4> */}
-                  {/* <div className="chart-container"> */}
-                  {/* <img
-                            src={chart.url}
-                            // alt={chartNameMapping[index + 1] || chart.name}
-                            className="chart-image"
-                            onError={(e) => {
-                              e.target.style.display = "none";
-                              e.target.nextSibling.style.display = "flex";
-                            }}
-                          />
-                          <div
-                            className="chart-placeholder"
-                            style={{ display: "none" }}
-                          >
-                            <Star className="chart-placeholder-icon" />
-                            <span>Chart Loading.......</span>
-                          </div>
-                        </div>
-                      </div>
-                    ))} */}
-                </div>
+                <div className="charts-grid"></div>
               </div>
             </motion.div>
-            {/* )} */}
           </div>
         </div>
       </div>

@@ -1,4 +1,3 @@
-import React from "react";
 import { useState, useContext, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -12,7 +11,6 @@ import {
   TableOfContents,
 } from "lucide-react";
 import { Form, Button, Select, Input } from "antd";
-import { useNavigate } from "react-router-dom";
 import "./Horoscope.css";
 import AppContext from "../../context/AppContext";
 import { yearlyHoroscope } from "../../api/UserHoroscope";

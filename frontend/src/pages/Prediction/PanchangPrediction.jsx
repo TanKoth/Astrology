@@ -10,15 +10,12 @@ import {
   Languages,
   ScrollText,
 } from "lucide-react";
-import { RiAlipayLine } from "react-icons/ri";
 import AppContext from "../../context/AppContext";
 import NavigationMenu from "../NavigationMenu/NavigationMenu";
 import { getPanchangPrediction } from "../../api/UserAstrologyData";
 import { getUserDetails } from "../../api/user";
 import "./Prediction.css";
 import { useNavigate } from "react-router-dom";
-import ReactMarkdown from "react-markdown";
-//import { useTranslation } from "../../context/TranslationContext";
 import { toast, ToastContainer } from "react-toastify";
 import {
   fetchLocationData,

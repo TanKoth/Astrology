@@ -14,23 +14,6 @@ const ForgotPassword = () => {
   const location = useLocation();
   const isFromDashboard = location.state?.fromDashboard;
 
-  // const onFinish = async (values) => {
-  //   setLoading(true);
-  //   setMessage("");
-
-  //   try {
-  //     const res = await forgotPassword(values.email);
-  //     setMessage(
-  //       "✅ OTP sent to " + values.email + ". Please check your email."
-  //     );
-  //     setTimeout(() => navigate("/reset"), 3000);
-  //   } catch (err) {
-  //     setMessage(err.response?.data?.message || "❌ Something went wrong.");
-  //   }
-
-  //   setLoading(false);
-  // };
-
   const onFinish = async (values) => {
     setLoading(true);
     setMessage("");
@@ -44,8 +27,6 @@ const ForgotPassword = () => {
             "✅ OTP sent to " + values.email + ". Please check your email.",
             { position: "top-right", autoClose: 3000, color: "green" }
           );
-          // window.location.href = "/reset";
-          // navigate(`/reset/${encodeURIComponent(values.email)}`);
           setTimeout(
             () =>
               navigate(`/reset-password/${encodeURIComponent(values.email)}`, {
@@ -68,8 +49,6 @@ const ForgotPassword = () => {
           setMessage(
             "✅ OTP sent to " + values.email + ". Please check your email."
           );
-          // window.location.href = "/reset";
-          // navigate(`/reset/${encodeURIComponent(values.email)}`);
           setTimeout(
             () =>
               navigate(`/reset-password/${encodeURIComponent(values.email)}`),

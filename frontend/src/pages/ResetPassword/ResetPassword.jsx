@@ -2,14 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { Form, Input, Button, Typography } from "antd";
 import { resetPassword } from "../../api/UserLogin";
-//import { updatePassword } from "../../api/user";
 import { toast, ToastContainer } from "react-toastify";
 import "./ResetPassword.css";
 
 const { Title, Text } = Typography;
 
 const ResetPassword = () => {
-  //const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");

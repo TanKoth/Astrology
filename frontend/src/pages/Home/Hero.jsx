@@ -1,6 +1,4 @@
-import React from "react";
 import { motion } from "framer-motion";
-import { FaRobot } from "react-icons/fa";
 import "./home_css/Hero.css";
 import { useNavigate } from "react-router-dom";
 import Aries from "../../img/Zodiac_Signs/Aries.png";

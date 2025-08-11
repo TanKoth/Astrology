@@ -13,16 +13,12 @@ import {
   Printer,
   Languages,
 } from "lucide-react";
-import { GiStarSattelites } from "react-icons/gi";
-import { RiAlipayLine } from "react-icons/ri";
 import AppContext from "../../context/AppContext";
 import NavigationMenu from "../NavigationMenu/NavigationMenu";
 import { getRasiPrediction } from "../../api/UserAstrologyData";
 import { getUserDetails } from "../../api/user";
 import "./Prediction.css";
 import { useNavigate } from "react-router-dom";
-import ReactMarkdown from "react-markdown";
-//import { useTranslation } from "../../context/TranslationContext";
 import { toast, ToastContainer } from "react-toastify";
 import {
   fetchLocationData,

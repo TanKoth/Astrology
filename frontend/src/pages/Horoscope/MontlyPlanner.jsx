@@ -11,7 +11,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { Form, Button, Select } from "antd";
-import { useNavigate } from "react-router-dom";
+
 import "./Horoscope.css";
 import AppContext from "../../context/AppContext";
 import { monthlyHoroscope } from "../../api/UserHoroscope";
@@ -40,11 +40,6 @@ const MonthlyHoroscope = () => {
     console.log("Selected Zodiac Sign:", value);
     setSelectedZodiacSign(value);
   };
-
-  // const handleDayChange = (value) => {
-  //   console.log("Selected Day:", value);
-  //   setSelectedDay(value);
-  // };
 
   const handleBackToForm = () => {
     setShowForm(true);
@@ -197,29 +192,6 @@ const MonthlyHoroscope = () => {
                         <Select.Option value="12">Pisces - (12)</Select.Option>
                       </Select>
                     </Form.Item>
-                    {/* <Form.Item
-                      label={
-                        <span className="form-label">
-                          <Calendar className="form-icon" /> Day
-                        </span>
-                      }
-                      name="day"
-                      rules={[
-                        { required: true, message: "Please select a day!" },
-                      ]}
-                    >
-                      <Select
-                        placeholder="Day"
-                        className="cosmic-input"
-                        onChange={handleDayChange}
-                      >
-                        <Select.Option value="today">Today</Select.Option>
-                        <Select.Option value="tomorrow">Tomorrow</Select.Option>
-                        <Select.Option value="yesterday">
-                          Yesterday
-                        </Select.Option>
-                      </Select>
-                    </Form.Item> */}
 
                     <Button
                       htmlType="submit"

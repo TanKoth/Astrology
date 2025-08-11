@@ -1,5 +1,3 @@
-"use frontend";
-
 import { useState, useEffect, useContext } from "react";
 import { motion, AnimatePresence, color } from "framer-motion";
 import {
@@ -23,7 +21,6 @@ import {
 } from "lucide-react";
 import AppContext from "../../context/AppContext";
 import { userLogin } from "../../api/UserLogin";
-//import { sendMessageToAI } from "../../api/chatApi";
 import "./Dashboard.css";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import ReactMarkdown from "react-markdown";

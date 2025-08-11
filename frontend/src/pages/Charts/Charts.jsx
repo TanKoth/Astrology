@@ -15,11 +15,8 @@ import {
 } from "lucide-react";
 import AppContext from "../../context/AppContext";
 import NavigationMenu from "../NavigationMenu/NavigationMenu";
-// import { getUserInsights } from "../../api/user";
-// import { sendMessageToAI } from "../../api/chatApi";
 import "./Charts.css";
 import { useNavigate } from "react-router-dom";
-import ReactMarkdown from "react-markdown";
 import { useTranslation } from "../../context/TranslationContext";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

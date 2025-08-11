@@ -10,14 +10,10 @@ export default defineConfig({
     host: true
   },
   build: {
-    sourcemap: false,
+    sourcemap: true,
     outDir: 'dist',
     minify: 'esbuild',
-    rollupOptions: {
-      output: {
-        sourcemap: false
-      }
-    }
+    
   },
   esbuild: {
     loader: 'jsx',

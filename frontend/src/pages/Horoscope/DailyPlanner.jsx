@@ -1,4 +1,3 @@
-import React from "react";
 import { useState, useContext, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -11,7 +10,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { Form, Button, Select } from "antd";
-import { useNavigate } from "react-router-dom";
+
 import "./Horoscope.css";
 import AppContext from "../../context/AppContext";
 import { dailyHoroscope } from "../../api/UserHoroscope";
@@ -26,7 +25,6 @@ const DailyHoroscope = () => {
   const [horoscope, setHoroscope] = useState(null);
   const [isHoroscopeOpen, setIsHoroscopeOpen] = useState(true);
   const [showForm, setShowForm] = useState(true);
-  //const navigate = useNavigate();
   const { user } = useContext(AppContext);
 
   useEffect(() => {
