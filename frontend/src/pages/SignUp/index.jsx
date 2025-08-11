@@ -14,7 +14,7 @@ import {
 } from "react-icons/fa";
 import "./SignUp.css";
 import { saveUserData } from "../../api/user"; // Adjust the import path as needed
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import AppContext from "../../context/AppContext";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -340,7 +340,7 @@ const SignUp = () => {
           {message && <p className="error-message">{message}</p>}
 
           <p className="login-link">
-            Already have an account? <a href="/login">Log In</a>
+            Already have an account? <Link to="/login">Log In</Link>
           </p>
         </motion.div>
       </div>
