@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
-const path = require('path');
+// const path = require('path');
 
 const PORT = process.env.PORT || 8081;
 
@@ -30,21 +30,16 @@ app.use(helmet());
 
 
 app.use(express.json());
+app.use((req, res, next) => {
+  req.setTimeout(30000);
+  next();
+});
 
 app.use('/api/users', userDetailRoute);
 app.use('/api/contactUs', contactUsRoute);
 app.use('/api/user', userLoginRoute);
 app.use('/api/astrologyData', userAstrologyDataRouter);
 app.use('/api/horoscope', horoscopeRouter);
-
-// Serve static files from React build (only in production)
-
-  
-  // Handle React routing - return all requests to React app
-//   app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'dist/index.html'));
-// });
-
 
 app.listen(PORT, ()=> {
   console.log(`Server is running on port ${PORT}`);

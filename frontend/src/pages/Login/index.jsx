@@ -95,7 +95,11 @@ const Login = () => {
           </Button>
           <Text className="signup-link">
             Forgot password?{" "}
-            <Link to="/forgot-password" className="signup-link-text">
+            <Link
+              to="/forgot-password"
+              className="signup-link-text"
+              onClick={() => navigate("/forgot-password")}
+            >
               Reset here
             </Link>
           </Text>
@@ -105,7 +109,11 @@ const Login = () => {
           {/* New User? Sign Up Link */}
           <Text className="signup-link">
             New user?{" "}
-            <Link to="/signup" className="signup-link-text">
+            <Link
+              to="/signup"
+              className="signup-link-text"
+              onClick={() => navigate("/signup")}
+            >
               Sign up here
             </Link>
           </Text>

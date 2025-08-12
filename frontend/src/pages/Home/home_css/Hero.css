@@ -121,3 +121,466 @@
   bottom: 10%;
   right: 10%;
 }
+
+.dashboard-button{
+  position: fixed;
+  top: 2rem;
+  right: 27rem;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 15px;
+  border: none;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  color: azure;
+  z-index: 1000;
+}
+
+.dashboard-button:hover {
+  /* text-decoration: underline; */
+  transform: translateY(-5px);
+  cursor: pointer;
+  background-color: #b8c1ec !important;
+}
+
+
+
+/* Mobile-First Responsive Design for Hero Section */
+
+.hero {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  color: #fff;
+  padding: 80px 0 60px;
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-content {
+  text-align: center;
+  z-index: 1;
+  max-width: 90%;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.hero h1 {
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(45deg, #ffd700, #ff6b6b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+  line-height: 1.2;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  color: #b8c1ec;
+  line-height: 1.5;
+  padding: 0 10px;
+}
+
+.cta-button {
+  background: linear-gradient(45deg, #ff6b6b, #ffd700);
+  color: #1a1a2e;
+  border: none;
+  padding: 14px 28px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  width: auto;
+  min-width: 200px;
+  /* Prevent button from being too small on mobile */
+  touch-action: manipulation;
+  /* Optimize for touch */
+}
+
+.cta-button:hover,
+.cta-button:active {
+  background: linear-gradient(45deg, #ffd700, #ff6b6b);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+  transform: translateY(-2px);
+}
+
+.hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* Mobile Zodiac Symbols - Reduced for better performance */
+.zodiac-symbol {
+  position: absolute;
+  font-size: 20px;
+  color: rgba(255, 215, 0, 0.2);
+  /* Reduced opacity for mobile */
+  pointer-events: none;
+  /* Prevent interference with touch */
+}
+
+/* Mobile positioning - fewer symbols for cleaner look */
+.zodiac-symbol:nth-child(1) {
+  top: 15%;
+  left: 10%;
+}
+
+.zodiac-symbol:nth-child(2) {
+  top: 25%;
+  right: 15%;
+}
+
+.zodiac-symbol:nth-child(3) {
+  bottom: 20%;
+  left: 20%;
+}
+
+.zodiac-symbol:nth-child(4) {
+  top: 50%;
+  right: 25%;
+}
+
+.zodiac-symbol:nth-child(5) {
+  bottom: 35%;
+  left: 30%;
+}
+
+.zodiac-symbol:nth-child(6) {
+  top: 70%;
+  right: 10%;
+}
+
+/* Hide additional symbols on mobile for cleaner look */
+.zodiac-symbol:nth-child(n+7) {
+  display: none;
+}
+
+.ai-icon {
+  position: absolute;
+  font-size: 48px;
+  color: rgba(78, 84, 200, 0.4);
+  bottom: 15%;
+  right: 15%;
+  pointer-events: none;
+}
+
+.dashboard-button {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  border: none;
+  padding: 10px 16px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  color: azure;
+  z-index: 1000;
+  font-size: 0.9rem;
+  backdrop-filter: blur(10px);
+  /* Add glass effect */
+  touch-action: manipulation;
+}
+
+.dashboard-button:hover,
+.dashboard-button:active {
+  transform: translateY(-2px);
+  cursor: pointer;
+  background-color: #b8c1ec !important;
+  box-shadow: 0 4px 15px rgba(184, 193, 236, 0.3);
+}
+
+/* ==================== TABLET STYLES ==================== */
+@media screen and (min-width: 481px) {
+  .hero {
+    padding: 120px 0 80px;
+  }
+
+  .hero-content {
+    max-width: 85%;
+    padding: 0 30px;
+  }
+
+  .hero h1 {
+    font-size: 2.8rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .hero p {
+    font-size: 1.3rem;
+    margin-bottom: 2.5rem;
+    padding: 0 20px;
+  }
+
+  .cta-button {
+    padding: 16px 32px;
+    font-size: 1.1rem;
+    min-width: 220px;
+  }
+
+  /* Show more zodiac symbols on tablet */
+  .zodiac-symbol {
+    font-size: 28px;
+    color: rgba(255, 215, 0, 0.25);
+  }
+
+  .zodiac-symbol:nth-child(n+7):nth-child(-n+9) {
+    display: block;
+  }
+
+  .zodiac-symbol:nth-child(7) {
+    bottom: 15%;
+    right: 20%;
+  }
+
+  .zodiac-symbol:nth-child(8) {
+    top: 10%;
+    left: 35%;
+  }
+
+  .zodiac-symbol:nth-child(9) {
+    bottom: 45%;
+    right: 30%;
+  }
+
+  .ai-icon {
+    font-size: 60px;
+    color: rgba(78, 84, 200, 0.5);
+    bottom: 12%;
+    right: 12%;
+  }
+
+  .dashboard-button {
+    top: 2rem;
+    right: 17rem;
+    /* padding: 12px 20px; */
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .hero {
+    padding: 120px 0 80px;
+  }
+
+  .hero-content {
+    max-width: 85%;
+    padding: 0 30px;
+  }
+
+  .hero h1 {
+    font-size: 2.8rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .hero p {
+    font-size: 1.3rem;
+    margin-bottom: 2.5rem;
+    padding: 0 20px;
+  }
+
+  .cta-button {
+    padding: 16px 32px;
+    font-size: 1.1rem;
+    min-width: 220px;
+  }
+
+  /* Show more zodiac symbols on tablet */
+  .zodiac-symbol {
+    font-size: 28px;
+    color: rgba(255, 215, 0, 0.25);
+  }
+
+  .zodiac-symbol:nth-child(n+7):nth-child(-n+9) {
+    display: block;
+  }
+
+  .zodiac-symbol:nth-child(7) {
+    bottom: 15%;
+    right: 20%;
+  }
+
+  .zodiac-symbol:nth-child(8) {
+    top: 10%;
+    left: 35%;
+  }
+
+  .zodiac-symbol:nth-child(9) {
+    bottom: 45%;
+    right: 30%;
+  }
+
+  .ai-icon {
+    font-size: 60px;
+    color: rgba(78, 84, 200, 0.5);
+    bottom: 12%;
+    right: 12%;
+  }
+
+  .dashboard-button {
+    top: 0.5rem;
+    right: 20rem;
+    /* padding: 12px 20px; */
+    font-size: 1rem;
+  }
+}
+
+/* ==================== DESKTOP STYLES ==================== */
+@media screen and (min-width: 1025px) {
+  .hero {
+    padding: 150px 0 100px;
+  }
+
+  .hero-content {
+    max-width: 800px;
+    padding: 0;
+  }
+
+  .hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .hero p {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    padding: 0;
+  }
+
+  .cta-button {
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    min-width: auto;
+  }
+
+  /* Show all zodiac symbols on desktop */
+  .zodiac-symbol {
+    font-size: 36px;
+    color: rgba(255, 215, 0, 0.3);
+  }
+
+  .zodiac-symbol:nth-child(n+7) {
+    display: block;
+  }
+
+  .zodiac-symbol:nth-child(7) {
+    bottom: 10%;
+    right: 15%;
+  }
+
+  .zodiac-symbol:nth-child(8) {
+    top: 5%;
+    left: 30%;
+  }
+
+  .zodiac-symbol:nth-child(9) {
+    bottom: 40%;
+    right: 25%;
+  }
+
+  .zodiac-symbol:nth-child(10) {
+    top: 70%;
+    left: 10%;
+  }
+
+  .zodiac-symbol:nth-child(11) {
+    top: 30%;
+    left: 20%;
+  }
+
+  .zodiac-symbol:nth-child(12) {
+    bottom: 20%;
+    right: 10%;
+  }
+
+  .ai-icon {
+    font-size: 72px;
+    color: rgba(78, 84, 200, 0.6);
+    bottom: 10%;
+    right: 10%;
+  }
+
+  .dashboard-button {
+    top: 2rem;
+    right: 27rem;
+    /* padding: 12px 24px; */
+    font-size: 1rem;
+  }
+}
+
+/* ==================== MOBILE PERFORMANCE OPTIMIZATIONS ==================== */
+@media screen and (max-width: 480px) {
+  
+  /* Reduce animations for better performance on low-end devices */
+  @media (prefers-reduced-motion: reduce) {
+    .cta-button,
+    .dashboard-button,
+    .zodiac-symbol {
+      transition: none;
+    }
+  }
+
+  /* Optimize text rendering */
+  .hero h1,
+  .hero p {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Ensure minimum touch target size */
+  .cta-button,
+  .dashboard-button {
+    min-height: 44px;
+    /* iOS minimum touch target */
+  }
+
+  /* Prevent zoom on input focus (if any inputs are added later) */
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
+/* ==================== ACCESSIBILITY IMPROVEMENTS ==================== */
+@media (prefers-reduced-motion: reduce) {
+  .cta-button:hover,
+  .dashboard-button:hover {
+    transform: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .hero {
+    background: #000;
+  }
+  
+  .hero h1 {
+    color: #fff;
+    -webkit-text-fill-color: #fff;
+  }
+  
+  .cta-button {
+    background: #fff;
+    color: #000;
+    border: 2px solid #fff;
+  }
+}
+
+/* Focus states for keyboard navigation */
+.cta-button:focus,
+.dashboard-button:focus {
+  outline: 3px solid #ffd700;
+  outline-offset: 2px;
+}

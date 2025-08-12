@@ -25,20 +25,19 @@ const extractTimeOnly = (timeInput) => {
   return timeInput;
 };
 
-// const normalizeDateOnly = (dateInput) => {
-//   if (!dateInput) return dateInput;
+const formatDate = (dateInput) => {
+   if (!dateInput) return null;
   
-//   const date = new Date(dateInput);
-//   // Create a new date with just the date part (no time) in UTC
-//   const normalizedDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-//   return normalizedDate;
-// };
-
-const formatDate = (date) => {
-  const d = new Date(date);
-  const day = String(d.getDate()).padStart(2, '0');
-  const month = String(d.getMonth() + 1).padStart(2, '0');
-  const year = d.getFullYear();
+  // If already in YYYY-MM-DD format, return as is
+  if (typeof dateInput === 'string' && dateInput.match(/^\d{4}-\d{2}-\d{2}$/)) {
+    return dateInput;
+  }
+  
+  const date = new Date(dateInput);
+  // Use UTC to avoid timezone issues
+  const year = date.getUTCFullYear();
+  const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+  const day = String(date.getUTCDate()).padStart(2, '0');
   return `${day}-${month}-${year}`;
 };
 

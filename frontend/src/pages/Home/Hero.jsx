@@ -13,6 +13,10 @@ import Sagittarius from "../../img/Zodiac_Signs/Sagittarius.png";
 import Capricorn from "../../img/Zodiac_Signs/Capricorn.png";
 import Aquarius from "../../img/Zodiac_Signs/Aquarius.png";
 import Pisces from "../../img/Zodiac_Signs/Pisces.png";
+import { useAuth } from "../../context/AppContext";
+import { useContext } from "react";
+import { Button } from "antd";
+
 const zodiacSymbols = [
   {
     Image: Aries,
@@ -66,12 +70,24 @@ const zodiacSymbols = [
 
 const Hero = () => {
   const navigate = useNavigate();
-
+  //const { isLoadingUser } = useContext(AppContext);
+  const { user } = useAuth();
   return (
     <section
       className="hero relative bg-gradient-to-b from-background via-primary to-black min-h-screen flex items-center justify-center text-center text-textPrimary"
       id="home"
     >
+      {user && (
+        <Button
+          type="primary"
+          htmlType="submit"
+          className="dashboard-button"
+          onClick={() => navigate("/dashboard")}
+        >
+          Dashboard
+        </Button>
+      )}
+
       {/* Hero Content */}
       <div className="hero-content space-y-6 z-10 px-4">
         <motion.h1

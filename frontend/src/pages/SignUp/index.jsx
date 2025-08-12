@@ -242,6 +242,7 @@ const SignUp = () => {
                   className="cosmic-input"
                   placeholder="YYYY-MM-DD"
                   format="YYYY-MM-DD"
+                  showTime={false}
                 />
               </Form.Item>
               <Form.Item
@@ -264,6 +265,7 @@ const SignUp = () => {
                   format="HH:mm"
                   className="cosmic-input"
                   placeholder="Select Time"
+                  showNow={false}
                 />
               </Form.Item>
             </div>

@@ -16,6 +16,7 @@ const createUser = async (req, res) =>{
     if(userExists){
       return res.status(400).json({success: false, message: "User already exists with this email"});
     }
+    const formattedDob = formatDate(req.body.dob);
     // Hash the password
     const saltRounds = 10;
     const hashPassword = await bcrypt.hash(req.body.password,saltRounds);
@@ -23,6 +24,7 @@ const createUser = async (req, res) =>{
     const userData ={
       ...req.body,
       password: hashPassword,
+      dob: formattedDob,
       timeOfBirth: extractTimeOnly(req.body.timeOfBirth) // Ensure timeOfBirth is in HH:MM format
     }
     // create user

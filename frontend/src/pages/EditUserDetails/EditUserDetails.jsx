@@ -275,30 +275,6 @@ const EditUserDetails = () => {
               </Form.Item>
             </div>
 
-            {/* <div className="form-row">
-              <Form.Item
-                label={
-                  <span className="form-label">
-                    <FaLock className="form-icon" />
-                    Password
-                  </span>
-                }
-                name="password"
-                rules={[
-                  { required: true, message: "Please create a password!" },
-                  {
-                    min: 6,
-                    message: "Password must be at least 6 characters!",
-                  },
-                ]}
-              >
-                <Input.Password
-                  placeholder="Choose a strong password"
-                  className="cosmic-input"
-                />
-              </Form.Item>
-            </div> */}
-
             <div className="form-row two-column">
               <Form.Item
                 label={
@@ -420,7 +396,6 @@ const EditUserDetails = () => {
                   type="primary"
                   htmlType="submit"
                   className="cancel-button"
-                  loading={loading}
                   onClick={handleCancel}
                 >
                   Cancel

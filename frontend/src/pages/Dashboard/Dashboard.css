@@ -398,70 +398,6 @@
   }
 }
 
-@media (max-width: 768px) {
-  .dashboard-container {
-    padding: 1rem;
-  }
-
-  .welcome-title {
-    font-size: 2rem;
-  }
-
-  .chat-messages {
-    height: 300px;
-  }
-
-  .message-content {
-    max-width: 90%;
-  }
-}
-/* Locked Insights Section */
-/* .locked-insights-section {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 16px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 215, 0, 0.1);
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-  transition: all 0.3s ease;
-}
-
-.locked-title {
-  color: #ffd700;
-  font-size: 1.3rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.locked-feature {
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 8px;
-  padding: 1rem;
-  margin-bottom: 0.75rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-weight: 500;
-  color: #e2e8f0;
-}
-
-.locked-feature .icon {
-  color: #ffd700;
-}
-
-.locked-text {
-  color: #e2e8f0;
-  font-size: 1rem;
-  margin-top: 0.5rem;
-}
-.unlock-description {
-  color: #e2e8f0; /* Light grayish-white for better visibility */
-  /* font-size: 1rem;
-  margin-top: 0.5rem;
-} */ 
 
 .dashboard-layout {
   display: flex;
@@ -480,401 +416,8 @@
   margin-left: 80px;
 }
 
-/* Mobile Responsive */
-@media (max-width: 768px) {
-  .stars {
-    position: fixed !important; /* Changed from absolute to fixed */
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    width: 100vw !important; /* Ensure full viewport width */
-    height: 100vh !important; /* Ensure full viewport height */
-    background-size: 100px 100px !important;
-    opacity: 0.05 !important;
-    animation: twinkle 3s infinite !important;
-    z-index: 0 !important; /* Ensure it's behind content */
-  }
-  
-  .dashboard-page {
-    padding: 60px 10px 20px;
-    position: relative;
-    overflow-x: hidden;
-    min-height: 100vh !important; /* Ensure full height */
-    background: linear-gradient(135deg, #0a0f29 0%, #1a1a2e 100%) !important; /* Fallback background */
-  }
 
-  .dashboard-container {
-    padding: 0;
-    margin: 0;
-    position: relative;
-    z-index: 1 !important; /* Ensure content is above stars */
-  }
 
-  .dashboard-content {
-    margin-left: 0;
-    padding-top: 60px;
-    width: 100%;
-    position: relative;
-    z-index: 1 !important; /* Ensure content is above stars */
-  }
-  
-  .navigation.collapsed ~ .dashboard-content {
-    margin-left: 0;
-  }
-
-  /* Welcome Section */
-  .welcome-section {
-    margin-bottom: 2rem;
-    padding: 1rem 0;
-  }
-
-  .welcome-title {
-    font-size: 1.8rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .welcome-subtitle {
-    font-size: 1rem;
-  }
-
-  /* Action Buttons */
-  .action-buttons {
-    flex-direction: row !important;
-    width: 35% !important;
-    margin-right: 9.7rem !important;
-    margin-top: 1rem !important;
-  }
-
-  .print-button,
-  .translate-button {
-    width: 100%;
-    justify-content: center;
-    padding: 0.75rem;
-    font-size: 0.9rem;
-  }
-
-  /* Insights Section */
-  .insights-section {
-    margin-bottom: 1.5rem;
-    padding: 1rem;
-    border-radius: 12px;
-  }
-
-  .insights-header {
-    padding: 0.75rem;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .insights-title {
-    font-size: 1.2rem;
-  }
-
-  .insights-header svg {
-    width: 24px;
-    height: 24px;
-  }
-
-  /* Birth Details Grid */
-  .birth-details-grid {
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
-  }
-
-  .birth-detail {
-    padding: 1rem;
-  }
-
-  .detail-label {
-    font-size: 0.8rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .detail-value {
-    font-size: 1.1rem;
-  }
-
-  /* Planetary Positions */
-  .planetary-positions {
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
-  }
-
-  .planetary-item {
-    padding: 0.75rem;
-  }
-
-  .planet-name {
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .planet-icon {
-    width: 16px;
-    height: 16px;
-  }
-
-  .planet-degree {
-    font-size: 1rem;
-  }
-
-  .planet-house,
-  .planet-nakshatra {
-    font-size: 0.8rem;
-  }
-
-  .planet-motion {
-    font-size: 0.7rem;
-    padding: 0.2rem 0.4rem;
-  }
-
-  /* Charts Grid */
-  .charts-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-
-  .chart-item {
-    padding: 1rem;
-  }
-
-  .chart-title {
-    font-size: 1rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .chart-container {
-    height: 200px;
-  }
-
-  /* Chat Section */
-  .chat-section {
-    padding: 1rem;
-    margin-bottom: 1rem;
-  }
-
-  .chat-title {
-    font-size: 1.2rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .chat-messages {
-    height: 250px;
-    padding: 0.75rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .message-content {
-    max-width: 95%;
-    padding: 0.75rem 1rem;
-    font-size: 0.9rem;
-  }
-
-  .chat-input {
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .chat-input input {
-    padding: 0.75rem;
-    font-size: 1rem;
-  }
-
-  .send-button {
-    width: 100%;
-    justify-content: center;
-    padding: 0.75rem;
-  }
-
-  /* Upgrade CTA */
-  .upgrade-cta {
-    padding: 1.5rem 1rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .upgrade-title {
-    font-size: 1.3rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .upgrade-button {
-    width: 100%;
-    justify-content: center;
-    padding: 0.75rem 1.5rem;
-    font-size: 0.9rem;
-  }
-
-  /* Typography adjustments */
-  .planetary-aspect {
-    padding: 0.5rem 0.75rem;
-    margin: 0.5rem 0;
-  }
-
-  .aspect-title {
-    font-size: 0.9rem;
-    margin-bottom: 0.25rem;
-  }
-
-  .aspect-content {
-    font-size: 0.85rem;
-  }
-}
-
-/* Extra small devices */
-@media (max-width: 480px) {
-  .stars {
-    position: fixed !important; /* Fixed positioning for extra small devices too */
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    background-size: 80px 80px !important;
-    opacity: 0.03 !important;
-    z-index: 0 !important;
-    background-image: radial-gradient(
-        1px 1px at 15px 25px,
-        #eee,
-        rgba(0, 0, 0, 0)
-      ),
-      radial-gradient(1px 1px at 30px 50px, #fff, rgba(0, 0, 0, 0)),
-      radial-gradient(1px 1px at 40px 120px, #ddd, rgba(0, 0, 0, 0)),
-      radial-gradient(1px 1px at 70px 30px, #fff, rgba(0, 0, 0, 0)),
-      radial-gradient(1px 1px at 100px 60px, #fff, rgba(0, 0, 0, 0));
-  }
-
-  .dashboard-page {
-    padding: 60px 5px 15px;
-    min-height: 100vh !important;
-    position: relative;
-    background: linear-gradient(135deg, #0a0f29 0%, #1a1a2e 100%) !important; /* Ensure background */
-  }
-
-  .welcome-title {
-    font-size: 1.5rem;
-  }
-
-  .welcome-subtitle {
-    font-size: 0.9rem;
-  }
-
-  .insights-section {
-    padding: 0.75rem;
-    margin-bottom: 1rem;
-  }
-
-  .insights-title {
-    font-size: 1.1rem;
-  }
-
-  .birth-detail {
-    padding: 0.75rem;
-  }
-
-  .detail-label {
-    font-size: 0.75rem;
-  }
-
-  .detail-value {
-    font-size: 1rem;
-  }
-
-  .planetary-item {
-    padding: 0.5rem;
-  }
-
-  .planet-name {
-    font-size: 0.9rem;
-  }
-
-  .planet-degree {
-    font-size: 0.9rem;
-  }
-
-  .planet-house,
-  .planet-nakshatra {
-    font-size: 0.75rem;
-  }
-
-  .chart-container {
-    height: 180px;
-  }
-
-  .chat-messages {
-    height: 200px;
-  }
-
-  .message-content {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.85rem;
-  }
-
-  .action-buttons {
-    gap: 0.4rem;
-  }
-
-  .print-button,
-  .translate-button {
-    padding: 0.6rem;
-    font-size: 0.85rem;
-  }
-}
-
-/* Landscape orientation on mobile */
-@media (max-width: 768px) and (orientation: landscape) {
-  .stars {
-    position: fixed !important; /* Fixed for landscape too */
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    background-size: 120px 120px !important;
-    opacity: 0.06 !important;
-    z-index: 0 !important;
-  }
-
-  .dashboard-page {
-    padding: 40px 10px 20px;
-    min-height: 100vh !important;
-    background: linear-gradient(135deg, #0a0f29 0%, #1a1a2e 100%) !important;
-  }
-
-  .welcome-section {
-    margin-bottom: 1.5rem;
-    padding: 0.75rem 0;
-  }
-
-  .welcome-title {
-    font-size: 1.6rem;
-  }
-
-  .birth-details-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.5rem;
-  }
-
-  .planetary-positions {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.5rem;
-  }
-
-  .charts-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
-  }
-
-  .chart-container {
-    height: 150px;
-  }
-
-  .chat-messages {
-    height: 200px;
-  }
-}
 
 
 /* Birth Details Grid */
@@ -1928,4 +1471,612 @@
 .translate-button .icon {
   width: 18px;
   height: 18px;
+}
+
+@media (max-width: 768px) {
+    .mobile-menu-toggle {
+        /* display: none; */
+        position: fixed;
+        top: 3rem;
+        left: 0px;
+        z-index: 1001;
+        background: rgba(26, 26, 46, 0.9);
+        border: 0px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        padding: 0;
+        color: white;
+        cursor: pointer;
+        backdrop-filter: blur(10px);
+        right: 0;
+    }
+}
+
+/* Mobile-First Responsive Enhancements for Astrology Dashboard */
+
+/* ====================
+   MOBILE BASE STYLES (320px - 767px)
+   ==================== */
+
+/* Reset mobile viewport issues */
+@media (max-width: 767px) {
+  .dashboard-page {
+    padding: 60px 16px 20px;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .dashboard-container {
+    max-width: 100%;
+    padding: 0;
+  }
+
+  /* Mobile Layout Adjustments */
+  .dashboard-layout {
+    display: block;
+    flex-direction: column;
+  }
+
+  .dashboard-content {
+    margin-left: 0;
+    padding: 0;
+    width: 100%;
+  }
+
+  /* Mobile Welcome Section */
+  .welcome-section {
+    text-align: center;
+    margin-bottom: 24px;
+    padding: 16px 0;
+  }
+
+  .welcome-title {
+    font-size: 1.75rem;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .welcome-subtitle {
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  /* Mobile Action Buttons */
+  .action-buttons {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .print-button,
+  .translate-button {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 16px;
+    font-size: 14px;
+    border-radius: 8px;
+  }
+
+  /* Mobile Insights Sections */
+  .insights-section {
+    margin-bottom: 20px;
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .insights-header {
+    padding: 12px 0;
+    flex-wrap: wrap;
+  }
+
+  .insights-title {
+    font-size: 1.25rem;
+    line-height: 1.3;
+  }
+
+  .insights-header svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Mobile Birth Details Grid */
+  .birth-details-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .birth-detail {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .detail-label {
+    font-size: 0.8rem;
+    margin-bottom: 6px;
+  }
+
+  .detail-value {
+    font-size: 1.1rem;
+  }
+
+  /* Mobile Planetary Positions */
+  .planetary-positions {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .planetary-item {
+    padding: 16px;
+    border-radius: 10px;
+  }
+
+  .planet-name {
+    font-size: 1rem;
+    margin-bottom: 12px;
+  }
+
+  .planet-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .planet-degree {
+    font-size: 1rem;
+  }
+
+  .planet-house,
+  .planet-nakshatra {
+    font-size: 0.85rem;
+  }
+
+  .planet-motion {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+  }
+
+  /* Mobile Charts Grid */
+  .charts-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .chart-item {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .chart-title {
+    font-size: 1rem;
+    margin-bottom: 12px;
+  }
+
+  .chart-container {
+    height: 280px;
+  }
+
+  /* Mobile Chat Section */
+  .chat-section {
+    margin-top: 20px;
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .chat-title {
+    font-size: 1.25rem;
+    margin-bottom: 16px;
+  }
+
+  .chat-messages {
+    height: 300px;
+    padding: 12px;
+    margin-bottom: 16px;
+  }
+
+  .message-content {
+    max-width: 95%;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .chat-input {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .chat-input input {
+    padding: 12px 16px;
+    font-size: 16px; /* Prevents zoom on iOS */
+    border-radius: 8px;
+  }
+
+  .send-button {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 16px;
+    border-radius: 8px;
+  }
+
+  /* Mobile CTA Section */
+  .upgrade-cta {
+    padding: 20px 16px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .upgrade-title {
+    font-size: 1.25rem;
+    margin-bottom: 12px;
+  }
+
+  .upgrade-button {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 16px;
+    font-size: 1rem;
+  }
+
+  /* Mobile Touch Improvements */
+  button,
+  .btn,
+  .clickable {
+    min-height: 44px;
+    min-width: 44px;
+    touch-action: manipulation;
+  }
+
+  /* Mobile Typography Improvements */
+  body {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  p, span, div {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  /* Mobile Scrolling Improvements */
+  .chat-messages {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+
+  /* Hide decorative elements on mobile */
+  .stars {
+    opacity: 0.05;
+  }
+}
+
+/* ====================
+   TABLET STYLES (768px - 1023px)
+   ==================== */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .dashboard-page {
+    padding: 70px 24px 30px;
+  }
+
+  .dashboard-container {
+    max-width: 100%;
+    padding: 0 16px;
+  }
+
+  /* Tablet Layout */
+  .dashboard-layout {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dashboard-content {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  /* Tablet Welcome Section */
+  .welcome-title {
+    font-size: 2.25rem;
+  }
+
+  .welcome-subtitle {
+    font-size: 1.1rem;
+  }
+
+  /* Tablet Action Buttons */
+  .action-buttons {
+    flex-direction: row;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .print-button,
+  .translate-button {
+    width: auto;
+    min-width: 140px;
+  }
+
+  /* Tablet Birth Details */
+  .birth-details-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  /* Tablet Planetary Positions */
+  .planetary-positions {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  /* Tablet Charts */
+  .charts-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .chart-container {
+    height: 320px;
+  }
+
+  /* Tablet Chat */
+  .chat-input {
+    flex-direction: row;
+    gap: 16px;
+  }
+
+  .chat-input input {
+    flex: 1;
+  }
+
+  .send-button {
+    width: auto;
+    min-width: 100px;
+  }
+
+  /* Tablet Insights */
+  .insights-section {
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+}
+
+/* ====================
+   LANDSCAPE MOBILE (480px+)
+   ==================== */
+
+@media (max-width: 767px) and (orientation: landscape) {
+  .dashboard-page {
+    padding: 40px 16px 20px;
+  }
+
+  .welcome-section {
+    margin-bottom: 20px;
+  }
+
+  .welcome-title {
+    font-size: 1.5rem;
+    margin-top: 2rem !important;
+  }
+
+  .birth-details-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .planetary-positions {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .charts-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .chart-container {
+    height: 200px;
+  }
+
+  .chat-messages {
+    height: 200px;
+  }
+}
+
+/* ====================
+   LARGE TABLET (1024px - 1199px)
+   ==================== */
+
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .dashboard-content {
+    margin-left: 12rem;
+  }
+
+  .birth-details-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .planetary-positions {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .charts-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ====================
+   ACCESSIBILITY & TOUCH IMPROVEMENTS
+   ==================== */
+
+/* Enhanced touch targets for mobile */
+@media (max-width: 1023px) {
+  .insights-header {
+    min-height: 48px;
+    padding: 12px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(255, 215, 0, 0.1);
+  }
+
+  .planetary-item,
+  .birth-detail,
+  .chart-item {
+    min-height: 48px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(255, 215, 0, 0.05);
+  }
+
+  /* Improved button states for touch */
+  button:active,
+  .btn:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+
+  /* Better focus states for accessibility */
+  button:focus,
+  input:focus {
+    outline: 2px solid #ffd700;
+    outline-offset: 2px;
+  }
+
+  /* Smooth scrolling for mobile */
+  html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* ====================
+   PERFORMANCE OPTIMIZATIONS
+   ==================== */
+
+/* Reduce animations on mobile for better performance */
+@media (max-width: 767px) {
+  .stars {
+    animation: none;
+  }
+
+  .crystal-ball {
+    animation: none;
+  }
+
+  .typing-indicator-dots {
+    animation-duration: 2s;
+  }
+
+  /* Optimize backdrop filters for mobile */
+  .insights-section,
+  .chat-section {
+    backdrop-filter: none;
+    background: rgba(255, 255, 255, 0.08);
+  }
+}
+
+/* ====================
+   DARK MODE MOBILE OPTIMIZATIONS
+   ==================== */
+
+@media (max-width: 767px) and (prefers-color-scheme: dark) {
+  .dashboard-page {
+    background: linear-gradient(135deg, #0a0f29 0%, #1a1a2e 100%);
+  }
+
+  .insights-section,
+  .chat-section {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 215, 0, 0.15);
+  }
+
+  .birth-detail,
+  .planetary-item,
+  .chart-item {
+    background: rgba(255, 255, 255, 0.06);
+  }
+}
+
+/* ====================
+   UTILITY CLASSES FOR MOBILE
+   ==================== */
+
+.mobile-only {
+  display: block;
+}
+
+.tablet-only {
+  display: none;
+}
+
+.desktop-only {
+  display: none;
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .mobile-only {
+    display: none;
+  }
+  
+  .tablet-only {
+    display: block;
+  }
+  
+  .desktop-only {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .mobile-only {
+    display: none;
+  }
+  
+  .tablet-only {
+    display: none;
+  }
+  
+  .desktop-only {
+    display: block;
+  }
+}
+
+/* Text size utilities for different screen sizes */
+.text-mobile {
+  font-size: 0.875rem;
+}
+
+.text-tablet {
+  font-size: 1rem;
+}
+
+.text-desktop {
+  font-size: 1.125rem;
+}
+
+/* Spacing utilities for mobile */
+.p-mobile {
+  padding: 12px;
+}
+
+.m-mobile {
+  margin: 12px;
+}
+
+.gap-mobile {
+  gap: 12px;
+}
+
+/* ====================
+   PRINT STYLES FOR MOBILE
+   ==================== */
+
+@media print {
+  .mobile-only,
+  .tablet-only,
+  .action-buttons,
+  .print-button,
+  .translate-button {
+    display: none !important;
+  }
 }

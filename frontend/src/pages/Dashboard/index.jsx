@@ -27,6 +27,7 @@ import ReactMarkdown from "react-markdown";
 import NavigationMenu from "../NavigationMenu/NavigationMenu";
 import { convertHtmlToAstrologyJson } from "../../utilityFunction/utilityFunction";
 import { useTranslation } from "../../context/TranslationContext";
+import { toast, ToastContainer } from "react-toastify";
 
 const TypingIndicator = () => (
   <div className="message ai">
@@ -104,8 +105,17 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    if (user) {
-      // Load astrology data frfom localStorage
+    const storedUser = localStorage.getItem("user");
+    if (!user && !storedUser) {
+      toast.warning("No user logged in. Please log in.", {
+        position: "top-right",
+        autoClose: 5000,
+      });
+      setTimeout(() => {
+        navigate("/login");
+      }, 5000);
+    } else {
+      // Load astrology data from localStorage
       const storedAstrologyData = localStorage.getItem("astrologyData");
       if (storedAstrologyData) {
         try {
@@ -192,6 +202,22 @@ const Dashboard = () => {
               <motion.h1 className="welcome-title">
                 {t("welcome")} {user?.name}
               </motion.h1>
+              {!astrologyData && !isLoadingChart && (
+                <motion.div className="no-data-section">
+                  <div className="no-data-message">
+                    <Star className="icon" />
+                    <h3>{t("noDataAvailable")}</h3>
+                    <p>{t("completeProfile")}</p>
+                    <button
+                      className="generate-button"
+                      onClick={() => navigate("/login")}
+                    >
+                      {t("completeProfileButton")}
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+
               <div className="action-buttons">
                 <button
                   className="translate-button"
@@ -215,22 +241,6 @@ const Dashboard = () => {
                 </button>
               </div>
             </div>
-
-            {!astrologyData && !isLoadingChart && (
-              <motion.div className="no-data-section">
-                <div className="no-data-message">
-                  <Star className="icon" />
-                  <h3>{t("noDataAvailable")}</h3>
-                  <p>{t("completeProfile")}</p>
-                  <button
-                    className="generate-button"
-                    onClick={() => navigate("/login")}
-                  >
-                    {t("completeProfileButton")}
-                  </button>
-                </div>
-              </motion.div>
-            )}
 
             {/* Birth Details Section */}
             {astrologyData && (
@@ -438,6 +448,63 @@ const Dashboard = () => {
               </motion.div>
             )}
 
+            {/* Chat Section */}
+            <motion.div className="chat-section" id="chat-section">
+              <h2 className="chat-title">
+                <MessageCircle className="icon" /> {t("chatWithAI")}
+              </h2>
+              <p
+                className="text-sm text-gray-400 mb-2"
+                style={{ color: "white" }}
+              >
+                Free chats left today:{" "}
+                <span className="text-yellow-300 font-semibold">
+                  {freeChatsLeft}
+                </span>
+              </p>
+
+              <div className="chat-messages">
+                {messages.length === 0 ? (
+                  <div className="text-center text-gray-400 mt-4">
+                    <Sparkles className="mx-auto mb-2" /> {t("askQuestion")}
+                  </div>
+                ) : (
+                  <>
+                    {messages.map((msg, index) => (
+                      <div key={index} className={`message ${msg.role}`}>
+                        <ReactMarkdown className="message-content prose prose-invert max-w-none text-white">
+                          {msg.content}
+                        </ReactMarkdown>
+                      </div>
+                    ))}
+                    {isTyping && <TypingIndicator />}
+                  </>
+                )}
+              </div>
+
+              <div className="chat-input">
+                <input
+                  type="text"
+                  placeholder={t("typeQuestion")}
+                  value={newMessage}
+                  onChange={(e) => setNewMessage(e.target.value)}
+                />
+                <button
+                  className="send-button"
+                  onClick={sendMessage}
+                  disabled={isLoadingChat}
+                >
+                  {isLoadingChat ? (
+                    "Sending..."
+                  ) : (
+                    <>
+                      <Send className="icon" /> {t("send")}
+                    </>
+                  )}
+                </button>
+              </div>
+            </motion.div>
+
             {/* Insights Section */}
             {/* <motion.div className="insights-section">
               <div
@@ -517,66 +584,10 @@ const Dashboard = () => {
             <Crown className="icon" /> Upgrade to Premium
           </button>
         </motion.div>  */}
-
-            {/* Chat Section */}
-            <motion.div className="chat-section" id="chat-section">
-              <h2 className="chat-title">
-                <MessageCircle className="icon" /> {t("chatWithAI")}
-              </h2>
-              <p
-                className="text-sm text-gray-400 mb-2"
-                style={{ color: "white" }}
-              >
-                Free chats left today:{" "}
-                <span className="text-yellow-300 font-semibold">
-                  {freeChatsLeft}
-                </span>
-              </p>
-
-              <div className="chat-messages">
-                {messages.length === 0 ? (
-                  <div className="text-center text-gray-400 mt-4">
-                    <Sparkles className="mx-auto mb-2" /> {t("askQuestion")}
-                  </div>
-                ) : (
-                  <>
-                    {messages.map((msg, index) => (
-                      <div key={index} className={`message ${msg.role}`}>
-                        <ReactMarkdown className="message-content prose prose-invert max-w-none text-white">
-                          {msg.content}
-                        </ReactMarkdown>
-                      </div>
-                    ))}
-                    {isTyping && <TypingIndicator />}
-                  </>
-                )}
-              </div>
-
-              <div className="chat-input">
-                <input
-                  type="text"
-                  placeholder={t("typeQuestion")}
-                  value={newMessage}
-                  onChange={(e) => setNewMessage(e.target.value)}
-                />
-                <button
-                  className="send-button"
-                  onClick={sendMessage}
-                  disabled={isLoadingChat}
-                >
-                  {isLoadingChat ? (
-                    "Sending..."
-                  ) : (
-                    <>
-                      <Send className="icon" /> {t("send")}
-                    </>
-                  )}
-                </button>
-              </div>
-            </motion.div>
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

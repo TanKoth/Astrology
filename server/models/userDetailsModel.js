@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   dob:{
-    type: Date,
+    type: String,
     required: true,
   },
   timeOfBirth:{
@@ -38,7 +38,6 @@ const userSchema = new mongoose.Schema({
     type: Date,
   }
 });
-
 
 const userDetailModel = mongoose.model('UserDetail', userSchema);
 module.exports = userDetailModel;

@@ -3,9 +3,20 @@ import axiosInstance from ".";
 //save user data
 
 export const saveUserData = async (userData) => {
-  console.log("Client user data :", userData);
+  console.log("Saving user data before formatting", userData);
+  const formattedUserData = {
+    ...userData,
+    dob: userData.dob ? userData.dob.format("YYYY-MM-DD") : null, // Convert to date string
+    timeOfBirth: userData.timeOfBirth
+      ? userData.timeOfBirth.format("HH:mm")
+      : null, // Convert to time string
+  };
+  console.log("Client user data :", formattedUserData);
   try {
-    const response = await axiosInstance.post("/api/users/save", userData);
+    const response = await axiosInstance.post(
+      "/api/users/save",
+      formattedUserData
+    );
     console.log("User data saved successfully:", response.data);
     return response.data;
   } catch (err) {
@@ -16,6 +27,13 @@ export const saveUserData = async (userData) => {
 
 export const updateUserData = async (values) => {
   try {
+    // const formattedUserData = {
+    //   ...userData,
+    //   dob: userData.dob ? userData.dob.format("YYYY-MM-DD") : null, // Convert to date string
+    //   timeOfBirth: userData.timeOfBirth
+    //     ? userData.timeOfBirth.format("HH:mm")
+    //     : null, // Convert to time string
+    // };
     console.log("Updating user data with values:", values);
     const response = await axiosInstance.put(
       "/api/users/update/" + values.userId,
