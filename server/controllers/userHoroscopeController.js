@@ -102,7 +102,7 @@ const dailyHoroscope = async (req, res) => {
   const { zodiac, day } = req.body;
 
   try {
-    const dailyHoroscopeData = await horoscope("daily", zodiac, day);
+    const dailyHoroscopeData = await horoscope("daily", zodiac, day,null);
     res.status(200).json({ success: true, message: "Daily horoscope fetched successfully", data: dailyHoroscopeData });
   } catch (error) {
     console.error("Error fetching daily horoscope:", error.message);
@@ -114,7 +114,7 @@ const weeklyHoroscope = async (req, res) => {
   const { zodiac } = req.body;
 
   try {
-    const weeklyHoroscopeData = await horoscope("weekly", zodiac);
+    const weeklyHoroscopeData = await horoscope("weekly", zodiac,null,null);
     res.status(200).json({ success: true, message: "Weekly horoscope fetched successfully", data: weeklyHoroscopeData });
   } catch (error) {
     console.error("Error fetching weekly horoscope:", error.message);
@@ -126,7 +126,7 @@ const monthlyHoroscope = async (req, res) => {
   const { zodiac } = req.body;
 
   try {
-    const monthlyHoroscopeData = await horoscope("monthly", zodiac);
+    const monthlyHoroscopeData = await horoscope("monthly", zodiac,null,null);
     res.status(200).json({ success: true, message: "Monthly horoscope fetched successfully", data: monthlyHoroscopeData });
   } catch (error) {
     console.error("Error fetching monthly horoscope:", error.message);

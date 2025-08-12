@@ -22,7 +22,7 @@ import {
 import AppContext from "../../context/AppContext";
 import { userLogin } from "../../api/UserLogin";
 import "./Dashboard.css";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import NavigationMenu from "../NavigationMenu/NavigationMenu";
 import { convertHtmlToAstrologyJson } from "../../utilityFunction/utilityFunction";
@@ -73,6 +73,8 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const { t, toggleLanguage, language } = useTranslation();
 
+  const location = useLocation();
+
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
@@ -105,6 +107,11 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
+    // Only check authentication if we're actually on the dashboard route
+    if (!location.pathname.includes("/dashboard")) {
+      return null;
+    }
+
     const storedUser = localStorage.getItem("user");
     if (!user && !storedUser) {
       toast.warning("No user logged in. Please log in.", {
@@ -112,7 +119,9 @@ const Dashboard = () => {
         autoClose: 5000,
       });
       setTimeout(() => {
-        navigate("/login");
+        if (window.location.pathname === "/dashboard") {
+          navigate("/login", { replace: true });
+        }
       }, 5000);
     } else {
       // Load astrology data from localStorage
@@ -132,7 +141,7 @@ const Dashboard = () => {
       }
       setIsLoadingInsights(false);
     }
-  }, [user]);
+  }, [user, location.pathname]);
 
   const fetchInsights = async () => {
     try {
