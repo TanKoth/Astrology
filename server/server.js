@@ -11,6 +11,7 @@ const contactUsRoute = require('./routes/contactUsRoute');
 const userLoginRoute = require('./routes/userLoginRoute');
 const userAstrologyDataRouter = require('./routes/userAstrologyDataRoute');
 const horoscopeRouter = require('./routes/userHoroscopeRoute');
+const sadeSatiRouter = require('./routes/sadeSatiRoute');
 
 const app = express();
 require('dotenv').config();
@@ -40,6 +41,7 @@ app.use('/api/contactUs', contactUsRoute);
 app.use('/api/user', userLoginRoute);
 app.use('/api/astrologyData', userAstrologyDataRouter);
 app.use('/api/horoscope', horoscopeRouter);
+app.use('/api', sadeSatiRouter);
 
 app.listen(PORT, ()=> {
   console.log(`Server is running on port ${PORT}`);

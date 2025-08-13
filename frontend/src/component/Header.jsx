@@ -31,8 +31,7 @@ const Header = () => {
   }, [user]);
 
   const handleLogout = () => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
+    localStorage.clear();
     setUser(null);
     navigate("/");
   };
