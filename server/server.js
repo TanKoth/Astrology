@@ -21,12 +21,13 @@ connectDB();
 const corsOptions = {
   origin: [
     'https://vedic-vedang-ai-astrology.onrender.com',
+    'https://vedic-vedang-ai.onrender.com',
     'http://localhost:3000', // for local development
     'http://localhost:5173', // for Vite development server
   ],
   credentials: true,
   optionsSuccessStatus: 200,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS','PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token']
 };
 
