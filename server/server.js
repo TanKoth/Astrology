@@ -18,7 +18,19 @@ require('dotenv').config();
 const connectDB = require('./config/db');
 connectDB();
 
-app.use(cors());
+const corsOptions = {
+  origin: [
+    'https://vedic-vedang-ai-astrology.onrender.com',
+    'http://localhost:3000', // for local development
+    'http://localhost:5173', // for Vite development server
+  ],
+  credentials: true,
+  optionsSuccessStatus: 200,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token']
+};
+
+app.use(cors(corsOptions));
 
 //setting rate limiter
 const limiter = rateLimit({
