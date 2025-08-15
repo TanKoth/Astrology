@@ -464,7 +464,7 @@ const Panchang = () => {
                     loading={loading}
                     onClick={handleBackToForm}
                   >
-                    <ArrowLeft className="icon" /> Back to Monthly Horoscope
+                    <ArrowLeft className="icon" /> Back to Panchang
                   </Button>
 
                   <AnimatePresence>

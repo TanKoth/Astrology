@@ -305,7 +305,7 @@
   margin-top: -1rem;
 }
 
-.back-button:hover {
+.panchang-back-button:hover {
   /* text-decoration: underline; */
   transform: translateY(-5px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -610,16 +610,79 @@
     gap: 1.25rem;
   }
   
-  .action-buttons {
+  /* .action-buttons {
     flex-direction: row;
     justify-content: flex-end;
     gap: 0.75rem;
     margin-right: 1rem;
-  }
+  } */
+   
 }
 
 /* Mobile Styles (up to 768px) */
 @media (max-width: 768px) {
+  .print-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.05);
+  color: white;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-bottom: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border-bottom-right-radius: 0;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  margin-top: -1.5rem;
+  margin-left: 9.5rem !important;
+}
+
+.print-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.print-button .icon {
+  width: 16px;
+  height: 16px;
+}
+
+
+/* Translate */
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  float: right; 
+}
+.translate-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.translate-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.translate-button .icon {
+  width: 18px;
+  height: 18px;
+}
+
   .dashboard-content {
     margin-left: 0;
     padding: 0.75rem;
@@ -668,16 +731,16 @@
   }
   
   /* Action Buttons Mobile Layout */
-  .action-buttons {
+  /* .action-buttons {
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
     gap: 0.5rem;
     margin-right: 0;
     order: 2;
-  }
+  } */
   
-  .translate-button,
+  /* .translate-button,
   .print-button {
     flex: 1;
     justify-content: center;
@@ -690,7 +753,7 @@
   
   .print-button {
     border-radius: 8px;
-  }
+  } */
   
   /* Content Grid Mobile */
   .panchang-content {
@@ -756,10 +819,100 @@
     width: 100%;
     margin-top: 1rem;
   }
+  .panchang-back-button {
+    background: rgba(255, 255, 255, 0.08); 
+  border-radius: 15px; 
+  /* padding: 1.5rem; */
+  border: none;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  color: azure;
+  float: right;
+  margin-top: -2.5rem;
+}
+
+.panchang-back-button:hover {
+  /* text-decoration: underline; */
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 215, 0, 0.3) !important;
+}
+  
 }
 
 /* Small Mobile Styles (up to 480px) */
 @media (max-width: 480px) {
+  
+   .print-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.05);
+  color: white;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-bottom: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border-bottom-right-radius: 0;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  margin-top: -1.5rem;
+  margin-left: 9.5rem !important;
+  visibility: hidden;
+}
+
+.print-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+  visibility: hidden;
+}
+
+.print-button .icon {
+  width: 16px;
+  height: 16px;
+  visibility: hidden;
+}
+
+
+/* Translate */
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  float: right; 
+  visibility: hidden;
+}
+.translate-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  visibility: hidden;
+}
+
+.translate-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  visibility: hidden;
+}
+
+.translate-button .icon {
+  width: 18px;
+  height: 18px;
+  visibility: hidden;
+}
+
   .dashboard-page {
     padding: 60px 8px 15px;
   }
@@ -802,7 +955,7 @@
     gap: 0.375rem;
   }
   
-  .translate-button,
+  /* .translate-button,
   .print-button {
     padding: 0.5rem 0.625rem;
     font-size: 0.8rem;
@@ -812,7 +965,7 @@
   .print-button .icon {
     width: 14px;
     height: 14px;
-  }
+  } */
   
   /* Touch-friendly button sizes */
   .generate-button {
@@ -827,6 +980,75 @@
 
 /* Landscape Mobile Optimization */
 @media (max-width: 768px) and (orientation: landscape) {
+  .print-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.05);
+  color: white;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-bottom: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border-bottom-right-radius: 0;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  margin-top: -1.5rem;
+  margin-left: 9.5rem !important;
+  visibility: hidden;
+}
+
+.print-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+  visibility: hidden;
+}
+
+.print-button .icon {
+  width: 16px;
+  height: 16px;
+  visibility: hidden;
+}
+
+
+/* Translate */
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  float: right; 
+  visibility: hidden;
+}
+.translate-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  visibility: hidden;
+}
+
+.translate-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  visibility: hidden;
+}
+
+.translate-button .icon {
+  width: 18px;
+  height: 18px;
+  visibility: hidden;
+}
+
   .dashboard-page {
     padding: 40px 10px 20px;
   }
@@ -875,8 +1097,6 @@
 @media (max-width: 768px) {
   /* Ensure minimum touch target size */
   .panchang-header,
-  .translate-button,
-  .print-button,
   .generate-button {
     min-height: 44px;
   }
@@ -891,8 +1111,6 @@
   }
   
   /* Better focus indicators for keyboard navigation */
-  .translate-button:focus,
-  .print-button:focus,
   .generate-button:focus {
     outline: 2px solid #ffd700;
     outline-offset: 2px;
@@ -955,6 +1173,76 @@
   .no-data-message {
     backdrop-filter: blur(10px);
   }
+
+  .print-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.05);
+  color: white;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-bottom: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border-bottom-right-radius: 0;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  margin-top: -1.5rem;
+  margin-left: 9.5rem !important;
+  visibility: hidden;
+}
+
+.print-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+  visibility: hidden;
+}
+
+.print-button .icon {
+  width: 16px;
+  height: 16px;
+  visibility: hidden;
+}
+
+
+/* Translate */
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  float: right; 
+  visibility: hidden;
+}
+.translate-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  visibility: hidden;
+}
+
+.translate-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  visibility: hidden;
+}
+
+.translate-button .icon {
+  width: 18px;
+  height: 18px;
+  visibility: hidden;
+}
+
 }
 
 /* Dark mode support for mobile devices */
@@ -966,9 +1254,78 @@
   .panchang-detail {
     background: rgba(255, 255, 255, 0.05);
   }
+  
+  .print-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.05);
+  color: white;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-bottom: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border-bottom-right-radius: 0;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  margin-top: -1.5rem;
+  margin-left: 9.5rem !important;
+  visibility: hidden;
 }
 
-/*Sade Sati Details Table  */
+.print-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+  visibility: hidden;
+}
+
+.print-button .icon {
+  width: 16px;
+  height: 16px;
+  visibility: hidden;
+}
+
+
+/* Translate */
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  float: right; 
+  visibility: hidden;
+}
+.translate-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  visibility: hidden;
+}
+
+.translate-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  visibility: hidden;
+}
+
+.translate-button .icon {
+  width: 18px;
+  height: 18px;
+  visibility: hidden;
+}
+
+}
+
 
 /* Add these styles to your panchang.css file */
 .panchang-details-table {
