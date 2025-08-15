@@ -307,12 +307,15 @@ const Dashboard = () => {
                         <div className="birth-detail">
                           <span className="detail-label">{t("nakshatra")}</span>
                           <span className="detail-value">
-                            {astrologyData.personalInfo.birthDetails.Nakshtra.split(
-                              " "
-                            )[0]
-                              .replace(/[0-9]/g, "")
-                              .replace(/[^\w\s]/g, "")
-                              .trim()}
+                            {
+                              astrologyData.personalInfo.birthDetails.Nakshtra.replace(
+                                /(\D)(\d)/g,
+                                "$1-$2"
+                              ).split(" ")[0]
+                              // .replace(/[0-9]/g, "")
+                              // .replace(/[^\w\s]/g, "")
+                              // .trim()
+                            }
                           </span>
                         </div>
                         <div className="birth-detail">

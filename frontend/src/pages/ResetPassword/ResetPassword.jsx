@@ -151,15 +151,18 @@ const ResetPassword = () => {
             </button>
           )}
           {isFromDashboard && (
-            <Form.Item>
-              <Text type="secondary">
-                Note: New password cannot be the same as current password.
-              </Text>
-            </Form.Item>
+            <>
+              <Form.Item>
+                <Text type="secondary" style={{ color: "#fff" }}>
+                  Note: New password cannot be the same as current password.
+                </Text>
+              </Form.Item>
+
+              <button type="submit" className="reset-button" disabled={loading}>
+                {loading ? "Updating..." : "Update Password"}
+              </button>
+            </>
           )}
-          <button type="submit" className="reset-button" disabled={loading}>
-            {loading ? "Updating..." : "Update Password"}
-          </button>
         </Form>
 
         {message && (

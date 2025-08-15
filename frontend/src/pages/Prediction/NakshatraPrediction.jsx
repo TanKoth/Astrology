@@ -4,12 +4,7 @@ import {
   ChevronDown,
   ChevronUp,
   Star,
-  Lock,
-  MessageCircle,
-  Crown,
-  Send,
   Sparkles,
-  Navigation,
   Printer,
   Languages,
 } from "lucide-react";

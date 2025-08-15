@@ -5,7 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import AppContext from "../context/AppContext";
 import "./Header.css";
 import Kundali_Logo from "../img/kundli2.png";
-import { KeyRound, Pencil, Crown, LogOut } from "lucide-react";
+import { KeyRound, Pencil, Crown, LogOut, UserRoundPlus } from "lucide-react";
 
 const Header = () => {
   const { user, setUser } = useContext(AppContext);
@@ -46,6 +46,12 @@ const Header = () => {
 
   const profileMenu = (
     <Menu className="profile-dropdown">
+      <Menu.Item key="new-user">
+        <Link to="/signup">
+          <UserRoundPlus size={16} className="plus-icon" />
+          Add New User
+        </Link>
+      </Menu.Item>
       <Menu.Item key="user-details">
         <Link to="/editUserDetails">
           <Pencil size={16} className="pencil-icon" />

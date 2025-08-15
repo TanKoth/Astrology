@@ -118,6 +118,13 @@ nav a:hover {
   cursor: pointer;
   transition: color 0.3s ease;
 }
+.plus-icon {
+   margin-right: 5px;
+  color: #ffd700;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
 .key-icon {
   margin-right: 5px;
   color: #ffd700;
@@ -137,6 +144,7 @@ nav a:hover {
 
 .ant-dropdown-menu-item:hover .subscription-icon,
 .ant-dropdown-menu-item:hover .pencil-icon,
+.ant-dropdown-menu-item:hover .plus-icon,
 .ant-dropdown-menu-item:hover .key-icon,
 .ant-dropdown-menu-item:hover .logout-icon {
   color: #fff !important; /* Change to white on hover */

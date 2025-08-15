@@ -12,26 +12,29 @@ const userLoginRoute = require('./routes/userLoginRoute');
 const userAstrologyDataRouter = require('./routes/userAstrologyDataRoute');
 const horoscopeRouter = require('./routes/userHoroscopeRoute');
 const sadeSatiRouter = require('./routes/sadeSatiRoute');
+const panchangRouter = require('./routes/panchangRoute');
 
 const app = express();
 require('dotenv').config();
 const connectDB = require('./config/db');
 connectDB();
 
-const corsOptions = {
-  origin: [
-    'https://vedic-vedang-ai-astrology.onrender.com',
-    'https://vedic-vedang-ai.onrender.com',
-    'http://localhost:3000', // for local development
-    'http://localhost:5173', // for Vite development server
-  ],
-  credentials: true,
-  optionsSuccessStatus: 200,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS','PATCH'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token']
-};
+// const corsOptions = {
+//   origin: [
+//     'https://vedic-vedang-ai-astrology.onrender.com',
+//     'https://vedic-vedang-ai.onrender.com',
+//     'http://localhost:3000', // for local development
+//     'http://localhost:5173', // for Vite development server
+//   ],
+//   credentials: true,
+//   optionsSuccessStatus: 200,
+//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS','PATCH'],
+//   allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token']
+// };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
+
+app.use(cors());
 
 //setting rate limiter
 const limiter = rateLimit({
@@ -55,6 +58,7 @@ app.use('/api/user', userLoginRoute);
 app.use('/api/astrologyData', userAstrologyDataRouter);
 app.use('/api/horoscope', horoscopeRouter);
 app.use('/api', sadeSatiRouter);
+app.use('/api', panchangRouter);
 
 app.listen(PORT, ()=> {
   console.log(`Server is running on port ${PORT}`);
