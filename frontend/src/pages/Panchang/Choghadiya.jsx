@@ -341,7 +341,7 @@ const Choghadiya = () => {
                     transition={{ delay: 0.3 }}
                     className="panchang-form-title"
                   >
-                    Panchang Report
+                    Choghadiya Report
                   </motion.h1>
 
                   <Form
@@ -489,7 +489,7 @@ const Choghadiya = () => {
                         className="panchang-submit-button"
                         loading={loading}
                       >
-                        Choghadiya Report
+                        Get Choghadiya
                       </Button>
                     </Form.Item>
                   </Form>
