@@ -79,7 +79,7 @@ const Choghadiya = () => {
   useEffect(() => {
     if (user) {
       // fetchInsights();
-      localStorage.removeItem("ChoghadiyaData");
+      localStorage.removeItem("choghadiyaData");
     }
   }, [user]);
 

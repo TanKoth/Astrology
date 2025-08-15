@@ -849,7 +849,7 @@
   }
 
   .horoscope-container {
-    width: 50vw;
+    width: 70vw;
     padding: 1.25rem;
     margin: 0.5rem auto;
   }
@@ -895,7 +895,7 @@
 
   .back-button {
     position: absolute;
-    top: 7rem;
+    top: 9rem;
     right: 1rem;
     
     padding: 0.5rem;
