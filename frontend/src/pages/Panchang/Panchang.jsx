@@ -384,7 +384,7 @@ const Panchang = () => {
                         className="panchang-submit-button"
                         loading={loading}
                       >
-                        Panchang Report
+                        Panchang
                       </Button>
                     </Form.Item>
                   </Form>

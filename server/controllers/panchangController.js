@@ -100,10 +100,10 @@ const getPanchangReport = async (req, res) => {
 }
 
 const getChoghadiyaMuhurat = async (req, res) => {
-  const { date, time, latitude, longitude, gmtOffset, language } = req.queryParams;
-  console.log('Fetching Choghadiya Muhurat with params:', req.queryParams);
+  const { date, time, latitude, longitude, gmtOffset, lang } = req.query;
+  console.log('Fetching Choghadiya Muhurat with params:', req.query);
   try{
-    const report = await panchangReport(date, time, latitude, longitude, gmtOffset, language, 'choghadiya');
+    const report = await panchangReport(date, time, latitude, longitude, gmtOffset, lang, 'choghadiya-muhurta');
     return res.status(200).json({ success: true, report });
   }catch(error){
     console.error("Error fetching Choghadiya Muhurat:", error.message);

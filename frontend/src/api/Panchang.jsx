@@ -13,3 +13,17 @@ export const getPanchangReport = async (panchangData) => {
     throw error;
   }
 };
+
+export const getChoghadiyaReport = async (choghadiyaData) => {
+  try {
+    console.log("Fetching Choghadiya report with params:", choghadiyaData);
+
+    const response = await axiosInstance.get("/api/panchang/choghadiya", {
+      params: choghadiyaData,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching Choghadiya report:", error);
+    throw error;
+  }
+};
