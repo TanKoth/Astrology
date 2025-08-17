@@ -31,6 +31,9 @@ import YearlyHoroscope from './pages/Horoscope/YearlyPlanner';
 import SadeSati from './pages/SadeSati/SadeSati';
 import Panchang from './pages/Panchang/Panchang';
 import Choghadiya from './pages/Panchang/Choghadiya';
+import NakshatraMatching from './pages/Matching/NakshatraMatching';
+import Matching from './pages/Matching/Matching';
+import ScrollToTop from './utilityFunction/ScrollToTop';
 
 function AppRoutes() {
   const location = useLocation();
@@ -42,7 +45,7 @@ function AppRoutes() {
     <AppProvider>
       <div className="App">
         {!hideHeaderRoutes.includes(location.pathname) && <Header />}
-      
+        <ScrollToTop />
         <Routes>
           <Route path={"/"} element = {<Home/>}/>
           <Route path ={"/signup"} element = {<SignUp/>}/>
@@ -70,6 +73,8 @@ function AppRoutes() {
           <Route path= {"/sade-sati"} element={<SadeSati/>} />
           <Route path= {"/panchang"} element={<Panchang/>} />
           <Route path= {"/choghadiya"} element={<Choghadiya/>} />
+          <Route path= {"/matching"} element={<Matching/>} />
+          <Route path= {"/nakshatra-matching"} element={<NakshatraMatching/>} />
         </Routes>
       
       </div>

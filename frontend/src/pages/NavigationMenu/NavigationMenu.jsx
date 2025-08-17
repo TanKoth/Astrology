@@ -26,6 +26,7 @@ import {
   NotepadText,
 } from "lucide-react";
 import { FaRobot, FaBook } from "react-icons/fa";
+import { FaHeartCircleBolt } from "react-icons/fa6";
 import { LiaStarOfDavidSolid, LiaStarOfLifeSolid } from "react-icons/lia";
 import { GiLouvrePyramid, GiStarSattelites } from "react-icons/gi";
 import { RiPlanetFill, RiAlipayLine } from "react-icons/ri";
@@ -148,7 +149,19 @@ const NavigationMenu = () => {
       ],
     },
 
-    { path: "/matching", icon: HeartHandshake, label: "Matching" },
+    {
+      path: "/matching",
+      icon: HeartHandshake,
+      label: "Matching",
+      hasSubMenu: true,
+      subItems: [
+        {
+          path: "/nakshatra-matching",
+          icon: FaHeartCircleBolt,
+          label: "Nakshatra Matching",
+        },
+      ],
+    },
     { path: "/dasha", icon: LiaStarOfLifeSolid, label: "Dasha" },
     { path: "/dosh", icon: GiLouvrePyramid, label: "Dosh" },
     {

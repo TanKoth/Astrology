@@ -163,7 +163,7 @@ const NakshatraPrediction = () => {
           <div className="dashboard-page">
             <div className="loading-container">
               <Star className="loading-icon" />
-              <p>Loading Rasi Prediction Data........ </p>
+              <p>Loading Nakshatra Prediction Data........ </p>
             </div>
           </div>
         </div>

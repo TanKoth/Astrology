@@ -69,7 +69,7 @@ const Choghadiya = () => {
 
   const handlePrint = () => {
     const userName = user?.name || "User";
-    document.title = `Panchang Report - ${userName}`;
+    document.title = `Choghadiya Report - ${userName}`;
 
     setTimeout(() => {
       window.print();
@@ -174,8 +174,8 @@ const Choghadiya = () => {
   const nightData = (choghadiyaData) => {
     if (
       !choghadiyaData ||
-      !choghadiyaData.report ||
-      !choghadiyaData.report?.response ||
+      !choghadiyaData?.report ||
+      !choghadiyaData?.report?.response ||
       !choghadiyaData?.report?.response?.night
     ) {
       return null;
@@ -298,7 +298,7 @@ const Choghadiya = () => {
   //     : prediction;
   // };
 
-  if (isLoadingChoghadiya) {
+  if (loading || isLoadingChoghadiya) {
     return (
       <div className="dashboard-layout">
         <NavigationMenu />
