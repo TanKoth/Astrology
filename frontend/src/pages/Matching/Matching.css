@@ -837,7 +837,7 @@
   }
 
   .welcome-title {
-    font-size: 1.5rem;
+    font-size: 0.5rem;
     padding: 0 0.5rem;
   }
 
@@ -853,7 +853,7 @@
   }
 
   .matching-title {
-    font-size: 1.75rem;
+    font-size: 1rem;
   }
 
   .matching-section {
@@ -893,7 +893,7 @@
 
   .nakshatra-matching-button {
     position: absolute;
-    top: 8rem;
+    top: 6rem;
     right: 1rem;
     
     padding: 0.5rem;
