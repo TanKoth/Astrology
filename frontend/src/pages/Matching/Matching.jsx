@@ -110,7 +110,7 @@ const Matching = () => {
 
   const handleBackToForm = () => {
     setShowForm(true);
-    setHoroscope(null);
+    setMatchingData(null);
     form.resetFields();
     localStorage.removeItem("matchingData");
     navigate("/matching");
