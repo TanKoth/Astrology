@@ -569,7 +569,7 @@ const Matching = () => {
                   loading={loading}
                   onClick={handleBackToForm}
                 >
-                  <ArrowLeft className="icon" /> Back to Nakshatra Matching
+                  <ArrowLeft className="icon" /> Back
                 </Button>
 
                 <AnimatePresence>
