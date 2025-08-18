@@ -52,14 +52,14 @@ const panchangReport = async (date, time, latitude, longitude, gmtOffset, lang,e
         if(!ASTROLOGY_API_KEY){
           throw new Error("Astrology API key is not set in environment variables");
         }
-        console.log("API_KEY:", ASTROLOGY_API_KEY);
+        //console.log("API_KEY:", ASTROLOGY_API_KEY);
         const baseUrl = `https://api.jyotishamastroapi.com/api/panchang/${endpoint}`;
-        console.log("Base URL:", baseUrl);
+        //console.log("Base URL:", baseUrl);
         let timeZone = gmtOffset;
         if(timeZone.includes(':')){
           timeZone = timeZone.replace(':','.');
         }
-        console.log("Timezone:", timeZone);
+        //console.log("Timezone:", timeZone);
         const queryParams = new URLSearchParams({
           date: date,
           time: time,
@@ -68,8 +68,8 @@ const panchangReport = async (date, time, latitude, longitude, gmtOffset, lang,e
           tz: timeZone,
           lang: lang || 'en',
         });
-        console.log("Query Params:", queryParams.toString());
-        console.log("Making API call to :", `${baseUrl}?${queryParams.toString()}`);
+        //console.log("Query Params:", queryParams.toString());
+        //console.log("Making API call to :", `${baseUrl}?${queryParams.toString()}`);
         const response = await axios.get(`${baseUrl}?${queryParams.toString()}`,{
           headers:{
              'key': ASTROLOGY_API_KEY,
@@ -89,7 +89,7 @@ const panchangReport = async (date, time, latitude, longitude, gmtOffset, lang,e
 
 const getPanchangReport = async (req, res) => {
   const { date, time, latitude, longitude, gmtOffset, lang } = req.query;
-  console.log('Fetching Panchang report with params:', req.query);
+  //console.log('Fetching Panchang report with params:', req.query);
   try{
     const report = await panchangReport(date, time, latitude, longitude, gmtOffset, lang, 'panchang');
     return res.status(200).json({ success: true, message: "Panchang report fetched successfully", report: report });
@@ -101,7 +101,7 @@ const getPanchangReport = async (req, res) => {
 
 const getChoghadiyaMuhurat = async (req, res) => {
   const { date, time, latitude, longitude, gmtOffset, lang } = req.query;
-  console.log('Fetching Choghadiya Muhurat with params:', req.query);
+  //console.log('Fetching Choghadiya Muhurat with params:', req.query);
   try{
     const report = await panchangReport(date, time, latitude, longitude, gmtOffset, lang, 'choghadiya-muhurta');
     return res.status(200).json({ success: true, report });
