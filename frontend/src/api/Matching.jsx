@@ -5,12 +5,12 @@ export const getNakshatraMatchingReport = async (
   girlNakshatra,
   lang
 ) => {
-  console.log(
-    "Fetching Nakshatra Matching report...",
-    boyNakshatra,
-    girlNakshatra,
-    lang
-  );
+  // console.log(
+  //   "Fetching Nakshatra Matching report...",
+  //   boyNakshatra,
+  //   girlNakshatra,
+  //   lang
+  // );
   try {
     const response = await axiosInstance.get("/api/nakshatraMatching", {
       params: {
@@ -27,7 +27,7 @@ export const getNakshatraMatchingReport = async (
 };
 
 export const getBoyAndGirlMatchingData = async (boyData, girlData, lang) => {
-  console.log("Fetching Boy and Girl Matching data...", boyData, girlData);
+  //console.log("Fetching Boy and Girl Matching data...", boyData, girlData);
   try {
     const response = await axiosInstance.get("/api/matching", {
       params: {
@@ -44,7 +44,7 @@ export const getBoyAndGirlMatchingData = async (boyData, girlData, lang) => {
         lang: lang || "en",
       },
     });
-    console.log("Boy and Girl Matching data:", response.data);
+    //console.log("Boy and Girl Matching data:", response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching Boy and Girl Matching data:", error);

@@ -70,41 +70,41 @@ const Matching = () => {
   }, [user]);
 
   const handleLangChange = (value) => {
-    console.log("Selected Language:", value);
+    //console.log("Selected Language:", value);
     setSelectedLanguage(value);
     form.setFieldValue({ lang: value });
   };
 
   const handleBoyCitySelect = async (value) => {
-    console.log("Selected Boy city:", value);
+    //console.log("Selected Boy city:", value);
     setBoyAddress(value);
     form.setFieldsValue({ boyCity: value });
   };
 
   const handleGirlCitySelect = async (value) => {
-    console.log("Selected Girl city:", value);
+    //console.log("Selected Girl city:", value);
     setGirlAddress(value);
     form.setFieldsValue({ girlCity: value });
   };
   const handleBoyTimeChange = (value) => {
-    console.log("Selected boy time:", value);
+    //console.log("Selected boy time:", value);
     setSelectedBoyTime(value);
     form.setFieldValue("boy_time", value); // ✅ Fixed: correct syntax
   };
 
   const handleGirlTimeChange = (value) => {
-    console.log("Selected girl time:", value);
+    //console.log("Selected girl time:", value);
     setSelectedGirlTime(value);
     form.setFieldValue("girl_time", value); // ✅ Fixed: correct syntax
   };
   const handleBoyDateChange = (value) => {
-    console.log("Selected boy date:", value);
+    //console.log("Selected boy date:", value);
     setSelectedBoyDate(value);
     form.setFieldValue("boy_date_of_birth", value);
   };
 
   const handleGirlDateChange = (value) => {
-    console.log("Selected girl date:", value);
+    //console.log("Selected girl date:", value);
     setSelectedGirlDate(value);
     form.setFieldValue("girl_date_of_birth", value);
   };
@@ -133,13 +133,13 @@ const Matching = () => {
       if (storedData) {
         const parsedData = JSON.parse(storedData);
         setMatchingData(parsedData);
-        console.log("Stored Matching Data:", parsedData);
+        //console.log("Stored Matching Data:", parsedData);
         setShowForm(false);
         setLoading(false);
       } else {
         // Get form data at the beginning before any async operations
         const fieldData = form.getFieldsValue();
-        console.log("All field data:", fieldData);
+        //console.log("All field data:", fieldData);
 
         // Validate required fields first
         if (!fieldData.boyCity || !fieldData.girlCity) {
@@ -172,8 +172,8 @@ const Matching = () => {
         const formattedBoyTime = fieldData.boy_time.format("HH:mm");
         const formattedGirlTime = fieldData.girl_time.format("HH:mm");
 
-        console.log("Formatted Boy Time:", formattedBoyTime);
-        console.log("Formatted Girl Time:", formattedGirlTime);
+        //console.log("Formatted Boy Time:", formattedBoyTime);
+        //console.log("Formatted Girl Time:", formattedGirlTime);
 
         const boyData = {
           boy_dob: boyDateData,
