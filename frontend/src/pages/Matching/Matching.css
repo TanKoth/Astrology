@@ -517,9 +517,9 @@
   background-color: gray !important;
 }
 
-.nakshatra-matching-table .ant-table-tbody > tr:hover > td {
+/* .nakshatra-matching-table .ant-table-tbody > tr:hover > td {
   background: rgba(255, 215, 0, 0.1) !important;
-}
+} */
 
 .nakshatra-matching-summary,
 .nakshatra-matching-recommendations {
@@ -901,7 +901,7 @@
 
   .nakshatra-matching-button {
     position: absolute;
-    top: 3rem;
+    top: 3.5rem;
     right: 1rem;
     
     padding: 0.5rem;
