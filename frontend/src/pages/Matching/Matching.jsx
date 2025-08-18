@@ -43,6 +43,7 @@ import {
   MatchingTable,
   AdvanceDetailsTable,
   LuckyDetailsTable,
+  GunaMilanTable,
 } from "./MatchingTable";
 
 const Matching = () => {
@@ -64,7 +65,7 @@ const Matching = () => {
 
   useEffect(() => {
     if (user) {
-      //localStorage.removeItem("matchingData");
+      localStorage.removeItem("matchingData");
     }
   }, [user]);
 
@@ -606,8 +607,12 @@ const Matching = () => {
                         </span>
                         <LuckyDetailsTable matchingData={matchingData} />
                       </div>
-
-                      {/* Table */}
+                      <div className="nakshatra-matching-detail">
+                        <span className="nakshatra-matching-label">
+                          {"Gun Milan"}:
+                        </span>
+                        <GunaMilanTable matchingData={matchingData} />
+                      </div>
 
                       <div className="nakshatra-matching-detail">
                         <span className="nakshatra-matching-label">
