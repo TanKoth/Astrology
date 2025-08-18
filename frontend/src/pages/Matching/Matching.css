@@ -507,7 +507,15 @@
   color: #fff !important;
 }
 
+.nakshatra-matching-table .ant-table-tbody > tr > td.gender-column-sticky {
+  background-color: gray !important;
+  
 
+}
+
+.nakshatra-matching-table .ant-table-thead > tr > th.gender-column-sticky {
+  background-color: gray !important;
+}
 
 .nakshatra-matching-table .ant-table-tbody > tr:hover > td {
   background: rgba(255, 215, 0, 0.1) !important;
@@ -575,7 +583,7 @@
   }
 
   .welcome-title {
-    font-size: 1.8rem;
+    font-size: 1rem;
     line-height: 1.2;
     margin-bottom: 0.75rem;
     padding: 0 1rem;
@@ -837,7 +845,7 @@
   }
 
   .welcome-title {
-    font-size: 0.5rem;
+    font-size: 1.5rem;
     padding: 0 0.5rem;
   }
 
@@ -893,7 +901,7 @@
 
   .nakshatra-matching-button {
     position: absolute;
-    top: 6rem;
+    top: 3rem;
     right: 1rem;
     
     padding: 0.5rem;
