@@ -269,7 +269,7 @@
 .favorable-value {
   display: block;
   font-size: 1.25rem;
-  font-weight: 700;
+  font-weight: 500;
   color: #ffd700;
   text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
 }
@@ -294,6 +294,86 @@
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
   background-color: #e6c200;
+}
+
+/*favorable Details Table  */
+
+/* Add these styles to your Favorable.css file */
+.favorable-details-table {
+  margin-top: 20px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.favorable-table-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.table-title .icon {
+  color: #ffd700;
+}
+
+.favorable-table {
+  background: transparent !important;
+}
+
+.favorable-table .ant-table {
+  background: transparent !important;
+}
+
+.favorable-table .ant-table-thead > tr > th {
+  background: rgba(255, 215, 0, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: #ffd700 !important;
+  font-weight: 600;
+}
+
+.favorable-table .ant-table-tbody > tr > td {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: #fff !important;
+}
+
+.favorable-table .ant-table-tbody > tr:hover > td {
+  background: rgba(255, 215, 0, 0.1) !important;
+}
+
+.favorable-summary,
+.favorable-recommendations {
+  margin-top: 20px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  border-left: 4px solid #ffd700;
+}
+
+.favorable-summary h4,
+.favorable-recommendations h4 {
+  color: #ffd700;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.favorable-summary p,
+.favorable-recommendations ul {
+  color: #fff;
+  line-height: 1.6;
+}
+
+.favorable-recommendations ul {
+  padding-left: 20px;
+}
+
+.favorable-recommendations li {
+  margin-bottom: 8px;
 }
 
 
@@ -372,6 +452,12 @@
   
   .detail-value, .favorable-value {
     font-size: 1.1rem;
+  }
+  
+  .favorable-submit-button{
+    width: 40%;
+    margin: 1.5rem auto 0;
+    display: block;
   }
 }
 

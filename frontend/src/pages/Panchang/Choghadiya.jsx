@@ -106,6 +106,12 @@ const Choghadiya = () => {
                 ? "Red"
                 : muhurat === "Udveg"
                 ? "Red"
+                : muhurat === "काल"
+                ? "Red"
+                : muhurat === "रोग"
+                ? "Red"
+                : muhurat === "उद्वेग"
+                ? "Red"
                 : "Green",
             fontWeight: "bold",
           }}
@@ -127,8 +133,8 @@ const Choghadiya = () => {
                 ? "Green"
                 : type === "Inauspicious"
                 ? "Red"
-                : type === "Good"
-                ? "Blue"
+                : type === "अशुभ"
+                ? "Red"
                 : "Green",
             fontWeight: "bold",
           }}
@@ -194,6 +200,12 @@ const Choghadiya = () => {
                 ? "Red"
                 : muhurat === "Udveg"
                 ? "Red"
+                : muhurat === "काल"
+                ? "Red"
+                : muhurat === "रोग"
+                ? "Red"
+                : muhurat === "उद्वेग"
+                ? "Red"
                 : "Green",
             fontWeight: "bold",
           }}
@@ -215,8 +227,8 @@ const Choghadiya = () => {
                 ? "Green"
                 : type === "Inauspicious"
                 ? "Red"
-                : type === "Good"
-                ? "Blue"
+                : type === "अशुभ"
+                ? "Red"
                 : "Green",
             fontWeight: "bold",
           }}
@@ -261,25 +273,25 @@ const Choghadiya = () => {
 
   const handleLanguageChange = (value) => {
     // Change the language in your app context or state
-    console.log("Selected language:", value);
+    //console.log("Selected language:", value);
     setSelectedLanguage(value);
     form.setFieldsValue({ lang: value });
   };
 
   const handleDateChange = (value) => {
-    console.log("Selected date:", value);
+    //console.log("Selected date:", value);
     setSelectedDate(value);
     form.setFieldsValue({ date: value });
   };
 
   const handleTimeChange = (value) => {
-    console.log("Selected time:", value);
+    //console.log("Selected time:", value);
     setSelectedTime(value);
     form.setFieldsValue({ time: value });
   };
 
   const handleCitySelect = async (value) => {
-    console.log("Selected city:", value);
+    //console.log("Selected city:", value);
     setAddress(value);
     form.setFieldsValue({ city: value });
   };
@@ -300,7 +312,7 @@ const Choghadiya = () => {
         setIsLoadingChoghadiya(false);
       } else {
         const fieldData = form.getFieldsValue();
-        console.log("Received form data:", fieldData);
+        //console.log("Received form data:", fieldData);
         if (!fieldData.date || !fieldData.time || !fieldData.city) {
           toast.error("Please fill in all required fields.");
           setLoading(false);
@@ -317,12 +329,12 @@ const Choghadiya = () => {
         const formattedTime = fieldData.time
           ? fieldData.time.format("HH:mm")
           : null;
-        console.log(
-          "Location data,formatted date, formatted time:",
-          locationData,
-          formattedDate,
-          formattedTime
-        );
+        // console.log(
+        //   "Location data,formatted date, formatted time:",
+        //   locationData,
+        //   formattedDate,
+        //   formattedTime
+        // );
 
         const apiParams = {
           date: formattedDate,
@@ -334,7 +346,7 @@ const Choghadiya = () => {
         };
 
         const response = await getChoghadiyaReport(apiParams);
-        console.log("Choghadiya report response:", response);
+        // console.log("Choghadiya report response:", response);
         if (response && response.success) {
           setChoghadiyaData(response);
           localStorage.setItem("choghadiyaData", JSON.stringify(response));

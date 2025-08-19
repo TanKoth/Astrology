@@ -36,13 +36,19 @@ const report = async (req, res,apiEndPoint, suggestionType) => {
       timeZone: gmtOffset,
       lang: "en",
     }
-    console.log('User Birth Details:', birthDetails);
-    const gemstoneReport = await getReport(birthDetails,apiEndPoint);
-    console.log(` ${suggestionType} Report:', gemstoneReport`);
-    res.status(200).json({success: true, message: `Report for ${suggestionType} retrieved successfully`, gemstoneReport: gemstoneReport});
+    //console.log('User Birth Details:', birthDetails);
+    if(apiEndPoint === "gem_suggestion"){
+      const gemstoneReport = await getReport(birthDetails,apiEndPoint);
+      //console.log(` ${suggestionType} Report:', gemstoneReport`);
+      res.status(200).json({success: true, message: `Report for ${suggestionType} retrieved successfully`, gemstoneReport: gemstoneReport});
+    }else if(apiEndPoint === "rudraksh_suggestion"){
+      const rudrakshReport = await getReport(birthDetails,apiEndPoint);
+      //console.log(` ${suggestionType} Report:', rudrakshReport`);
+      res.status(200).json({success: true, message: `Report for ${suggestionType} retrieved successfully`, rudrakshReport: rudrakshReport});
+    }
 
   }catch(err){
-    console.log(`Error in creating ${suggestionType}:`, err.message);
+    //console.log(`Error in creating ${suggestionType}:`, err.message);
     res.status(400).json({success: false, message: `Error in creating report for ${suggestionType}`, error: err.message});
   }
 }
@@ -52,36 +58,65 @@ const getReport = async (birthDetails, endpoint) =>{
     if(!ASTROLOGY_API_KEY){
       throw new Error("Astrology API key is not set in environment variables");
     }
-    console.log("API_KEY:", ASTROLOGY_API_KEY);
+    //console.log("API_KEY:", ASTROLOGY_API_KEY);
     if(endpoint === "gem_suggestion"){
       const baseUrl = `https://api.jyotishamastroapi.com/api/extended_horoscope/${endpoint}`;
-    console.log("Base URL:", baseUrl);
-    let timeZone = birthDetails.timeZone;
-    if(timeZone.includes(':')){
-      timeZone = timeZone.replace(':','.');
-    }
-    console.log("Timezone:", timeZone);
-    const queryParams = new URLSearchParams({
-      date: birthDetails.dateOfBirth,
-      time: birthDetails.timeOfBirth,
-      latitude: birthDetails.latitude,
-      longitude: birthDetails.longitude,
-      tz: timeZone,
-      lang: "en",
-    });
-    console.log("Query Params:", queryParams.toString());
-    console.log("Making API call to :", `${baseUrl}?${queryParams.toString()}`);
-    const response = await axios.get(`${baseUrl}?${queryParams.toString()}`,{
-      headers:{
-          'key': ASTROLOGY_API_KEY,
+      //console.log("Base URL:", baseUrl);
+      let timeZone = birthDetails.timeZone;
+      if(timeZone.includes(':')){
+        timeZone = timeZone.replace(':','.');
       }
-    })
+      //console.log("Timezone:", timeZone);
+      const queryParams = new URLSearchParams({
+        date: birthDetails.dateOfBirth,
+        time: birthDetails.timeOfBirth,
+        latitude: birthDetails.latitude,
+        longitude: birthDetails.longitude,
+        tz: timeZone,
+        lang: "en",
+      });
+      //console.log("Query Params:", queryParams.toString());
+      //console.log("Making API call to :", `${baseUrl}?${queryParams.toString()}`);
+      const response = await axios.get(`${baseUrl}?${queryParams.toString()}`,{
+        headers:{
+            'key': ASTROLOGY_API_KEY,
+        }
+      })
 
-    if(response.status === 200){
-      return response.data;
-    } else {
-      throw new Error("Failed to fetch astrology insights");
-    }
+      if(response.status === 200){
+        return response.data;
+      } else {
+        throw new Error("Failed to fetch astrology insights");
+      }
+    }else if(endpoint === "rudraksh_suggestion"){
+      const baseUrl = `https://api.jyotishamastroapi.com/api/extended_horoscope/${endpoint}`;
+      //console.log("Base URL:", baseUrl);
+      let timeZone = birthDetails.timeZone;
+      if(timeZone.includes(':')){
+        timeZone = timeZone.replace(':','.');
+      }
+      //console.log("Timezone:", timeZone);
+      const queryParams = new URLSearchParams({
+        date: birthDetails.dateOfBirth,
+        time: birthDetails.timeOfBirth,
+        latitude: birthDetails.latitude,
+        longitude: birthDetails.longitude,
+        tz: timeZone,
+        lang: "en",
+      });
+      //console.log("Query Params:", queryParams.toString());
+      //console.log("Making API call to :", `${baseUrl}?${queryParams.toString()}`);
+      const response = await axios.get(`${baseUrl}?${queryParams.toString()}`,{
+        headers:{
+            'key': ASTROLOGY_API_KEY,
+        }
+      })
+
+      if(response.status === 200){
+        return response.data;
+      } else {
+        throw new Error("Failed to fetch astrology insights");
+      }
     }
     
   }catch(error){

@@ -28,6 +28,7 @@ import {
   formateDate,
 } from "../../utilityFunction/FetchLocationData";
 import { Button } from "antd";
+import { GemstoneTable } from "./ReportTable";
 
 const TypingIndicator = () => (
   <div className="message ai">
@@ -95,7 +96,7 @@ const Gemstone = () => {
         }
       } else {
         const userData = await getUserDetails(user._id);
-        console.log("Fetched user data:", userData);
+        //console.log("Fetched user data:", userData);
 
         if (!userData) {
           toast.error("No user data found. Please complete your profile.");
@@ -114,7 +115,7 @@ const Gemstone = () => {
         const locationData = await fetchLocationData(
           userData.user.placeOfBirth
         );
-        console.log("Fetched location data:", locationData);
+        //console.log("Fetched location data:", locationData);
 
         if (
           !locationData ||
@@ -138,11 +139,11 @@ const Gemstone = () => {
           gmtOffset: locationData.gmtOffset,
         };
 
-        console.log("API Parameters:", apiParams);
-        console.log("User ID:", userData.user._id);
+        //console.log("API Parameters:", apiParams);
+        //console.log("User ID:", userData.user._id);
         //if no data found, navigate to login page
         const response = await getGemstoneReport(userData.user._id, apiParams);
-        console.log("Fetched gemstone data:", response);
+        //console.log("Fetched gemstone data:", response);
         if (response && response.success) {
           setGemstoneData(response);
           localStorage.setItem("gemstoneData", JSON.stringify(response));
@@ -250,74 +251,37 @@ const Gemstone = () => {
                   {isGemstoneOpen && (
                     <motion.div className="favorable-content">
                       <div className="favorable-detail">
-                        <span className="favorable-label">{""}</span>
-                        <span className="favorable-value"></span>
-                      </div>
-                      <div className="favorable-detail">
-                        <span className="favorable-label">
-                          {"What Is Gemstone?"}
-                        </span>
+                        {/* <span className="favorable-label">
+                          {"Gemstone Details"}
+                        </span> */}
                         <span className="favorable-value">
-                          <p style={{ color: "#cbd5e1" }}>
-                            The primary use for gems throughout history has been
-                            for healing and spiritual rituals. Although gems
-                            were rare and exhibited great beauty, the reason
-                            they were so precious was due to the power they
-                            imparted to their wearers. They are storehouses of
-                            empowerment, transmitted through contact with one's
-                            body. Gems exhibit their power in a beneficial or
-                            detrimental way - depending on how they are used.
-                            All stones or gems have magnetic powers in varying
-                            degrees, and many of them are beneficial to us for
-                            their therapeutic cures. They emit vibrations and
-                            frequencies which have strong potential influence on
-                            our whole being. Here's what your Gemstone
-                            prediction looks like.
-                          </p>
+                          <GemstoneTable gemstoneData={gemstoneData} />
                         </span>
                       </div>
                       <div className="favorable-detail">
-                        <span className="favorable-label">{"Life Stone"}</span>
+                        <span className="favorable-label">{"Mantra"}</span>
                         <span className="favorable-value">
-                          <p style={{ color: "#cbd5e1" }}>
-                            A life stone is a gem for the Lagna lord. One can
-                            wear it all though his life to experience it's
-                            mystic powers. Wearing a life stone can remove
-                            obstacles and bless an individual with happiness,
-                            success and prosperity. It is generally worn to
-                            bring about an overall well being of an individual.
-                            It's cosmic rays are influence his entire existence.
-                          </p>
-                        </span>
-                      </div>
-                      <div className="favorable-detail">
-                        <span className="favorable-label">{"Lucky Stone"}</span>
-                        <span className="favorable-value">
-                          <p style={{ color: "#cbd5e1" }}>
-                            Life is a perfect blend of efforts and destiny. Get
-                            destiny to work for you by wearing you're lucky
-                            stone. An individual's lucky stone is one that keeps
-                            luck ticking bringing in pleasant surprises in life.
-                            The Lucky stone we recommend for you is:
-                          </p>
+                          {gemstoneData?.gemstoneReport?.response?.mantra ||
+                            "Om Namah Shivaya"}
                         </span>
                       </div>
                       <div className="favorable-detail">
                         <span className="favorable-label">
-                          {"Bhagya Stone"}
+                          {"Time to Wear"}
                         </span>
                         <span className="favorable-value">
-                          <p style={{ color: "#cbd5e1" }}>
-                            Recommendations of Bhagya stone also known as
-                            fortune stone is done on the basis of the Lord
-                            goverining the ninth house.This stone is known to
-                            make fortune work for you when you actually need
-                            it.Good fortune comes your way in personal and
-                            professional life .It helps you combat any obstacle
-                            that stands in your way of prosperity.
-                          </p>
+                          {gemstoneData?.gemstoneReport?.response
+                            ?.time_to_wear || "Unknown"}
                         </span>
                       </div>
+                      <div className="favorable-detail">
+                        <span className="favorable-label">{"Methods"}</span>
+                        <span className="favorable-value">
+                          {gemstoneData?.gemstoneReport?.response?.methods ||
+                            "Unknown"}
+                        </span>
+                      </div>
+
                       <div className="favorable-detail">
                         <span className="favorable-label">
                           {"Important Information"}
@@ -330,7 +294,7 @@ const Gemstone = () => {
                             also need to wear the prescribed weight, what is
                             commonly known as "Ratti". Now days markets are
                             flooded with fake gems. To give our readers genuine
-                            assistance Vedic Vedan.AI brings to you our unique
+                            assistance Vedic Vedang.AI brings to you our unique
                             genuine collection of Gemstones. To know more about
                             it please contact us!
                           </p>

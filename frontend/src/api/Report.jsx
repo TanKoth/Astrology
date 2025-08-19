@@ -1,8 +1,8 @@
 import axiosInstance from ".";
 
 export const getReport = async (userId, params, endpoint) => {
-  console.log("Fetching user report for userId:", userId);
-  console.log("Params received:", params);
+  //console.log("Fetching user report for userId:", userId);
+  //console.log("Params received:", params);
   try {
     // Validate all required parameters
     if (!params.dob) {
@@ -32,7 +32,7 @@ export const getReport = async (userId, params, endpoint) => {
     const response = await axiosInstance.get(
       `/api/reports/${endpoint}/${userId}?${urlParams.toString()}`
     );
-    console.log(`Response for ${endpoint}:`, response.data);
+    //console.log(`Response for ${endpoint}:`, response.data);
     return response.data;
   } catch (error) {
     console.error(`Cannot fetch ${endpoint} report:`, error);

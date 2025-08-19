@@ -58,7 +58,7 @@ const NavigationMenu = () => {
         if (hasActiveSubItem) {
           setExpandedSubMenus((prev) => ({
             ...prev,
-            [item.path]: true,
+            [item.id]: true,
           }));
         }
       }
@@ -67,6 +67,7 @@ const NavigationMenu = () => {
 
   const navigationItems = [
     {
+      id: "horoscope",
       path: "/dashboard",
       icon: Search,
       label: "Horoscope",
@@ -101,6 +102,7 @@ const NavigationMenu = () => {
       ],
     },
     {
+      id: "panchang",
       path: "/panchang",
       icon: Calendar,
       label: "Panchang",
@@ -108,7 +110,8 @@ const NavigationMenu = () => {
       subItems: [{ path: "/choghadiya", icon: Diamond, label: "Choghadiya" }],
     },
     {
-      path: "/Reports",
+      id: "reports",
+      path: "",
       icon: NotepadText, //gemstone-report
       label: "Reports",
       hasSubMenu: true,
@@ -126,11 +129,13 @@ const NavigationMenu = () => {
       ],
     },
     {
+      id: "sade-sati",
       path: "/sade-sati",
       icon: RiPlanetFill,
       label: "Sade Sati Report",
     },
     {
+      id: "prediction",
       path: "",
       icon: View,
       label: "Prediction",
@@ -156,6 +161,7 @@ const NavigationMenu = () => {
     },
 
     {
+      id: "matching",
       path: "/matching",
       icon: HeartHandshake,
       label: "Matching",
@@ -168,14 +174,16 @@ const NavigationMenu = () => {
         },
       ],
     },
-    { path: "/dasha", icon: LiaStarOfLifeSolid, label: "Dasha" },
-    { path: "/dosh", icon: GiLouvrePyramid, label: "Dosh" },
+    { id: "dasha", path: "/dasha", icon: LiaStarOfLifeSolid, label: "Dasha" },
+    { id: "dosh", path: "/dosh", icon: GiLouvrePyramid, label: "Dosh" },
     {
+      id: "lalkitab",
       path: "/lalkitab",
       icon: FaBook,
       label: "Lalkitab Remedies",
     },
     {
+      id: "ai-chat",
       path: "/dashboard?section=chat-section",
       icon: FaRobot,
       label: "AI Chat",
@@ -207,10 +215,10 @@ const NavigationMenu = () => {
     setIsCollapsed(!isCollapsed);
   };
 
-  const toggleSubMenu = (path) => {
+  const toggleSubMenu = (id) => {
     setExpandedSubMenus((prev) => ({
       ...prev,
-      [path]: !prev[path],
+      [id]: !prev[id],
     }));
   };
 
@@ -260,7 +268,7 @@ const NavigationMenu = () => {
             const Icon = item.icon;
             const isActive = location.pathname === item.path;
             const hasSubMenu = item.hasSubMenu && item.subItems;
-            const isExpanded = expandedSubMenus[item.path];
+            const isExpanded = expandedSubMenus[item.id];
 
             // Check if any submenu item is active
             const hasActiveSubItem =
@@ -270,7 +278,7 @@ const NavigationMenu = () => {
               );
 
             return (
-              <div key={item.path} className="nav-item-container">
+              <div key={item.id} className="nav-item-container">
                 <button
                   className={`nav-item ${isActive ? "active" : ""}${
                     hasSubMenu ? "has-submenu" : ""
@@ -302,7 +310,7 @@ const NavigationMenu = () => {
                           className="submenu-arrow"
                           onClick={(e) => {
                             e.stopPropagation();
-                            toggleSubMenu(item.path);
+                            toggleSubMenu(item.id);
                           }}
                         >
                           {isExpanded ? (
