@@ -134,7 +134,10 @@ const MoonPrediction = () => {
           "moonPredictionData",
           JSON.stringify(moonPrediction)
         );
-        // toast.success("Moon prediction data fetched successfully");
+        toast.success("Moon prediction data fetched successfully", {
+          position: "top-right",
+          autoClose: 1000,
+        });
 
         setMoonPredictionData(moonPrediction);
         setIsLoadingMoonPrediction(false);

@@ -24,6 +24,7 @@ import {
   HeartHandshake,
   Diamond,
   NotepadText,
+  ShipWheel,
 } from "lucide-react";
 import { FaRobot, FaBook } from "react-icons/fa";
 import { FaHeartCircleBolt } from "react-icons/fa6";
@@ -107,15 +108,20 @@ const NavigationMenu = () => {
       subItems: [{ path: "/choghadiya", icon: Diamond, label: "Choghadiya" }],
     },
     {
-      path: "/gemstones",
-      icon: Gem, //gemstone-report
-      label: "Gemstones",
+      path: "/Reports",
+      icon: NotepadText, //gemstone-report
+      label: "Reports",
       hasSubMenu: true,
       subItems: [
         {
-          path: "/gemstone-report",
-          icon: NotepadText,
+          path: "/gemstones",
+          icon: Gem,
           label: "Gemstone Report",
+        },
+        {
+          path: "/rudraksh-report",
+          icon: ShipWheel,
+          label: "Rudraksh Report",
         },
       ],
     },

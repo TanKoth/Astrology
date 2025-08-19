@@ -1,12 +1,12 @@
 import React from "react";
 
-const GemstoneReport = () => {
+const RudrakshReport = () => {
   return (
     <div>
-      <h1>Gemstone Report</h1>
+      <h1>Rudraksh Report</h1>
       {/* Add your report content here */}
     </div>
   );
 };
 
-export default GemstoneReport;
+export default RudrakshReport;

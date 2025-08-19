@@ -96,12 +96,46 @@ const Choghadiya = () => {
       dataIndex: "muhurat",
       key: "muhurat",
       width: "10%",
+      render: (muhurat) => (
+        <span
+          style={{
+            color:
+              muhurat === "Rog"
+                ? "Red"
+                : muhurat === "Kaal"
+                ? "Red"
+                : muhurat === "Udveg"
+                ? "Red"
+                : "Green",
+            fontWeight: "bold",
+          }}
+        >
+          {muhurat}
+        </span>
+      ),
     },
     {
       title: "Type",
       dataIndex: "type",
       key: "type",
       width: "10%",
+      render: (type) => (
+        <span
+          style={{
+            color:
+              type === "Auspicious"
+                ? "Green"
+                : type === "Inauspicious"
+                ? "Red"
+                : type === "Good"
+                ? "Blue"
+                : "Green",
+            fontWeight: "bold",
+          }}
+        >
+          {type}
+        </span>
+      ),
     },
     {
       title: "Start",
@@ -150,12 +184,46 @@ const Choghadiya = () => {
       dataIndex: "muhurat",
       key: "muhurat",
       width: "10%",
+      render: (muhurat) => (
+        <span
+          style={{
+            color:
+              muhurat === "Rog"
+                ? "Red"
+                : muhurat === "Kaal"
+                ? "Red"
+                : muhurat === "Udveg"
+                ? "Red"
+                : "Green",
+            fontWeight: "bold",
+          }}
+        >
+          {muhurat}
+        </span>
+      ),
     },
     {
       title: "Type",
       dataIndex: "type",
       key: "type",
       width: "10%",
+      render: (type) => (
+        <span
+          style={{
+            color:
+              type === "Auspicious"
+                ? "Green"
+                : type === "Inauspicious"
+                ? "Red"
+                : type === "Good"
+                ? "Blue"
+                : "Green",
+            fontWeight: "bold",
+          }}
+        >
+          {type}
+        </span>
+      ),
     },
     {
       title: "Start",

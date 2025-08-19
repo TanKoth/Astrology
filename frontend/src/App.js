@@ -18,8 +18,8 @@ import Dosh from './pages/Dosh/Dosh';
 //import Prediction from './pages/Prediction/Prediction';
 import LalKitab from './pages/LalKitab/LalKitab';
 import Dasha from './pages/Dasha/Dasha';
-import Gemstone from './pages/Gemstone/Gemstone';
-import GemstoneReport from './pages/Gemstone/GemstoneReport'
+import Gemstone from './pages/Report/Gemstone';
+import RudrakshReport from './pages/Report/RudrakshReport'
 import MoonPrediction from './pages/Prediction/MoonPrediction';
 import NakshatraPrediction from './pages/Prediction/NakshatraPrediction';
 import RasiPrediction from './pages/Prediction/RasiPrediction';
@@ -61,7 +61,7 @@ function AppRoutes() {
           <Route path= {"/lalkitab"} element= {<LalKitab/>} />
           <Route path= {"/dasha"} element={<Dasha/>} />
           <Route path= {"/gemstones"} element={<Gemstone/>} />
-          <Route path= {"/gemstone-report"} element={<GemstoneReport/>} />
+          <Route path= {"/rudraksh-report"} element={<RudrakshReport/>} />
           <Route path= {"/moon-prediction"} element={<MoonPrediction/>} />
           <Route path= {"/nakshatra-prediction"} element={<NakshatraPrediction/>} />
           <Route path= {"/rasi-prediction"} element={<RasiPrediction/>} />
