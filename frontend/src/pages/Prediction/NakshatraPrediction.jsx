@@ -47,6 +47,7 @@ const NakshatraPrediction = () => {
   const [isNakshatraPredictionOpen, setIsNakshatraPredictionOpen] =
     useState(true);
   const navigate = useNavigate(); // Initialize navigation
+  const [currentLanguage, setCurrentLanguage] = useState("en");
 
   const handlePrint = () => {
     const userName = user?.name || "User";
@@ -63,13 +64,15 @@ const NakshatraPrediction = () => {
     }
   }, [user]);
 
-  const fetchInsights = async () => {
+  const fetchInsights = async (lang = "en", forceRefresh = false) => {
     setIsLoadingNakshatraPrediction(true);
 
     try {
-      const storedData = localStorage.getItem("nakshatraPredictionData");
-      if (storedData) {
+      const cacheKey = `nakshatraPredictionData_${lang}`;
+      const storedData = localStorage.getItem(cacheKey);
+      if (storedData && !forceRefresh) {
         setNakshatraPredictionData(JSON.parse(storedData));
+        setCurrentLanguage(lang);
         setIsLoadingNakshatraPrediction(false);
       } else {
         //Get user's astrology data from database
@@ -116,6 +119,7 @@ const NakshatraPrediction = () => {
           latitude: locationData.latitude,
           longitude: locationData.longitude,
           gmtOffset: locationData.gmtOffset,
+          lang: lang,
           //userId: userData.user._id,
         };
 
@@ -128,13 +132,11 @@ const NakshatraPrediction = () => {
           apiParams
         );
         //console.log("Nakshatra Prediction Data:", nakshatraPrediction);
-        localStorage.setItem(
-          "nakshatraPredictionData",
-          JSON.stringify(nakshatraPrediction)
-        );
+        localStorage.setItem(cacheKey, JSON.stringify(nakshatraPrediction));
         // toast.success("Nakshatra prediction data fetched successfully");
 
         setNakshatraPredictionData(nakshatraPrediction);
+        setCurrentLanguage(lang);
         setIsLoadingNakshatraPrediction(false);
       }
     } catch (error) {
@@ -154,6 +156,37 @@ const NakshatraPrediction = () => {
   //     ? translated
   //     : prediction;
   // };
+
+  const handleLanguageChange = async () => {
+    const languageMap = {
+      en: "hi",
+      hi: "mr",
+      mr: "en",
+    };
+
+    const newLanguage = languageMap[currentLanguage] || "en";
+
+    // Show loading state
+    setIsLoadingNakshatraPrediction(true);
+
+    try {
+      await fetchInsights(newLanguage, true); // Force refresh for new language
+    } catch (error) {
+      console.error("Failed to change language:", error);
+      toast.error("Failed to change language. Please try again.");
+      setIsLoadingNakshatraPrediction(false);
+    }
+  };
+
+  // Get language display name
+  const getLanguageDisplayName = () => {
+    const languageNames = {
+      en: "हिंदी",
+      hi: "मराठी",
+      mr: "English",
+    };
+    return languageNames[currentLanguage] || "हिंदी";
+  };
 
   if (isLoadingNakshatraPrediction) {
     return (
@@ -183,18 +216,15 @@ const NakshatraPrediction = () => {
                 {"Nakshatra Prediction"}
               </motion.h1>
               <div className="action-buttons">
-                {/* <button
+                <button
                   className="translate-button"
-                  onClick={toggleLanguage}
+                  onClick={handleLanguageChange}
                   title="Translate"
+                  disabled={isLoadingNakshatraPrediction}
                 >
                   <Languages className="icon" />
-                  {language === "en"
-                    ? "हिंदी"
-                    : language === "hi"
-                    ? "मराठी"
-                    : "English"}
-                </button> */}
+                  {getLanguageDisplayName()}
+                </button>
                 <button
                   className="print-button"
                   onClick={handlePrint}

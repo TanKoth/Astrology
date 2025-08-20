@@ -2,7 +2,7 @@ import axiosInstance from ".";
 
 export const fetchAstrologyData = async (userId, params, endpoint) => {
   //console.log("Fetching user insights for userId:", userId);
-  //console.log("Params received:", params);
+  console.log("Params received:", params);
   try {
     // Validate all required parameters
     if (!params.dob) {
@@ -28,6 +28,7 @@ export const fetchAstrologyData = async (userId, params, endpoint) => {
       latitude: params.latitude.toString(),
       longitude: params.longitude.toString(),
       gmtOffset: params.gmtOffset.toString(),
+      lang: params.lang,
       //userId: params.userId,
     });
 

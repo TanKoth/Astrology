@@ -54,6 +54,7 @@ const RudrakshReport = () => {
   const [isRudrakshOpen, setIsRudrakshOpen] = useState(true);
 
   const navigate = useNavigate(); // Initialize navigation
+  const [currentLanguage, setCurrentLanguage] = useState("en");
 
   const handlePrint = () => {
     const userName = user?.name || "User";
@@ -80,15 +81,17 @@ const RudrakshReport = () => {
     }
   }, [user]);
 
-  const fetchReport = async () => {
+  const fetchReport = async (lang = "en", forceRefresh = false) => {
     setIsLoadingRudraksh(true);
     try {
       // load astrology data from local storage
-      const storedData = localStorage.getItem("rudrakshData");
-      if (storedData) {
+      const cacheKey = `rudrakshData_${user._id}`;
+      const storedData = localStorage.getItem(cacheKey);
+      if (storedData && !forceRefresh) {
         try {
           const parsedData = JSON.parse(storedData);
           setRudrakshData(parsedData);
+          setCurrentLanguage(lang);
           setIsLoadingRudraksh(false);
         } catch (err) {
           console.error("Error parsing rudraksh data:", err);
@@ -137,6 +140,7 @@ const RudrakshReport = () => {
           latitude: locationData.latitude,
           longitude: locationData.longitude,
           gmtOffset: locationData.gmtOffset,
+          lang: lang,
         };
 
         //console.log("API Parameters:", apiParams);
@@ -146,11 +150,12 @@ const RudrakshReport = () => {
         //console.log("Fetched rudraksh data:", response);
         if (response && response.success) {
           setRudrakshData(response);
-          localStorage.setItem("rudrakshData", JSON.stringify(response));
+          localStorage.setItem(cacheKey, JSON.stringify(response));
           toast.success("Rudraksh report fetched successfully", {
             position: "top-right",
             autoClose: 1000,
           });
+          setCurrentLanguage(lang);
           setIsLoadingRudraksh(false);
         }
       }
@@ -161,6 +166,37 @@ const RudrakshReport = () => {
     } finally {
       setIsLoadingRudraksh(false);
     }
+  };
+
+  const handleLanguageChange = async () => {
+    const languageMap = {
+      en: "hi",
+      hi: "mr",
+      mr: "en",
+    };
+
+    const newLanguage = languageMap[currentLanguage] || "en";
+
+    // Show loading state
+    setIsLoadingRudraksh(true);
+
+    try {
+      await fetchReport(newLanguage, true); // Force refresh for new language
+    } catch (error) {
+      console.error("Failed to change language:", error);
+      toast.error("Failed to change language. Please try again.");
+      setIsLoadingRudraksh(false);
+    }
+  };
+
+  // Get language display name
+  const getLanguageDisplayName = () => {
+    const languageNames = {
+      en: "हिंदी",
+      hi: "मराठी",
+      mr: "English",
+    };
+    return languageNames[currentLanguage] || "हिंदी";
   };
 
   if (isLoadingRudraksh) {
@@ -192,18 +228,15 @@ const RudrakshReport = () => {
               </motion.h1>
               {rudrakshData && (
                 <div className="action-buttons">
-                  {/* <button
-                  className="translate-button"
-                  onClick={toggleLanguage}
-                  title="Translate"
-                >
-                  <Languages className="icon" />
-                  {language === "en"
-                    ? "हिंदी"
-                    : language === "hi"
-                    ? "मराठी"
-                    : "English"}
-                </button> */}
+                  <button
+                    className="translate-button"
+                    onClick={handleLanguageChange}
+                    title="Translate"
+                    disabled={isLoadingRudraksh}
+                  >
+                    <Languages className="icon" />
+                    {getLanguageDisplayName()}
+                  </button>
                   <button
                     className="print-button"
                     onClick={handlePrint}

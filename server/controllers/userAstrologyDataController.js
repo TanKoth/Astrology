@@ -7,7 +7,7 @@ const getAstrologyPrediction = async (req, res,apiEndPoint,predictionType) => {
   try{
     const userId = req.params.userId;
 
-    const {latitude, longitude, gmtOffset} = req.query;
+    const {latitude, longitude, gmtOffset, lang} = req.query;
     if(!userId){
       return res.status(400).json({success: false, message: "User ID is required"});
     }
@@ -34,7 +34,7 @@ const getAstrologyPrediction = async (req, res,apiEndPoint,predictionType) => {
       latitude: parseFloat(latitude),
       longitude: parseFloat(longitude),
       timeZone: gmtOffset,
-      lang: "en",
+      lang: lang || "en",
     }
     console.log('User Birth Details:', birthDetails);
     const astrologyInsights = await getAstrologyInsights(birthDetails,apiEndPoint);
@@ -66,7 +66,7 @@ const getAstrologyInsights = async (birthDetails, endpoint) =>{
         latitude: birthDetails.latitude,
         longitude: birthDetails.longitude,
         tz: timeZone,
-        lang: "en",
+        lang: birthDetails.lang,
       });
       console.log("Query Params:", queryParams.toString());
       console.log("Making API call to :", `${baseUrl}?${queryParams.toString()}`);

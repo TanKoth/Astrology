@@ -8,6 +8,7 @@ import {
   Printer,
   ChevronUp,
   ChevronDown,
+  Languages,
 } from "lucide-react";
 import { Form, Button, Select } from "antd";
 
@@ -26,11 +27,17 @@ const DailyHoroscope = () => {
   const [isHoroscopeOpen, setIsHoroscopeOpen] = useState(true);
   const [showForm, setShowForm] = useState(true);
   const { user } = useContext(AppContext);
+  const [currentLanguage, setCurrentLanguage] = useState("en");
+  const [lastFormValues, setLastFormValues] = useState(null);
 
   useEffect(() => {
     if (user) {
-      localStorage.removeItem("dailyHoroscope");
-      // Load user-specific data or perform actions based on user context
+      ["en", "hi", "mr"].forEach((lang) => {
+        const keys = Object.keys(localStorage).filter(
+          (key) => key.startsWith(`dailyHoroscope_`) && key.endsWith(`_${lang}`)
+        );
+        keys.forEach((key) => localStorage.removeItem(key));
+      });
     }
   }, [user]);
 
@@ -48,7 +55,14 @@ const DailyHoroscope = () => {
     setShowForm(true);
     setHoroscope(null);
     form.resetFields();
-    localStorage.removeItem("dailyHoroscope");
+    setLastFormValues(null);
+    // Clear all language-specific cache
+    ["en", "hi", "mr"].forEach((lang) => {
+      const keys = Object.keys(localStorage).filter(
+        (key) => key.startsWith(`dailyHoroscope_`) && key.endsWith(`_${lang}`)
+      );
+      keys.forEach((key) => localStorage.removeItem(key));
+    });
   };
 
   const handlePrint = () => {
@@ -60,14 +74,32 @@ const DailyHoroscope = () => {
     }, 100);
   };
 
-  const onFinish = async (values) => {
+  const onFinish = async (values, lang = "en", forceRefresh = false) => {
     setLoading(true);
     try {
-      const { zodiacSign, day } = values;
-      const storedDay = localStorage.getItem("dailyHoroscope");
-      if (storedDay) {
-        const parsedDay = JSON.parse(storedDay);
+      const formValues = values || lastFormValues;
 
+      if (!formValues) {
+        toast.error("Please fill the form first");
+        setLoading(false);
+        return;
+      }
+
+      const { zodiacSign, day } = formValues;
+
+      // Store form values for language changes
+      setLastFormValues(formValues);
+
+      const cacheKey = `dailyHoroscope_${zodiacSign}_${day}_${lang}`;
+      const storedDay = localStorage.getItem(cacheKey);
+      if (
+        storedDay &&
+        storedDay !== "undefined" &&
+        storedDay !== "null" &&
+        !forceRefresh
+      ) {
+        const parsedDay = JSON.parse(storedDay);
+        setCurrentLanguage(lang);
         setHoroscope(parsedDay);
 
         console.log("Stored Daily Horoscope Data:", parsedDay);
@@ -75,11 +107,17 @@ const DailyHoroscope = () => {
         setShowForm(false);
         setLoading(false);
       } else {
-        const horoscopeData = await dailyHoroscope(zodiacSign, day);
+        const horoscopeData = await dailyHoroscope(zodiacSign, day, lang);
         console.log("Horoscope Data:", horoscopeData);
-        localStorage.setItem("dailyHoroscope", JSON.stringify(horoscopeData));
+        if (horoscopeData && typeof horoscopeData === "object") {
+          localStorage.setItem(cacheKey, JSON.stringify(horoscopeData));
+        }
         setHoroscope(horoscopeData);
-        form.resetFields();
+        setCurrentLanguage(lang);
+        if (values) {
+          // Only reset form if this is initial submission
+          form.resetFields();
+        }
         setShowForm(false);
         setLoading(false);
       }
@@ -92,6 +130,42 @@ const DailyHoroscope = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleLanguageChange = async () => {
+    if (!lastFormValues) {
+      toast.error("Please submit the form first before changing language");
+      return;
+    }
+
+    const languageMap = {
+      en: "hi",
+      hi: "mr",
+      mr: "en",
+    };
+
+    const newLanguage = languageMap[currentLanguage] || "en";
+
+    // Show loading state
+    setLoading(true);
+
+    try {
+      await onFinish(lastFormValues, newLanguage, true); // Force refresh for new language
+    } catch (error) {
+      console.error("Failed to change language:", error);
+      toast.error("Failed to change language. Please try again.");
+      setLoading(false);
+    }
+  };
+
+  // Get language display name
+  const getLanguageDisplayName = () => {
+    const languageNames = {
+      en: "हिंदी",
+      hi: "मराठी",
+      mr: "English",
+    };
+    return languageNames[currentLanguage] || "हिंदी";
   };
 
   return (
@@ -109,18 +183,15 @@ const DailyHoroscope = () => {
                   {"Daily Horoscope"}
                 </motion.h1>
                 <div className="action-buttons">
-                  {/* <button
-                  className="translate-button"
-                  onClick={toggleLanguage}
-                  title="Translate"
-                >
-                  <Languages className="icon" />
-                  {language === "en"
-                    ? "हिंदी"
-                    : language === "hi"
-                    ? "मराठी"
-                    : "English"}
-                </button> */}
+                  <button
+                    className="translate-button"
+                    onClick={handleLanguageChange}
+                    title="Translate"
+                    disabled={loading}
+                  >
+                    <Languages className="icon" />
+                    {getLanguageDisplayName()}
+                  </button>
                   <button
                     className="print-button"
                     onClick={handlePrint}
@@ -254,7 +325,6 @@ const DailyHoroscope = () => {
                 <Button
                   htmlType="submit"
                   className="back-button"
-                  loading={loading}
                   onClick={handleBackToForm}
                 >
                   <ArrowLeft className="icon" /> Back to Daily Horoscope

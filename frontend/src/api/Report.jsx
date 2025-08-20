@@ -27,6 +27,7 @@ export const getReport = async (userId, params, endpoint) => {
       latitude: params.latitude.toString(),
       longitude: params.longitude.toString(),
       gmtOffset: params.gmtOffset.toString(),
+      lang: params.lang || "en", // Default to English if no language is provided
     });
 
     const response = await axiosInstance.get(

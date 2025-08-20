@@ -2,7 +2,7 @@ const axios = require('axios');
 const ASTROLOGY_API_KEY = process.env.ASTROLOGY_API_KEY;
 
 
-const horoscope = async (endpoint, zodiac, day,year) =>{
+const horoscope = async (endpoint, zodiac, day,year,lang) =>{
   try{
     if(!ASTROLOGY_API_KEY){
       throw new Error("Astrology API key is not set in environment variables");
@@ -14,7 +14,7 @@ const horoscope = async (endpoint, zodiac, day,year) =>{
         const queryParams = new URLSearchParams({
         zodiac: zodiac,
         day: day,
-        lang: "en",
+        lang: lang || "en",
       });
       console.log("Query Params:", queryParams.toString());
       console.log("Making API call to :", `${baseUrl}?${queryParams.toString()}`);
@@ -34,7 +34,7 @@ const horoscope = async (endpoint, zodiac, day,year) =>{
         console.log("Base URL:", baseUrl);
         const queryParams = new URLSearchParams({
         zodiac: zodiac,
-        lang: "en",
+        lang: lang ||"en",
       });
       console.log("Query Params:", queryParams.toString());
       console.log("Making API call to :", `${baseUrl}?${queryParams.toString()}`);
@@ -54,7 +54,7 @@ const horoscope = async (endpoint, zodiac, day,year) =>{
         console.log("Base URL:", baseUrl);
         const queryParams = new URLSearchParams({
         zodiac: zodiac,
-        lang: "en",
+        lang: lang ||"en",
       });
       console.log("Query Params:", queryParams.toString());
       console.log("Making API call to :", `${baseUrl}?${queryParams.toString()}`);
@@ -75,7 +75,7 @@ const horoscope = async (endpoint, zodiac, day,year) =>{
         const queryParams = new URLSearchParams({
         zodiac: zodiac,
         year: year,
-        lang: "en",
+        lang: lang || "en",
       });
       console.log("Query Params:", queryParams.toString());
       console.log("Making API call to :", `${baseUrl}?${queryParams.toString()}`);
@@ -99,10 +99,10 @@ const horoscope = async (endpoint, zodiac, day,year) =>{
 }
 
 const dailyHoroscope = async (req, res) => {
-  const { zodiac, day } = req.body;
+  const { zodiac, day, lang } = req.body;
 
   try {
-    const dailyHoroscopeData = await horoscope("daily", zodiac, day,null);
+    const dailyHoroscopeData = await horoscope("daily", zodiac, day,null, lang);
     res.status(200).json({ success: true, message: "Daily horoscope fetched successfully", data: dailyHoroscopeData });
   } catch (error) {
     console.error("Error fetching daily horoscope:", error.message);
@@ -111,10 +111,10 @@ const dailyHoroscope = async (req, res) => {
 }
 
 const weeklyHoroscope = async (req, res) => {
-  const { zodiac } = req.body;
+  const { zodiac, lang } = req.body;
 
   try {
-    const weeklyHoroscopeData = await horoscope("weekly", zodiac,null,null);
+    const weeklyHoroscopeData = await horoscope("weekly", zodiac, null, null, lang);
     res.status(200).json({ success: true, message: "Weekly horoscope fetched successfully", data: weeklyHoroscopeData });
   } catch (error) {
     console.error("Error fetching weekly horoscope:", error.message);
@@ -123,10 +123,10 @@ const weeklyHoroscope = async (req, res) => {
 }
 
 const monthlyHoroscope = async (req, res) => {
-  const { zodiac } = req.body;
+  const { zodiac, lang  } = req.body;
 
   try {
-    const monthlyHoroscopeData = await horoscope("monthly", zodiac,null,null);
+    const monthlyHoroscopeData = await horoscope("monthly", zodiac,null,null,lang);
     res.status(200).json({ success: true, message: "Monthly horoscope fetched successfully", data: monthlyHoroscopeData });
   } catch (error) {
     console.error("Error fetching monthly horoscope:", error.message);
@@ -135,10 +135,10 @@ const monthlyHoroscope = async (req, res) => {
 }
 
 const yearlyHoroscope = async (req, res) => {
-  const { zodiac, year } = req.body;
+  const { zodiac, year, lang } = req.body;
 
   try {
-    const yearlyHoroscopeData = await horoscope("yearly", zodiac, null, year);
+    const yearlyHoroscopeData = await horoscope("yearly", zodiac, null, year, lang);
     res.status(200).json({ success: true, message: "Yearly horoscope fetched successfully", data: yearlyHoroscopeData });
   } catch (error) {
     console.error("Error fetching yearly horoscope:", error.message);

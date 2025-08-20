@@ -1,28 +1,32 @@
 import axiosInstance from ".";
 
-const horoscope = async (zodiac, day, year, endpoint) => {
-  console.log(`Fetching ${endpoint} horoscope...`, zodiac, day, year);
+const horoscope = async (zodiac, day, year, lang = "en", endpoint) => {
+  console.log(`Fetching ${endpoint} horoscope...`, zodiac, day, year, lang);
   try {
     if (endpoint === "daily") {
       const response = await axiosInstance.post(`/api/horoscope/${endpoint}`, {
         zodiac,
         day,
+        lang,
       });
       return response.data;
     } else if (endpoint === "yearly") {
       const response = await axiosInstance.post(`/api/horoscope/${endpoint}`, {
         zodiac,
         year,
+        lang,
       });
       return response.data;
     } else if (endpoint === "weekly") {
       const response = await axiosInstance.post(`/api/horoscope/${endpoint}`, {
         zodiac,
+        lang,
       });
       return response.data;
     } else if (endpoint === "monthly") {
       const response = await axiosInstance.post(`/api/horoscope/${endpoint}`, {
         zodiac,
+        lang,
       });
       return response.data;
     }
@@ -37,17 +41,17 @@ const horoscope = async (zodiac, day, year, endpoint) => {
   }
 };
 
-export const dailyHoroscope = async (zodiac, day) => {
-  return horoscope(zodiac, day, null, "daily");
+export const dailyHoroscope = async (zodiac, day, lang) => {
+  return horoscope(zodiac, day, null, lang, "daily");
 };
-export const weeklyHoroscope = async (zodiac) => {
-  return horoscope(zodiac, null, null, "weekly");
-};
-
-export const monthlyHoroscope = async (zodiac) => {
-  return horoscope(zodiac, null, null, "monthly");
+export const weeklyHoroscope = async (zodiac, lang) => {
+  return horoscope(zodiac, null, null, lang, "weekly");
 };
 
-export const yearlyHoroscope = async (zodiac, year) => {
-  return horoscope(zodiac, null, year, "yearly");
+export const monthlyHoroscope = async (zodiac, lang) => {
+  return horoscope(zodiac, null, null, lang, "monthly");
+};
+
+export const yearlyHoroscope = async (zodiac, year, lang) => {
+  return horoscope(zodiac, null, year, lang, "yearly");
 };

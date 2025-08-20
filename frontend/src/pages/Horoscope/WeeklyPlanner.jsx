@@ -8,6 +8,7 @@ import {
   Printer,
   ChevronUp,
   ChevronDown,
+  Languages,
 } from "lucide-react";
 import { Form, Button, Select } from "antd";
 import "./Horoscope.css";
@@ -26,11 +27,18 @@ const WeeklyHoroscope = () => {
   const [showForm, setShowForm] = useState(true);
   //const navigate = useNavigate();
   const { user } = useContext(AppContext);
+  const [currentLanguage, setCurrentLanguage] = useState("en");
+  const [lastFormValues, setLastFormValues] = useState(null);
 
   useEffect(() => {
     if (user) {
-      localStorage.removeItem("weeklyHoroscope");
-      // Load user-specific data or perform actions based on user context
+      ["en", "hi", "mr"].forEach((lang) => {
+        const keys = Object.keys(localStorage).filter(
+          (key) =>
+            key.startsWith(`weeklyHoroscope_`) && key.endsWith(`_${lang}`)
+        );
+        keys.forEach((key) => localStorage.removeItem(key));
+      });
     }
   }, [user]);
 
@@ -48,7 +56,12 @@ const WeeklyHoroscope = () => {
     setShowForm(true);
     setHoroscope(null);
     form.resetFields();
-    localStorage.removeItem("weeklyHoroscope");
+    ["en", "hi", "mr"].forEach((lang) => {
+      const keys = Object.keys(localStorage).filter(
+        (key) => key.startsWith(`weeklyHoroscope_`) && key.endsWith(`_${lang}`)
+      );
+      keys.forEach((key) => localStorage.removeItem(key));
+    });
   };
 
   const handlePrint = () => {
@@ -60,14 +73,28 @@ const WeeklyHoroscope = () => {
     }, 100);
   };
 
-  const onFinish = async (values) => {
+  const onFinish = async (values, lang = "en", forceRefresh = false) => {
     setLoading(true);
     try {
-      const { zodiacSign } = values;
-      const storedDay = localStorage.getItem("weeklyHoroscope");
-      if (storedDay) {
-        const parsedDay = JSON.parse(storedDay);
+      const formValues = values || lastFormValues;
 
+      if (!formValues) {
+        toast.error("Please fill the form first");
+        setLoading(false);
+        return;
+      }
+      const { zodiacSign } = formValues;
+      setLastFormValues(formValues);
+      const cacheKey = `weeklyHoroscope_${zodiacSign}_${lang}`;
+      const storedDay = localStorage.getItem(cacheKey);
+      if (
+        storedDay &&
+        storedDay !== "undefined" &&
+        storedDay !== "null" &&
+        !forceRefresh
+      ) {
+        const parsedDay = JSON.parse(storedDay);
+        setCurrentLanguage(lang);
         setHoroscope(parsedDay);
 
         console.log("Stored weekly Horoscope Data:", parsedDay);
@@ -75,11 +102,16 @@ const WeeklyHoroscope = () => {
         setShowForm(false);
         setLoading(false);
       } else {
-        const horoscopeData = await weeklyHoroscope(zodiacSign);
+        const horoscopeData = await weeklyHoroscope(zodiacSign, lang);
         console.log("Horoscope Data:", horoscopeData);
-        localStorage.setItem("weeklyHoroscope", JSON.stringify(horoscopeData));
+        if (horoscopeData && typeof horoscopeData === "object") {
+          localStorage.setItem(cacheKey, JSON.stringify(horoscopeData));
+        }
+        setCurrentLanguage(lang);
         setHoroscope(horoscopeData);
-        form.resetFields();
+        if (values) {
+          form.resetFields();
+        }
         setShowForm(false);
         setLoading(false);
       }
@@ -92,6 +124,42 @@ const WeeklyHoroscope = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleLanguageChange = async () => {
+    if (!lastFormValues) {
+      toast.error("Please submit the form first before changing language");
+      return;
+    }
+
+    const languageMap = {
+      en: "hi",
+      hi: "mr",
+      mr: "en",
+    };
+
+    const newLanguage = languageMap[currentLanguage] || "en";
+
+    // Show loading state
+    setLoading(true);
+
+    try {
+      await onFinish(lastFormValues, newLanguage, true); // Force refresh for new language
+    } catch (error) {
+      console.error("Failed to change language:", error);
+      toast.error("Failed to change language. Please try again.");
+      setLoading(false);
+    }
+  };
+
+  // Get language display name
+  const getLanguageDisplayName = () => {
+    const languageNames = {
+      en: "हिंदी",
+      hi: "मराठी",
+      mr: "English",
+    };
+    return languageNames[currentLanguage] || "हिंदी";
   };
 
   return (
@@ -109,18 +177,15 @@ const WeeklyHoroscope = () => {
                   {"Weekly Horoscope"}
                 </motion.h1>
                 <div className="action-buttons">
-                  {/* <button
-                  className="translate-button"
-                  onClick={toggleLanguage}
-                  title="Translate"
-                >
-                  <Languages className="icon" />
-                  {language === "en"
-                    ? "हिंदी"
-                    : language === "hi"
-                    ? "मराठी"
-                    : "English"}
-                </button> */}
+                  <button
+                    className="translate-button"
+                    onClick={handleLanguageChange}
+                    title="Translate"
+                    disabled={loading}
+                  >
+                    <Languages className="icon" />
+                    {getLanguageDisplayName()}
+                  </button>
                   <button
                     className="print-button"
                     onClick={handlePrint}
@@ -254,7 +319,6 @@ const WeeklyHoroscope = () => {
                 <Button
                   htmlType="submit"
                   className="back-button"
-                  loading={loading}
                   onClick={handleBackToForm}
                 >
                   <ArrowLeft className="icon" /> Back to Weekly Horoscope

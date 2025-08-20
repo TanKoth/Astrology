@@ -9,6 +9,7 @@ import {
   ChevronUp,
   ChevronDown,
   TableOfContents,
+  Languages,
 } from "lucide-react";
 import { Form, Button, Select, Input } from "antd";
 import "./Horoscope.css";
@@ -32,11 +33,18 @@ const YearlyHoroscope = () => {
   const [isDisabled, setIsDisabled] = useState(true);
   //const navigate = useNavigate();
   const { user } = useContext(AppContext);
+  const [currentLanguage, setCurrentLanguage] = useState("en");
+  const [lastFormValues, setLastFormValues] = useState(null);
 
   useEffect(() => {
     if (user) {
-      localStorage.removeItem("yearlyHoroscope");
-      // Load user-specific data or perform actions based on user context
+      ["en", "hi", "mr"].forEach((lang) => {
+        const keys = Object.keys(localStorage).filter(
+          (key) =>
+            key.startsWith(`yearlyHoroscope_`) && key.endsWith(`_${lang}`)
+        );
+        keys.forEach((key) => localStorage.removeItem(key));
+      });
     }
   }, [user]);
 
@@ -75,7 +83,12 @@ const YearlyHoroscope = () => {
     setShowForm(true);
     setHoroscope(null);
     form.resetFields();
-    localStorage.removeItem("yearlyHoroscope");
+    ["en", "hi", "mr"].forEach((lang) => {
+      const keys = Object.keys(localStorage).filter(
+        (key) => key.startsWith(`yearlyHoroscope_`) && key.endsWith(`_${lang}`)
+      );
+      keys.forEach((key) => localStorage.removeItem(key));
+    });
   };
 
   const handlePrint = () => {
@@ -87,13 +100,28 @@ const YearlyHoroscope = () => {
     }, 100);
   };
 
-  const onFinish = async (values) => {
+  const onFinish = async (values, lang = "en", forceRefresh = false) => {
     setLoading(true);
     try {
-      const { zodiacSign, year } = values;
-      const storedYear = localStorage.getItem("yearlyHoroscope");
-      if (storedYear) {
+      const formValues = values || lastFormValues;
+
+      if (!formValues) {
+        toast.error("Please fill the form first");
+        setLoading(false);
+        return;
+      }
+      const { zodiacSign, year } = formValues;
+      setLastFormValues(formValues);
+      const cacheKey = `yearlyHoroscope_${zodiacSign}_${year}_${lang}`;
+      const storedYear = localStorage.getItem(cacheKey);
+      if (
+        storedYear &&
+        storedYear !== "undefined" &&
+        storedYear !== "null" &&
+        !forceRefresh
+      ) {
         const parsedYear = JSON.parse(storedYear);
+        setCurrentLanguage(lang);
 
         setHoroscope(parsedYear);
 
@@ -102,11 +130,16 @@ const YearlyHoroscope = () => {
         setShowForm(false);
         setLoading(false);
       } else {
-        const horoscopeData = await yearlyHoroscope(zodiacSign, year);
+        const horoscopeData = await yearlyHoroscope(zodiacSign, year, lang);
         console.log("Horoscope Data:", horoscopeData);
-        localStorage.setItem("yearlyHoroscope", JSON.stringify(horoscopeData));
+        if (horoscopeData && typeof horoscopeData === "object") {
+          localStorage.setItem(cacheKey, JSON.stringify(horoscopeData));
+        }
+        setCurrentLanguage(lang);
         setHoroscope(horoscopeData);
-        form.resetFields();
+        if (values) {
+          form.resetFields();
+        }
         setShowForm(false);
         setLoading(false);
       }
@@ -119,6 +152,42 @@ const YearlyHoroscope = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleLanguageChange = async () => {
+    if (!lastFormValues) {
+      toast.error("Please submit the form first before changing language");
+      return;
+    }
+
+    const languageMap = {
+      en: "hi",
+      hi: "mr",
+      mr: "en",
+    };
+
+    const newLanguage = languageMap[currentLanguage] || "en";
+
+    // Show loading state
+    setLoading(true);
+
+    try {
+      await onFinish(lastFormValues, newLanguage, true); // Force refresh for new language
+    } catch (error) {
+      console.error("Failed to change language:", error);
+      toast.error("Failed to change language. Please try again.");
+      setLoading(false);
+    }
+  };
+
+  // Get language display name
+  const getLanguageDisplayName = () => {
+    const languageNames = {
+      en: "हिंदी",
+      hi: "मराठी",
+      mr: "English",
+    };
+    return languageNames[currentLanguage] || "हिंदी";
   };
 
   return (
@@ -136,18 +205,15 @@ const YearlyHoroscope = () => {
                   {"Yearly Horoscope"}
                 </motion.h1>
                 <div className="action-buttons">
-                  {/* <button
-                  className="translate-button"
-                  onClick={toggleLanguage}
-                  title="Translate"
-                >
-                  <Languages className="icon" />
-                  {language === "en"
-                    ? "हिंदी"
-                    : language === "hi"
-                    ? "मराठी"
-                    : "English"}
-                </button> */}
+                  <button
+                    className="translate-button"
+                    onClick={handleLanguageChange}
+                    title="Translate"
+                    disabled={loading}
+                  >
+                    <Languages className="icon" />
+                    {getLanguageDisplayName()}
+                  </button>
                   <button
                     className="print-button"
                     onClick={handlePrint}
@@ -283,7 +349,6 @@ const YearlyHoroscope = () => {
                 <Button
                   htmlType="submit"
                   className="back-button"
-                  loading={loading}
                   onClick={handleBackToForm}
                 >
                   <ArrowLeft className="icon" /> Back to Yearly Horoscope

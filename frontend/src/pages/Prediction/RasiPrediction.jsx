@@ -48,6 +48,7 @@ const RasiPrediction = () => {
   const [isLoadingRasiPrediction, setIsLoadingRasiPrediction] = useState(false);
   const [isRasiPredictionOpen, setIsRasiPredictionOpen] = useState(true);
   const navigate = useNavigate(); // Initialize navigation
+  const [currentLanguage, setCurrentLanguage] = useState("en");
 
   const handlePrint = () => {
     const userName = user?.name || "User";
@@ -64,13 +65,15 @@ const RasiPrediction = () => {
     }
   }, [user]);
 
-  const fetchInsights = async () => {
+  const fetchInsights = async (lang = "en", forceRefresh = false) => {
     setIsLoadingRasiPrediction(true);
 
     try {
-      const storedData = localStorage.getItem("rasiPredictionData");
-      if (storedData) {
+      const cacheKey = `rasiPredictionData_${lang}`;
+      const storedData = localStorage.getItem(cacheKey);
+      if (storedData && !forceRefresh) {
         setRasiPredictionData(JSON.parse(storedData));
+        setCurrentLanguage(lang);
         setIsLoadingRasiPrediction(false);
       } else {
         //Get user's astrology data from database
@@ -117,6 +120,7 @@ const RasiPrediction = () => {
           latitude: locationData.latitude,
           longitude: locationData.longitude,
           gmtOffset: locationData.gmtOffset,
+          lang: lang,
           //userId: userData.user._id,
         };
 
@@ -129,13 +133,11 @@ const RasiPrediction = () => {
           apiParams
         );
         //console.log("Rasi Prediction Data:", rasiPrediction);
-        localStorage.setItem(
-          "rasiPredictionData",
-          JSON.stringify(rasiPrediction)
-        );
+        localStorage.setItem(cacheKey, JSON.stringify(rasiPrediction));
         // toast.success("Rasi prediction data fetched successfully");
 
         setRasiPredictionData(rasiPrediction);
+        setCurrentLanguage(lang);
         setIsLoadingRasiPrediction(false);
       }
     } catch (error) {
@@ -155,6 +157,37 @@ const RasiPrediction = () => {
   //     ? translated
   //     : prediction;
   // };
+
+  const handleLanguageChange = async () => {
+    const languageMap = {
+      en: "hi",
+      hi: "mr",
+      mr: "en",
+    };
+
+    const newLanguage = languageMap[currentLanguage] || "en";
+
+    // Show loading state
+    setIsLoadingRasiPrediction(true);
+
+    try {
+      await fetchInsights(newLanguage, true); // Force refresh for new language
+    } catch (error) {
+      console.error("Failed to change language:", error);
+      toast.error("Failed to change language. Please try again.");
+      setIsLoadingRasiPrediction(false);
+    }
+  };
+
+  // Get language display name
+  const getLanguageDisplayName = () => {
+    const languageNames = {
+      en: "हिंदी",
+      hi: "मराठी",
+      mr: "English",
+    };
+    return languageNames[currentLanguage] || "हिंदी";
+  };
 
   if (isLoadingRasiPrediction) {
     return (
@@ -184,18 +217,15 @@ const RasiPrediction = () => {
                 {"Rasi Prediction"}
               </motion.h1>
               <div className="action-buttons">
-                {/* <button
+                <button
                   className="translate-button"
-                  onClick={toggleLanguage}
+                  onClick={handleLanguageChange}
                   title="Translate"
+                  disabled={isLoadingRasiPrediction}
                 >
                   <Languages className="icon" />
-                  {language === "en"
-                    ? "हिंदी"
-                    : language === "hi"
-                    ? "मराठी"
-                    : "English"}
-                </button> */}
+                  {getLanguageDisplayName()}
+                </button>
                 <button
                   className="print-button"
                   onClick={handlePrint}

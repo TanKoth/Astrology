@@ -47,6 +47,7 @@ const PanchangPrediction = () => {
   const [isPanchangPredictionOpen, setIsPanchangPredictionOpen] =
     useState(true);
   const navigate = useNavigate(); // Initialize navigation
+  const [currentLanguage, setCurrentLanguage] = useState("en");
 
   const handlePrint = () => {
     const userName = user?.name || "User";
@@ -63,13 +64,15 @@ const PanchangPrediction = () => {
     }
   }, [user]);
 
-  const fetchInsights = async () => {
+  const fetchInsights = async (lang = "en", forceRefresh = false) => {
     setIsLoadingPanchangPrediction(true);
 
     try {
-      const storedData = localStorage.getItem("panchangPredictionData");
-      if (storedData) {
+      const cacheKey = `panchangPredictionData_${lang}`;
+      const storedData = localStorage.getItem(cacheKey);
+      if (storedData && !forceRefresh) {
         setPanchangPredictionData(JSON.parse(storedData));
+        setCurrentLanguage(lang);
         setIsLoadingPanchangPrediction(false);
       } else {
         //Get user's astrology data from database
@@ -116,6 +119,7 @@ const PanchangPrediction = () => {
           latitude: locationData.latitude,
           longitude: locationData.longitude,
           gmtOffset: locationData.gmtOffset,
+          lang: lang,
           //userId: userData.user._id,
         };
 
@@ -128,13 +132,11 @@ const PanchangPrediction = () => {
           apiParams
         );
         //console.log("Panchang Prediction Data:", panchangPrediction);
-        localStorage.setItem(
-          "panchangPredictionData",
-          JSON.stringify(panchangPrediction)
-        );
+        localStorage.setItem(cacheKey, JSON.stringify(panchangPrediction));
         // toast.success("Panchang prediction data fetched successfully");
 
         setPanchangPredictionData(panchangPrediction);
+        setCurrentLanguage(lang);
         setIsLoadingPanchangPrediction(false);
       }
     } catch (error) {
@@ -154,6 +156,37 @@ const PanchangPrediction = () => {
   //     ? translated
   //     : prediction;
   // };
+
+  const handleLanguageChange = async () => {
+    const languageMap = {
+      en: "hi",
+      hi: "mr",
+      mr: "en",
+    };
+
+    const newLanguage = languageMap[currentLanguage] || "en";
+
+    // Show loading state
+    setIsLoadingPanchangPrediction(true);
+
+    try {
+      await fetchInsights(newLanguage, true); // Force refresh for new language
+    } catch (error) {
+      console.error("Failed to change language:", error);
+      toast.error("Failed to change language. Please try again.");
+      setIsLoadingPanchangPrediction(false);
+    }
+  };
+
+  // Get language display name
+  const getLanguageDisplayName = () => {
+    const languageNames = {
+      en: "हिंदी",
+      hi: "मराठी",
+      mr: "English",
+    };
+    return languageNames[currentLanguage] || "हिंदी";
+  };
 
   if (isLoadingPanchangPrediction) {
     return (
@@ -183,18 +216,15 @@ const PanchangPrediction = () => {
                 {"Panchang Prediction"}
               </motion.h1>
               <div className="action-buttons">
-                {/* <button
+                <button
                   className="translate-button"
-                  onClick={toggleLanguage}
+                  onClick={handleLanguageChange}
                   title="Translate"
+                  disabled={isLoadingPanchangPrediction}
                 >
                   <Languages className="icon" />
-                  {language === "en"
-                    ? "हिंदी"
-                    : language === "hi"
-                    ? "मराठी"
-                    : "English"}
-                </button> */}
+                  {getLanguageDisplayName()}
+                </button>
                 <button
                   className="print-button"
                   onClick={handlePrint}

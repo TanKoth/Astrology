@@ -54,6 +54,7 @@ const Gemstone = () => {
   const [isGemstoneOpen, setIsGemstoneOpen] = useState(true);
 
   const navigate = useNavigate(); // Initialize navigation
+  const [currentLanguage, setCurrentLanguage] = useState("en");
 
   const handlePrint = () => {
     const userName = user?.name || "User";
@@ -80,15 +81,17 @@ const Gemstone = () => {
     }
   }, [user]);
 
-  const fetchReport = async () => {
+  const fetchReport = async (lang = "en", forceRefresh = false) => {
     setIsLoadingGemstone(true);
     try {
       // load astrology data from local storage
-      const storedData = localStorage.getItem("gemstoneData");
-      if (storedData) {
+      const cacheKey = `gemstoneData_${user._id}`;
+      const storedData = localStorage.getItem(cacheKey);
+      if (storedData && !forceRefresh) {
         try {
           const parsedData = JSON.parse(storedData);
           setGemstoneData(parsedData);
+          setCurrentLanguage(lang);
           setIsLoadingGemstone(false);
         } catch (err) {
           console.error("Error parsing gemstone data:", err);
@@ -137,6 +140,7 @@ const Gemstone = () => {
           latitude: locationData.latitude,
           longitude: locationData.longitude,
           gmtOffset: locationData.gmtOffset,
+          lang: lang,
         };
 
         //console.log("API Parameters:", apiParams);
@@ -146,11 +150,12 @@ const Gemstone = () => {
         //console.log("Fetched gemstone data:", response);
         if (response && response.success) {
           setGemstoneData(response);
-          localStorage.setItem("gemstoneData", JSON.stringify(response));
+          localStorage.setItem(cacheKey, JSON.stringify(response));
           toast.success("Gemstone report fetched successfully", {
             position: "top-right",
             autoClose: 1000,
           });
+          setCurrentLanguage(lang);
           setIsLoadingGemstone(false);
         }
       }
@@ -161,6 +166,37 @@ const Gemstone = () => {
     } finally {
       setIsLoadingGemstone(false);
     }
+  };
+
+  const handleLanguageChange = async () => {
+    const languageMap = {
+      en: "hi",
+      hi: "mr",
+      mr: "en",
+    };
+
+    const newLanguage = languageMap[currentLanguage] || "en";
+
+    // Show loading state
+    setIsLoadingGemstone(true);
+
+    try {
+      await fetchReport(newLanguage, true); // Force refresh for new language
+    } catch (error) {
+      console.error("Failed to change language:", error);
+      toast.error("Failed to change language. Please try again.");
+      setIsLoadingGemstone(false);
+    }
+  };
+
+  // Get language display name
+  const getLanguageDisplayName = () => {
+    const languageNames = {
+      en: "हिंदी",
+      hi: "मराठी",
+      mr: "English",
+    };
+    return languageNames[currentLanguage] || "हिंदी";
   };
 
   if (isLoadingGemstone) {
@@ -192,18 +228,15 @@ const Gemstone = () => {
               </motion.h1>
               {gemstoneData && (
                 <div className="action-buttons">
-                  {/* <button
-                  className="translate-button"
-                  onClick={toggleLanguage}
-                  title="Translate"
-                >
-                  <Languages className="icon" />
-                  {language === "en"
-                    ? "हिंदी"
-                    : language === "hi"
-                    ? "मराठी"
-                    : "English"}
-                </button> */}
+                  <button
+                    className="translate-button"
+                    onClick={handleLanguageChange}
+                    title="Translate"
+                    disabled={isLoadingGemstone}
+                  >
+                    <Languages className="icon" />
+                    {getLanguageDisplayName()}
+                  </button>
                   <button
                     className="print-button"
                     onClick={handlePrint}

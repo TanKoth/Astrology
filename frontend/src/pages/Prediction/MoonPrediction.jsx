@@ -49,6 +49,7 @@ const MoonPrediction = () => {
   const [isLoadingMoonPrediction, setIsLoadingMoonPrediction] = useState(false);
   const [isMoonPredictionOpen, setIsMoonPredictionOpen] = useState(true);
   const navigate = useNavigate(); // Initialize navigation
+  const [currentLanguage, setCurrentLanguage] = useState("en");
 
   const handlePrint = () => {
     const userName = user?.name || "User";
@@ -65,14 +66,17 @@ const MoonPrediction = () => {
     }
   }, [user]);
 
-  const fetchInsights = async () => {
+  const fetchInsights = async (lang = "en", forceRefresh = false) => {
     setIsLoadingMoonPrediction(true);
 
     try {
-      const storedData = localStorage.getItem("moonPredictionData");
-      if (storedData) {
+      const cacheKey = `moonPredictionData_${lang}`;
+      const storedData = localStorage.getItem(cacheKey);
+      if (storedData && !forceRefresh) {
         setMoonPredictionData(JSON.parse(storedData));
+        setCurrentLanguage(lang);
         setIsLoadingMoonPrediction(false);
+        return;
       } else {
         //Get user's astrology data from database
         const userData = await getUserDetails(user._id);
@@ -118,6 +122,7 @@ const MoonPrediction = () => {
           latitude: locationData.latitude,
           longitude: locationData.longitude,
           gmtOffset: locationData.gmtOffset,
+          lang: lang,
           //userId: userData.user._id,
         };
 
@@ -130,16 +135,14 @@ const MoonPrediction = () => {
           apiParams
         );
         console.log("Moon Prediction Data:", moonPrediction);
-        localStorage.setItem(
-          "moonPredictionData",
-          JSON.stringify(moonPrediction)
-        );
+        localStorage.setItem(cacheKey, JSON.stringify(moonPrediction));
         toast.success("Moon prediction data fetched successfully", {
           position: "top-right",
           autoClose: 1000,
         });
 
         setMoonPredictionData(moonPrediction);
+        setCurrentLanguage(lang);
         setIsLoadingMoonPrediction(false);
       }
     } catch (error) {
@@ -159,6 +162,37 @@ const MoonPrediction = () => {
   //     ? translated
   //     : prediction;
   // };
+
+  const handleLanguageChange = async () => {
+    const languageMap = {
+      en: "hi",
+      hi: "mr",
+      mr: "en",
+    };
+
+    const newLanguage = languageMap[currentLanguage] || "en";
+
+    // Show loading state
+    setIsLoadingMoonPrediction(true);
+
+    try {
+      await fetchInsights(newLanguage, true); // Force refresh for new language
+    } catch (error) {
+      console.error("Failed to change language:", error);
+      toast.error("Failed to change language. Please try again.");
+      setIsLoadingMoonPrediction(false);
+    }
+  };
+
+  // Get language display name
+  const getLanguageDisplayName = () => {
+    const languageNames = {
+      en: "हिंदी",
+      hi: "मराठी",
+      mr: "English",
+    };
+    return languageNames[currentLanguage] || "हिंदी";
+  };
 
   if (isLoadingMoonPrediction) {
     return (
@@ -188,18 +222,15 @@ const MoonPrediction = () => {
                 {"Moon Prediction"}
               </motion.h1>
               <div className="action-buttons">
-                {/* <button
+                <button
                   className="translate-button"
-                  onClick={toggleLanguage}
+                  onClick={handleLanguageChange}
                   title="Translate"
+                  disabled={isLoadingMoonPrediction}
                 >
                   <Languages className="icon" />
-                  {language === "en"
-                    ? "हिंदी"
-                    : language === "hi"
-                    ? "मराठी"
-                    : "English"}
-                </button> */}
+                  {getLanguageDisplayName()}
+                </button>
                 <button
                   className="print-button"
                   onClick={handlePrint}
