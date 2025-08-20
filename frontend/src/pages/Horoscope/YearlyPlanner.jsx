@@ -190,6 +190,22 @@ const YearlyHoroscope = () => {
     return languageNames[currentLanguage] || "हिंदी";
   };
 
+  if (loading) {
+    return (
+      <div className="dashboard-layout">
+        <NavigationMenu />
+        <div className="dashboard-content">
+          <div className="dashboard-page">
+            <div className="loading-container">
+              <Star className="loading-icon" />
+              <p>Loading Yearly Horoscope Data........ </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="dashboard-layout">
       <NavigationMenu />
@@ -351,7 +367,7 @@ const YearlyHoroscope = () => {
                   className="back-button"
                   onClick={handleBackToForm}
                 >
-                  <ArrowLeft className="icon" /> Back to Yearly Horoscope
+                  <ArrowLeft className="icon" /> Back
                 </Button>
 
                 <AnimatePresence>
