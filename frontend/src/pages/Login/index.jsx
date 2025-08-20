@@ -8,6 +8,7 @@ import "./Login.css";
 import AppContext from "../../context/AppContext";
 import { userLogin } from "../../api/UserLogin";
 import { convertHtmlToAstrologyJson } from "../../utilityFunction/utilityFunction";
+import { toast, ToastContainer } from "react-toastify";
 
 const { Text } = Typography;
 
@@ -18,28 +19,77 @@ const Login = () => {
   const { setUser } = useContext(AppContext);
 
   const onFinish = async (values) => {
+    // try {
+    //   setLoading(true);
+    //   const data = await userLogin(values);
+    //   console.log("Login successful:", data);
+    //   const parsedAstrologyData = convertHtmlToAstrologyJson(
+    //     data.astrologyData.data
+    //   );
+    //   console.log("Parsed astrology data:", parsedAstrologyData);
+    //   localStorage.setItem("token", data.token);
+    //   localStorage.setItem("user", JSON.stringify(data.user));
+    //   if (parsedAstrologyData) {
+    //     localStorage.setItem(
+    //       "astrologyData",
+    //       JSON.stringify(parsedAstrologyData)
+    //     );
+    //   }
+    //   setUser(data.user);
+    //   navigate("/dashboard");
+    // } catch (error) {
+    //   setMessage(error.response?.data?.message || "Login failed. Try again.");
+    // }
+    // setLoading(false);
     try {
       setLoading(true);
+      setMessage(""); // Clear previous messages
+
+      // Step 1: Login API call
+      setMessage("Logging in...");
       const data = await userLogin(values);
       console.log("Login successful:", data);
+
+      // Step 2: Process astrology data
+      setMessage("Processing your astrology data...");
+
+      // Use setTimeout to allow UI to update before heavy processing
+      await new Promise((resolve) => setTimeout(resolve, 100));
+
       const parsedAstrologyData = convertHtmlToAstrologyJson(
         data.astrologyData.data
       );
       console.log("Parsed astrology data:", parsedAstrologyData);
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      if (parsedAstrologyData) {
-        localStorage.setItem(
-          "astrologyData",
-          JSON.stringify(parsedAstrologyData)
-        );
-      }
+
+      // Step 3: Store data (batch localStorage operations)
+      toast.success("Loading your data...", {
+        position: "top-right",
+        autoClose: 100,
+      });
+      const storageData = {
+        token: data.token,
+        user: JSON.stringify(data.user),
+        ...(parsedAstrologyData && {
+          astrologyData: JSON.stringify(parsedAstrologyData),
+        }),
+      };
+
+      // Batch localStorage operations
+      Object.entries(storageData).forEach(([key, value]) => {
+        localStorage.setItem(key, value);
+      });
+
       setUser(data.user);
       navigate("/dashboard");
     } catch (error) {
       setMessage(error.response?.data?.message || "Login failed. Try again.");
+      toast.error(
+        "Login failed. Try again. Please try again with proper credentials.",
+        { position: "top-right" }
+      );
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
@@ -119,6 +169,7 @@ const Login = () => {
           </Text>
         </Form>
       </motion.div>
+      <ToastContainer />
     </section>
   );
 };

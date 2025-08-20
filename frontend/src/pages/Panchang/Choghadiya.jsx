@@ -96,52 +96,45 @@ const Choghadiya = () => {
       dataIndex: "muhurat",
       key: "muhurat",
       width: "10%",
-      render: (muhurat) => (
-        <span
-          style={{
-            color:
-              muhurat === "Rog"
-                ? "Red"
-                : muhurat === "Kaal"
-                ? "Red"
-                : muhurat === "Udveg"
-                ? "Red"
-                : muhurat === "काल"
-                ? "Red"
-                : muhurat === "रोग"
-                ? "Red"
-                : muhurat === "उद्वेग"
-                ? "Red"
-                : "Green",
-            fontWeight: "bold",
-          }}
-        >
-          {muhurat}
-        </span>
-      ),
+      render: (muhurat) => {
+        const isBadMuhurat = [
+          "Rog",
+          "Kaal",
+          "Udveg",
+          "काल",
+          "रोग",
+          "उद्वेग",
+        ].includes(muhurat);
+        return (
+          <span
+            style={{
+              color: isBadMuhurat ? "Red" : "Green",
+              fontWeight: "bold",
+            }}
+          >
+            {muhurat}
+          </span>
+        );
+      },
     },
     {
       title: "Type",
       dataIndex: "type",
       key: "type",
       width: "10%",
-      render: (type) => (
-        <span
-          style={{
-            color:
-              type === "Auspicious"
-                ? "Green"
-                : type === "Inauspicious"
-                ? "Red"
-                : type === "अशुभ"
-                ? "Red"
-                : "Green",
-            fontWeight: "bold",
-          }}
-        >
-          {type}
-        </span>
-      ),
+      render: (type) => {
+        const isBadType = ["Inauspicious", "अशुभ"].includes(type);
+        return (
+          <span
+            style={{
+              color: isBadType ? "Red" : "Green",
+              fontWeight: "bold",
+            }}
+          >
+            {type}
+          </span>
+        );
+      },
     },
     {
       title: "Start",
@@ -190,52 +183,45 @@ const Choghadiya = () => {
       dataIndex: "muhurat",
       key: "muhurat",
       width: "10%",
-      render: (muhurat) => (
-        <span
-          style={{
-            color:
-              muhurat === "Rog"
-                ? "Red"
-                : muhurat === "Kaal"
-                ? "Red"
-                : muhurat === "Udveg"
-                ? "Red"
-                : muhurat === "काल"
-                ? "Red"
-                : muhurat === "रोग"
-                ? "Red"
-                : muhurat === "उद्वेग"
-                ? "Red"
-                : "Green",
-            fontWeight: "bold",
-          }}
-        >
-          {muhurat}
-        </span>
-      ),
+      render: (muhurat) => {
+        const isBadMuhurat = [
+          "Rog",
+          "Kaal",
+          "Udveg",
+          "काल",
+          "रोग",
+          "उद्वेग",
+        ].includes(muhurat);
+        return (
+          <span
+            style={{
+              color: isBadMuhurat ? "Red" : "Green",
+              fontWeight: "bold",
+            }}
+          >
+            {muhurat}
+          </span>
+        );
+      },
     },
     {
       title: "Type",
       dataIndex: "type",
       key: "type",
       width: "10%",
-      render: (type) => (
-        <span
-          style={{
-            color:
-              type === "Auspicious"
-                ? "Green"
-                : type === "Inauspicious"
-                ? "Red"
-                : type === "अशुभ"
-                ? "Red"
-                : "Green",
-            fontWeight: "bold",
-          }}
-        >
-          {type}
-        </span>
-      ),
+      render: (type) => {
+        const isBadType = ["Inauspicious", "अशुभ"].includes(type);
+        return (
+          <span
+            style={{
+              color: isBadType ? "Red" : "Green",
+              fontWeight: "bold",
+            }}
+          >
+            {type}
+          </span>
+        );
+      },
     },
     {
       title: "Start",
