@@ -85,7 +85,7 @@ const RudrakshReport = () => {
     setIsLoadingRudraksh(true);
     try {
       // load astrology data from local storage
-      const cacheKey = `rudrakshData_${user._id}`;
+      const cacheKey = `rudrakshData_${lang}`;
       const storedData = localStorage.getItem(cacheKey);
       if (storedData && !forceRefresh) {
         try {

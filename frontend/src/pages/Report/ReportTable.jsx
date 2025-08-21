@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Table } from "antd";
-import { getGemstoneReport } from "../../api/Report";
+// import { getGemstoneReport } from "../../api/Report";
 
 export const GemstoneTable = ({ gemstoneData }) => {
   const gemStoneColumns = [
@@ -82,7 +82,7 @@ export const GemstoneTable = ({ gemstoneData }) => {
 
     const gemstoneReport = gemstoneData.gemstoneReport.response;
     let data = null;
-    if (getGemstoneReport) {
+    if (gemstoneReport) {
       if (Array.isArray(data)) {
         data = gemstoneReport[0];
       }

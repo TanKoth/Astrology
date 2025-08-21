@@ -34,6 +34,7 @@ export const en = {
   lagnaChart: "Lagna Chart",
   chandraChart: "Chandra Chart",
   navamsaChart: "Navamsa Chart",
+  ashtakvargaChart: "Ashtakvarga Chart",
   horaChart: "Hora (Wealth - D2)",
   drekkanaChart: "Drekkana (Sibling - D3)",
   chaturtamshaChart: "Chaturtamsha (Luck - D4)",

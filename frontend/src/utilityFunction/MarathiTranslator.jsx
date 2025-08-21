@@ -33,6 +33,7 @@ export const ma = {
   lagnaChart: "लग्न चार्ट",
   chandraChart: "चंद्र चार्ट",
   navamsaChart: "नवांश चार्ट",
+  ashtakvargaChart: "अष्टकवर्ग चार्ट",
   horaChart: "होरा (धन - D2)",
   drekkanaChart: "द्रेक्कन (भाई-बहन - D3)",
   chaturtamshaChart: "चतुर्तमांश (भाग्य - D4)",

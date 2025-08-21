@@ -12,11 +12,23 @@ import {
   Navigation,
   Printer,
   Languages,
+  Gem,
 } from "lucide-react";
+import { LiaStarOfLifeSolid } from "react-icons/lia";
 import AppContext from "../../context/AppContext";
 import NavigationMenu from "../NavigationMenu/NavigationMenu";
-import "./Dasha.css";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./Dasha.css";
+import { getDashaReport } from "../../api/Dasha";
+import { getUserDetails } from "../../api/user";
+import {
+  fetchLocationData,
+  formateDate,
+} from "../../utilityFunction/FetchLocationData";
+import { Button } from "antd";
+import { DashaTable } from "./DashaTable";
 
 const TypingIndicator = () => (
   <div className="message ai">
@@ -36,19 +48,13 @@ const TypingIndicator = () => (
 
 const Dasha = () => {
   const { user } = useContext(AppContext);
-  const [insights, setInsights] = useState([]);
-  const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState("");
-  const [freeChatsLeft, setFreeChatsLeft] = useState(3);
-  const [isLoadingInsights, setIsLoadingInsights] = useState(true);
-  const [isLoadingChat, setIsLoadingChat] = useState(false);
-  const [isInsightsOpen, setIsInsightsOpen] = useState(true);
-  const [isTyping, setIsTyping] = useState(false);
+  // const { t, toggleLanguage, language } = useTranslation();
+  const [dashaData, setDashaData] = useState(null);
+  const [isLoadingDasha, setIsLoadingDasha] = useState(false);
+  const [isDashaOpen, setIsDashaOpen] = useState(true);
+
   const navigate = useNavigate(); // Initialize navigation
-
-  const [language, setLanguage] = useState("en");
-
-  const toggleLanguage = () => {};
+  const [currentLanguage, setCurrentLanguage] = useState("en");
 
   const handlePrint = () => {};
 
@@ -58,16 +64,136 @@ const Dasha = () => {
     }
   }, [user]);
 
-  const fetchInsights = async () => {
-    // try {
-    //   const data = await getUserInsights(user._id);
-    //   setInsights(data);
-    //   setIsLoadingInsights(false);
-    // } catch (error) {
-    //   console.error("Failed to load insights.");
-    //   setIsLoadingInsights(false);
-    // }
+  const fetchInsights = async (lang = "en", forceRefresh = false) => {
+    setIsLoadingDasha(true);
+    try {
+      // load astrology data from local storage
+      const cacheKey = `dashaData_${lang}`;
+      const storedData = localStorage.getItem(cacheKey);
+      if (storedData && !forceRefresh) {
+        try {
+          const parsedData = JSON.parse(storedData);
+          setDashaData(parsedData);
+          setCurrentLanguage(lang);
+          setIsLoadingDasha(false);
+        } catch (err) {
+          console.error("Error parsing dasha data:", err);
+          setIsLoadingDasha(false);
+        }
+      } else {
+        const userData = await getUserDetails(user._id);
+        //console.log("Fetched user data:", userData);
+
+        if (!userData) {
+          toast.error("No user data found. Please complete your profile.");
+          setIsLoadingDasha(false);
+          return;
+        }
+
+        //Check if birth place exists
+        if (!userData.user.placeOfBirth) {
+          toast.error("Birth place not found. Please update your profile.");
+          setIsLoadingDasha(false);
+          return;
+        }
+
+        //Fetch location data (latitude, longitude, GMT offset)
+        const locationData = await fetchLocationData(
+          userData.user.placeOfBirth
+        );
+        //console.log("Fetched location data:", locationData);
+
+        if (
+          !locationData ||
+          typeof locationData.latitude === "undefined" ||
+          typeof locationData.longitude === "undefined" ||
+          typeof locationData.gmtOffset === "undefined"
+        ) {
+          console.error("Invalid location data structure:", locationData);
+          toast.error(
+            "Could not fetch complete location data for birth place. Please check your birth place format."
+          );
+          setIsLoadingDasha(false);
+          return;
+        }
+        //Prepare data for API call
+        const apiParams = {
+          dob: formateDate(userData.user.dob), // Format: YYYY/MM/DD
+          timeOfBirth: userData.user.timeOfBirth, // Format: HH:MM
+          latitude: locationData.latitude,
+          longitude: locationData.longitude,
+          gmtOffset: locationData.gmtOffset,
+          lang: lang,
+        };
+
+        const response = await getDashaReport(userData.user._id, apiParams);
+        //console.log("Fetched dasha data:", response);
+        if (response && response.success) {
+          setDashaData(response);
+          localStorage.setItem(cacheKey, JSON.stringify(response));
+          toast.success("Dasha report fetched successfully", {
+            position: "top-right",
+            autoClose: 1000,
+          });
+          setCurrentLanguage(lang);
+          setIsLoadingDasha(false);
+        }
+      }
+    } catch (err) {
+      console.error("Failed to fetch dasha report:", err);
+      toast.error("Failed to load dasha report. Please try again.");
+      setIsLoadingDasha(false);
+    } finally {
+      setIsLoadingDasha(false);
+    }
   };
+
+  const handleLanguageChange = async () => {
+    const languageMap = {
+      en: "hi",
+      hi: "mr",
+      mr: "en",
+    };
+
+    const newLanguage = languageMap[currentLanguage] || "en";
+
+    // Show loading state
+    setIsLoadingDasha(true);
+
+    try {
+      await fetchInsights(newLanguage, true); // Force refresh for new language
+    } catch (error) {
+      console.error("Failed to change language:", error);
+      toast.error("Failed to change language. Please try again.");
+      setIsLoadingDasha(false);
+    }
+  };
+
+  // Get language display name
+  const getLanguageDisplayName = () => {
+    const languageNames = {
+      en: "हिंदी",
+      hi: "मराठी",
+      mr: "English",
+    };
+    return languageNames[currentLanguage] || "हिंदी";
+  };
+
+  if (isLoadingDasha) {
+    return (
+      <div className="dashboard-layout">
+        <NavigationMenu />
+        <div className="dashboard-content">
+          <div className="dashboard-page">
+            <div className="loading-container">
+              <Star className="loading-icon" />
+              <p>Loading Dasha Data........ </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="dashboard-layout">
@@ -77,88 +203,75 @@ const Dasha = () => {
           <div className="stars" />
           <div className="dashboard-container">
             <div className="welcome-section">
-              <div className="action-buttons">
-                <button
-                  className="translate-button"
-                  onClick={toggleLanguage}
-                  title="Translate"
-                >
-                  <Languages className="icon" />
-                  {language === "en" ? "हिंदी" : "English"}
-                </button>
-                <button
-                  className="print-button"
-                  onClick={handlePrint}
-                  title="Print Dashboard"
-                >
-                  <Printer className="icon" />
-                  Print
-                </button>
-              </div>
+              <motion.h1 className="welcome-title">{"Dasha"}</motion.h1>
+              {dashaData && (
+                <div className="action-buttons">
+                  <button
+                    className="translate-button"
+                    onClick={handleLanguageChange}
+                    title="Translate"
+                    disabled={isLoadingDasha}
+                  >
+                    <Languages className="icon" />
+                    {getLanguageDisplayName()}
+                  </button>
+                  <button
+                    className="print-button"
+                    onClick={handlePrint}
+                    title="Print Dashboard"
+                  >
+                    <Printer className="icon" />
+                    Print
+                  </button>
+                </div>
+              )}
             </div>
 
-            {/* {!astrologyData && !isLoadingChart && (
+            {!dashaData && !isLoadingDasha && (
               <motion.div className="no-data-section">
                 <div className="no-data-message">
                   <Star className="icon" />
-                  <h3>{t("noDataAvailable")}</h3>
-                  <p>{t("completeProfile")}</p>
+                  <h3>{"No Dasha available"}</h3>
+                  <p>{"Please complete your profile to generate Dasha."}</p>
                   <button
                     className="generate-button"
-                    onClick={() => navigate("/profile")}
+                    onClick={() => navigate("/login")}
                   >
-                    {t("completeProfileButton")}
+                    {"Go to Login"}
                   </button>
                 </div>
               </motion.div>
-            )} */}
+            )}
 
-            {/* Charts Section */}
-            {/* {astrologyData && ( */}
-            <motion.div className="insights-section">
-              <div className="insights-header">
-                <h2 className="insights-title">
-                  <Navigation className="icon" /> Dasha
-                </h2>
-              </div>
-              <motion.p className="welcome-subtitle">
-                Dasha are generated based on your birth details. If you have not
-                provided your birth details, please complete your profile to
-                generate Dosh.
-              </motion.p>
-              <div className="insights-content">
-                <div className="charts-grid">
-                  {/* {astrologyData.charts.slice(0, 3).map((chart, index) => (
-                      <div key={index} className="chart-item">
-                        <h4 className="chart-title">
-                          {chartNameMapping[index] ||
-                            chart.name ||
-                            `Chart ${index + 1}`}
-                        </h4> */}
-                  {/* <div className="chart-container"> */}
-                  {/* <img
-                            src={chart.url}
-                            // alt={chartNameMapping[index + 1] || chart.name}
-                            className="chart-image"
-                            onError={(e) => {
-                              e.target.style.display = "none";
-                              e.target.nextSibling.style.display = "flex";
-                            }}
-                          />
-                          <div
-                            className="chart-placeholder"
-                            style={{ display: "none" }}
-                          >
-                            <Star className="chart-placeholder-icon" />
-                            <span>Chart Loading.......</span>
-                          </div>
-                        </div>
-                      </div>
-                    ))} */}
+            {dashaData && (
+              <motion.div className="dasha-section">
+                <div
+                  className="dasha-header"
+                  onClick={() => setIsDashaOpen(!isDashaOpen)}
+                >
+                  <h2 className="dasha-title">
+                    <LiaStarOfLifeSolid className="icon" /> {"Dasha"}
+                  </h2>
+                  {isDashaOpen ? (
+                    <ChevronUp className="icon" />
+                  ) : (
+                    <ChevronDown className="icon" />
+                  )}
                 </div>
-              </div>
-            </motion.div>
-            {/* )} */}
+                <AnimatePresence>
+                  {isDashaOpen && (
+                    <motion.div className="dasha-content">
+                      <div className="dasha-detail">
+                        {/* <span className="dasha-label">
+                                       {"Dasha Details"}
+                                     </span> */}
+                        <DashaTable dashaData={dashaData} />
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            )}
           </div>
         </div>
       </div>

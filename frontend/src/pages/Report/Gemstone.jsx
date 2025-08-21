@@ -85,7 +85,7 @@ const Gemstone = () => {
     setIsLoadingGemstone(true);
     try {
       // load astrology data from local storage
-      const cacheKey = `gemstoneData_${user._id}`;
+      const cacheKey = `gemstoneData_${lang}`;
       const storedData = localStorage.getItem(cacheKey);
       if (storedData && !forceRefresh) {
         try {

@@ -169,6 +169,7 @@ const Dashboard = () => {
     0: t("lagnaChart"), // Lagna Chart
     1: t("chandraChart"), // Chandra Chart
     2: t("navamsaChart"), // Navamsa Chart
+    16: t("ashtakvargaChart"), // Ashtakvarga Chart
   };
 
   const sendMessage = async () => {
@@ -362,33 +363,48 @@ const Dashboard = () => {
                 </motion.p>
                 <div className="insights-content">
                   <div className="charts-grid">
-                    {astrologyData.charts.slice(0, 3).map((chart, index) => (
-                      <div key={index} className="chart-item">
-                        <h4 className="chart-title">
-                          {chartNameMapping[index] ||
-                            chart.name ||
-                            `Chart ${index + 1}`}
-                        </h4>
-                        <div className="chart-container">
-                          <img
-                            src={chart.url}
-                            alt={chartNameMapping[index + 1] || chart.name}
-                            className="chart-image"
-                            onError={(e) => {
-                              e.target.style.display = "none";
-                              e.target.nextSibling.style.display = "flex";
-                            }}
-                          />
-                          <div
-                            className="chart-placeholder"
-                            style={{ display: "none" }}
-                          >
-                            <Star className="chart-placeholder-icon" />
-                            <span>{t("chartLoading")}</span>
+                    {astrologyData.charts
+                      .filter(
+                        (chart, index) =>
+                          index < 3 || index === astrologyData.charts.length - 1
+                      )
+                      .map((chart, originalIndex) => {
+                        // Get the actual index from the original array
+                        const actualIndex =
+                          originalIndex < 3
+                            ? originalIndex
+                            : astrologyData.charts.length - 1;
+
+                        return (
+                          <div key={actualIndex} className="chart-item">
+                            <h4 className="chart-title">
+                              {chartNameMapping[actualIndex] ||
+                                chart.name ||
+                                `Chart ${actualIndex + 1}`}
+                            </h4>
+                            <div className="chart-container">
+                              <img
+                                src={chart.url}
+                                alt={
+                                  chartNameMapping[actualIndex] || chart.name
+                                }
+                                className="chart-image"
+                                onError={(e) => {
+                                  e.target.style.display = "none";
+                                  e.target.nextSibling.style.display = "flex";
+                                }}
+                              />
+                              <div
+                                className="chart-placeholder"
+                                style={{ display: "none" }}
+                              >
+                                <Star className="chart-placeholder-icon" />
+                                <span>{t("chartLoading")}</span>
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                    ))}
+                        );
+                      })}
                   </div>
                 </div>
               </motion.div>
