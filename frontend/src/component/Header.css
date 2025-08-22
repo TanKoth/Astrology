@@ -153,6 +153,39 @@ nav a:hover {
   color: #fff !important;
 }
 
+/* Toggle Button */
+
+.nav-toggle-btn {
+  background: none;
+  border: none;
+  color: #ffd700;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  margin-right: 1rem;
+}
+
+.nav-toggle-btn:hover {
+  background-color: rgba(255, 215, 0, 0.1);
+  transform: scale(1.05);
+}
+
+.nav-toggle-btn:active {
+  transform: scale(0.95);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 1rem;
+}
+
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
   .header {
@@ -255,6 +288,15 @@ nav a:hover {
     width: 17%;
     margin-right: 6.6rem;
   }
+
+  /* Toggle Button */
+  .nav-toggle-btn {
+    margin-right: 0.5rem;
+  }
+  
+  .logo {
+    font-size: 1.2rem !important;
+  }
 }
 
 /* Extra small devices */
@@ -284,6 +326,15 @@ nav a:hover {
     min-width: 160px !important;
     right: 0.75rem !important;
   }
+
+  /* Toggle Button */
+  .nav-toggle-btn {
+    margin-right: 0.5rem;
+  }
+  
+  .logo {
+    font-size: 1.2rem !important;
+  }
 }
 
 /* Landscape orientation on mobile */
@@ -299,5 +350,15 @@ nav a:hover {
 
   .logo {
     font-size: 1.4rem !important;
+  }
+
+  /* Toggle Button */
+
+  .nav-toggle-btn {
+    margin-right: 0.5rem;
+  }
+  
+  .logo {
+    font-size: 1.2rem !important;
   }
 }

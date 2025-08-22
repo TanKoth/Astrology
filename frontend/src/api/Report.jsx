@@ -48,3 +48,7 @@ export const getGemstoneReport = async (userId, params) => {
 export const getRudrakshReport = async (userId, params) => {
   return getReport(userId, params, "rudraksh_suggestion");
 };
+
+export const getPlanetKpReport = async (userId, params) => {
+  return getReport(userId, params, "planets_kp");
+};

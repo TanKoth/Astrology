@@ -5,8 +5,17 @@ import { useNavigate, Link } from "react-router-dom";
 import AppContext from "../context/AppContext";
 import "./Header.css";
 import Kundali_Logo from "../img/kundli2.png";
-import { KeyRound, Pencil, Crown, LogOut, UserRoundPlus } from "lucide-react";
+import {
+  KeyRound,
+  Pencil,
+  Crown,
+  LogOut,
+  UserRoundPlus,
+  Menu as MenuIcon,
+  X,
+} from "lucide-react";
 
+// const Header = ({ onToggleNav, isNavOpen }) => {
 const Header = () => {
   const { user, setUser } = useContext(AppContext);
   const [scrolled, setScrolled] = useState(false);
@@ -88,6 +97,16 @@ const Header = () => {
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
     >
       <div className="header-content">
+        {/* Navigation Toggle Button */}
+        {/* <motion.button
+          className="nav-toggle-btn"
+          onClick={onToggleNav}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          title={isNavOpen ? "Close Navigation" : "Open Navigation"}
+        >
+          {isNavOpen ? <X size={24} /> : <MenuIcon size={24} />}
+        </motion.button> */}
         <motion.h1
           className="logo"
           whileHover={{ scale: 1.05 }}

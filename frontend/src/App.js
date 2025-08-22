@@ -34,6 +34,7 @@ import Choghadiya from './pages/Panchang/Choghadiya';
 import NakshatraMatching from './pages/Matching/NakshatraMatching';
 import Matching from './pages/Matching/Matching';
 import ScrollToTop from './utilityFunction/ScrollToTop';
+import PlanetKp from "./pages/Planet-KP/PlanetKp";
 
 function AppRoutes() {
   const location = useLocation();
@@ -75,6 +76,7 @@ function AppRoutes() {
           <Route path= {"/choghadiya"} element={<Choghadiya/>} />
           <Route path= {"/matching"} element={<Matching/>} />
           <Route path= {"/nakshatra-matching"} element={<NakshatraMatching/>} />
+          <Route path= {"/planet-kp"} element={<PlanetKp/>} />
         </Routes>
       
       </div>

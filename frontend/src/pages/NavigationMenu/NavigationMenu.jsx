@@ -25,6 +25,8 @@ import {
   Diamond,
   NotepadText,
   ShipWheel,
+  Orbit,
+  Calculator,
 } from "lucide-react";
 import { FaRobot, FaBook } from "react-icons/fa";
 import { FaHeartCircleBolt } from "react-icons/fa6";
@@ -35,8 +37,9 @@ import { useState } from "react";
 import AppContext from "../../context/AppContext";
 import "./NavigationMenu.css";
 import Kundali_Logo from "../../img/kundali_logo.png";
+//import Image from "../../img/kundli2.png";
 
-const NavigationMenu = () => {
+const NavigationMenu = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, setUser } = useContext(AppContext);
@@ -175,7 +178,14 @@ const NavigationMenu = () => {
       ],
     },
     { id: "dasha", path: "/dasha", icon: LiaStarOfLifeSolid, label: "Dasha" },
+    {
+      id: "planetkp",
+      path: "/planet-kp",
+      icon: Orbit,
+      label: "Planet KP",
+    },
     { id: "dosh", path: "/dosh", icon: GiLouvrePyramid, label: "Dosh" },
+    { id: "calculator", path: "", icon: Calculator, label: "Calculator" },
     {
       id: "lalkitab",
       path: "/lalkitab",
@@ -240,6 +250,15 @@ const NavigationMenu = () => {
       >
         {/* Logo Header */}
         <div className="nav-header">
+          {/* <div
+            className="nav-brand"
+            onClick={() => handleNavigation("/dashboard")}
+          >
+            <img src={Image} alt="Vedic Vedang.AI" className="nav-logo" />
+            {!isCollapsed && (
+              <span className="nav-brand-text">Vedic Vedang.AI</span>
+            )} 
+          </div>*/}
           {/* Desktop Collapse Toggle */}
           <button
             className="collapse-toggle desktop-only"

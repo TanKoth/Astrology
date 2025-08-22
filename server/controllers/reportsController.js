@@ -45,6 +45,10 @@ const report = async (req, res,apiEndPoint, suggestionType) => {
       const rudrakshReport = await getReport(birthDetails,apiEndPoint);
       //console.log(` ${suggestionType} Report:', rudrakshReport`);
       res.status(200).json({success: true, message: `Report for ${suggestionType} retrieved successfully`, rudrakshReport: rudrakshReport});
+    }else if(apiEndPoint === "planets_kp"){
+      const planetsKpReport = await getReport(birthDetails,apiEndPoint);
+      //console.log(` ${suggestionType} Report:', planetsKpReport`);
+      res.status(200).json({success: true, message: `Report for ${suggestionType} retrieved successfully`, planetsKpReport: planetsKpReport});
     }
 
   }catch(err){
@@ -86,7 +90,7 @@ const getReport = async (birthDetails, endpoint) =>{
       if(response.status === 200){
         return response.data;
       } else {
-        throw new Error("Failed to fetch astrology insights");
+        throw new Error("Failed to fetch gemstone reports");
       }
     }else if(endpoint === "rudraksh_suggestion"){
       const baseUrl = `https://api.jyotishamastroapi.com/api/extended_horoscope/${endpoint}`;
@@ -115,13 +119,42 @@ const getReport = async (birthDetails, endpoint) =>{
       if(response.status === 200){
         return response.data;
       } else {
-        throw new Error("Failed to fetch astrology insights");
+        throw new Error("Failed to fetch Rudraksh reports");
+      }
+    }else if(endpoint === "planets_kp"){
+      const baseUrl = `https://api.jyotishamastroapi.com/api/extended_horoscope/${endpoint}`;
+      //console.log("Base URL:", baseUrl);
+      let timeZone = birthDetails.timeZone;
+      if(timeZone.includes(':')){
+        timeZone = timeZone.replace(':','.');
+      }
+      //console.log("Timezone:", timeZone);
+      const queryParams = new URLSearchParams({
+        date: birthDetails.dateOfBirth,
+        time: birthDetails.timeOfBirth,
+        latitude: birthDetails.latitude,
+        longitude: birthDetails.longitude,
+        tz: timeZone,
+        lang: birthDetails.lang,
+      });
+      //console.log("Query Params:", queryParams.toString());
+      //console.log("Making API call to :", `${baseUrl}?${queryParams.toString()}`);
+      const response = await axios.get(`${baseUrl}?${queryParams.toString()}`,{
+        headers:{
+            'key': ASTROLOGY_API_KEY,
+        }
+      })
+
+      if(response.status === 200){
+        return response.data;
+      } else {
+        throw new Error("Failed to fetch Planet KP reports");
       }
     }
     
   }catch(error){
-    console.error("Error fetching astrology insights:", error.message);
-    throw new Error("Failed to fetch astrology insights");
+    console.error("Error fetching reports:", error.message);
+    throw new Error("Failed to fetch reports");
   }
 }
 
@@ -133,4 +166,8 @@ const getRudrakshReport = async (req, res) => {
   return report(req, res, 'rudraksh_suggestion', "Rudraksh Suggestion");
 }
 
-module.exports = {getGemstoneReport,getRudrakshReport}
+const getPlanetKpReport = async (req, res) => {
+  return report(req, res, 'planets_kp', "Planet KP");
+}
+
+module.exports = {getGemstoneReport,getRudrakshReport,getPlanetKpReport}

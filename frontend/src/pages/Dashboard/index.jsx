@@ -28,6 +28,7 @@ import NavigationMenu from "../NavigationMenu/NavigationMenu";
 import { convertHtmlToAstrologyJson } from "../../utilityFunction/utilityFunction";
 import { useTranslation } from "../../context/TranslationContext";
 import { toast, ToastContainer } from "react-toastify";
+//import Header from "../../component/Header";
 
 const TypingIndicator = () => (
   <div className="message ai">
@@ -72,6 +73,15 @@ const Dashboard = () => {
   const [isTyping, setIsTyping] = useState(false);
   const navigate = useNavigate();
   const { t, toggleLanguage, language } = useTranslation();
+  // const [isNavOpen, setIsNavOpen] = useState(false);
+
+  // const handleToggleNav = () => {
+  //   setIsNavOpen(!isNavOpen);
+  // };
+
+  // const handleCloseNav = () => {
+  //   setIsNavOpen(false);
+  // };
 
   const location = useLocation();
 
@@ -203,6 +213,8 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-layout">
+      {/* <Header onToggleNav={handleToggleNav} isNavOpen={isNavOpen} />
+      <NavigationMenu isOpen={isNavOpen} onClose={handleCloseNav} /> */}
       <NavigationMenu />
       <div className="dashboard-content">
         <div className="dashboard-page">

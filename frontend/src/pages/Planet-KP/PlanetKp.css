@@ -148,8 +148,8 @@
   box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
 }
 
-/* Dasha Section */
-.dasha-section {
+/* KP Section */
+.kp-section {
  background: rgba(255, 255, 255, 0.05);
   border-radius: 16px;
   backdrop-filter: blur(10px);
@@ -159,7 +159,7 @@
   transition: all 0.3s ease;
 }
 
-.dasha-header {
+.kp-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -171,11 +171,11 @@
    border-radius: 12px;
 }
 
-.dasha-header:hover {
+.kp-header:hover {
   background: rgba(255, 215, 0, 0.1);
 }
 
-.dasha-title {
+.kp-title {
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -185,36 +185,36 @@
   margin: 0;
 }
 
-.dasha-title .icon {
+.kp-title .icon {
   width: 24px;
   height: 24px;
   color: #ffd700;
 }
 
-.dasha-header .icon {
+.kp-header .icon {
   width: 20px;
   height: 20px;
   color: gold;
   transition: transform 0.3s ease;
 }
 
-.dasha-header .icon:hover{
+.kp-header .icon:hover{
   box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
   cursor: pointer;
 }
 
 /* prediction Content */
-.dasha-content {
+.kp-content {
   padding: 2rem;
 }
 
-.dasha-details-grid {
+.kp-details-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1.5rem;
 }
 
-.dasha-detail {
+.kp-detail {
   background: rgba(255, 255, 255, 0.08);
   border-radius: 15px;
   padding: 1.5rem;
@@ -225,7 +225,7 @@
   margin-bottom: 1.5rem;
 }
 
-.dasha-detail::before {
+.kp-detail::before {
   content: '';
   position: absolute;
   top: 0;
@@ -237,17 +237,17 @@
   transition: opacity 0.3s ease;
 }
 
-.dasha-detail:hover {
+.kp-detail:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   background: rgba(255, 255, 255, 0.12);
 }
 
-.dasha-detail:hover::before {
+.kp-detail:hover::before {
   opacity: 1;
 }
 
-.dasha-label {
+.kp-label {
   display: block;
   font-size: 0.9rem;
   font-weight: 500;
@@ -257,7 +257,7 @@
   margin-bottom: 0.75rem;
 }
 
-.dasha-value {
+.kp-value {
   display: block;
   font-size: 1.25rem;
   font-weight: 700;
@@ -266,7 +266,7 @@
 }
 
 /* Animation Classes */
-.dasha-content {
+.kp-content {
   animation: fadeInUp 0.6s ease;
 }
 
@@ -300,17 +300,17 @@
     display: none;
   }
   
-  .dasha-section {
+  .kp-section {
     background: white;
     border: 1px solid #ddd;
     box-shadow: none;
   }
 
-  .dasha-title {
+  .kp-title {
     color: #333;
   }
 
-  .detail-value, .dasha-value {
+  .detail-value, .kp-value {
     color: #333;
   }
 }
@@ -390,7 +390,7 @@
   position: relative;
   overflow: hidden;
 }
-.dashaDetails-button {  
+.kpDetails-button {  
   align-items: center;
   background: rgba(255,255,255,0.05);
   color: #b8c1ec;
@@ -406,7 +406,7 @@
   margin: 0 auto;
 }
 
-.dashaDetails-button:hover {
+.kpDetails-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
   cursor: pointer;
@@ -441,7 +441,7 @@
     font-size: 1.1rem;
   }
   
-  .dasha-details-grid {
+  .kp-details-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.25rem;
   }
@@ -484,21 +484,21 @@
     padding: 0 1rem;
   }
 
-  /* Dasha Section Mobile */
-  .dasha-section {
+  /* KP Section Mobile */
+  .kp-section {
     margin-bottom: 1.5rem;
     border-radius: 12px;
     padding: 1rem;
   }
 
-  .dasha-header {
+  .kp-header {
     padding: 1rem;
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
   }
 
-  .dasha-title {
+  .kp-title {
     font-size: 1.25rem;
     width: 100%;
   }
@@ -529,27 +529,27 @@
   }
   
   /* Content Grid Mobile */
-  .dasha-content {
+  .kp-content {
     padding: 1rem;
   }
   
-  .dasha-details-grid {
+  .kp-details-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
 
-  .dasha-detail {
+  .kp-detail {
     padding: 1.25rem;
     margin-bottom: 1rem;
     border-radius: 12px;
   }
   
-  .dasha-label {
+  .kp-label {
     font-size: 0.85rem;
     margin-bottom: 0.5rem;
   }
   
-  .dasha-value {
+  .kp-value {
     font-size: 1.1rem;
     line-height: 1.3;
   }
@@ -609,28 +609,28 @@
     font-size: 0.9rem;
   }
 
-  .dasha-section {
+  .kp-section {
     padding: 0.75rem;
     margin-bottom: 1rem;
   }
   
-  .dasha-header {
+  .kp-header {
     padding: 0.75rem;
   }
   
-  .dasha-title {
+  .kp-title {
     font-size: 1.1rem;
   }
   
-  .dasha-content {
+  .kp-content {
     padding: 0.75rem;
   }
 
-  .dasha-detail {
+  .kp-detail {
     padding: 1rem;
   }
   
-  .dasha-value {
+  .kp-value {
     font-size: 1rem;
   }
   
@@ -675,7 +675,7 @@
     font-size: 1.6rem;
   }
 
-  .dasha-details-grid {
+  .kp-details-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem;
   }
@@ -687,16 +687,16 @@
 
 /* Enhanced Touch Interactions */
 @media (hover: none) and (pointer: coarse) {
-  .dasha-header:hover,
-  .dasha-detail:hover {
+  .kp-header:hover,
+  .kp-detail:hover {
     transform: none;
   }
   
-  .dasha-header:active {
+  .kp-header:active {
     background: rgba(255, 215, 0, 0.15);
   }
 
-  .dasha-detail:active {
+  .kp-detail:active {
     transform: scale(0.98);
   }
   
@@ -710,7 +710,7 @@
 /* Accessibility Improvements for Mobile */
 @media (max-width: 768px) {
   /* Ensure minimum touch target size */
-  .dasha-header,
+  .kp-header,
   .translate-button,
   .print-button,
   .generate-button {
@@ -718,11 +718,11 @@
   }
   
   /* Improve text readability */
-  .dasha-value {
+  .kp-value {
     line-height: 1.4;
   }
 
-  .dasha-label {
+  .kp-label {
     line-height: 1.3;
   }
   
@@ -751,11 +751,11 @@
     display: none;
   }
   
-  .action-buttons {
+  .kp-buttons {
     display: none;
   }
 
-  .dasha-section {
+  .kp-section {
     background: white;
     border: 1px solid #ddd;
     box-shadow: none;
@@ -763,15 +763,15 @@
     margin-bottom: 1rem;
   }
 
-  .dasha-title {
+  .kp-title {
     color: #333;
   }
 
-  .dasha-value {
+  .kp-value {
     color: #333;
   }
 
-  .dasha-details-grid {
+  .kp-details-grid {
     grid-template-columns: 1fr;
   }
 }
@@ -784,7 +784,7 @@
   }
   
   /* Optimize backdrop filters for mobile performance */
-  .dasha-section {
+  .kp-section {
     backdrop-filter: blur(5px);
   }
   
@@ -795,19 +795,19 @@
 
 /* Dark mode support for mobile devices */
 @media (prefers-color-scheme: dark) and (max-width: 768px) {
-  .dasha-section {
+  .kp-section {
     background: rgba(255, 255, 255, 0.03);
   }
 
-  .dasha-detail {
+  .kp-detail {
     background: rgba(255, 255, 255, 0.05);
   }
 }
 
-/*Dasha Details Table  */
+/*kp Details Table  */
 
-/* Add these styles to your Dasha.css file */
-.dasha-details-table {
+/* Add these styles to your kp.css file */
+.kp-details-table {
   margin-top: 20px;
   padding: 20px;
   background: rgba(255, 255, 255, 0.05);
@@ -815,7 +815,7 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.dasha-table-title {
+.kp-table-title {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -825,10 +825,10 @@
   font-weight: 600;
 }
 
-.dasha-table-title .icon {
+.kp-table-title .icon {
   color: #ffd700;
 }
-.dasha-table-sub-title {
+.kp-table-sub-title {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -838,33 +838,33 @@
   font-weight: 600;
 }
 
-.dasha-table {
+.kp-table {
   background: transparent !important;
 }
 
-.dasha-table .ant-table {
+.kp-table .ant-table {
   background: transparent !important;
 }
 
-.dasha-table .ant-table-thead > tr > th {
+.kp-table .ant-table-thead > tr > th {
   background: rgba(255, 215, 0, 0.1) !important;
   border-color: rgba(255, 255, 255, 0.2) !important;
   color: #ffd700 !important;
   font-weight: 600;
 }
 
-.dasha-table .ant-table-tbody > tr > td {
+.kp-table .ant-table-tbody > tr > td {
   background: rgba(255, 255, 255, 0.05) !important;
   border-color: rgba(255, 255, 255, 0.1) !important;
   color: #fff !important;
 }
 
-.dasha-table .ant-table-tbody > tr:hover > td {
+.kp-table .ant-table-tbody > tr:hover > td {
   background: rgba(255, 215, 0, 0.1) !important;
 }
 
-.dasha-summary,
-.dasha-recommendations {
+.kp-summary,
+.kp-recommendations {
   margin-top: 20px;
   padding: 16px;
   background: rgba(255, 255, 255, 0.03);
@@ -872,23 +872,23 @@
   border-left: 4px solid #ffd700;
 }
 
-.dasha-summary h4,
-.dasha-recommendations h4 {
+.kp-summary h4,
+.kp-recommendations h4 {
   color: #ffd700;
   margin-bottom: 12px;
   font-weight: 600;
 }
 
-.dasha-summary p,
-.dasha-recommendations ul {
+.kp-summary p,
+.kp-recommendations ul {
   color: #fff;
   line-height: 1.6;
 }
 
-.dasha-recommendations ul {
+.kp-recommendations ul {
   padding-left: 20px;
 }
 
-.dasha-recommendations li {
+.kp-recommendations li {
   margin-bottom: 8px;
 }

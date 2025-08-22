@@ -13,22 +13,22 @@ import {
   Printer,
   Languages,
   Gem,
+  Orbit,
 } from "lucide-react";
-import { LiaStarOfLifeSolid } from "react-icons/lia";
+
 import AppContext from "../../context/AppContext";
 import NavigationMenu from "../NavigationMenu/NavigationMenu";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "./Dasha.css";
-import { getDashaReport } from "../../api/Dasha";
+import "./PlanetKp.css";
+import { getPlanetKpReport } from "../../api/Report";
 import { getUserDetails } from "../../api/user";
 import {
   fetchLocationData,
   formateDate,
 } from "../../utilityFunction/FetchLocationData";
-import { Button } from "antd";
-import { DashaTable } from "./DashaTable";
+import { PlanetKpTable } from "./PlanetKpTable";
 
 const TypingIndicator = () => (
   <div className="message ai">
@@ -46,12 +46,12 @@ const TypingIndicator = () => (
   </div>
 );
 
-const Dasha = () => {
+const PlanetKp = () => {
   const { user } = useContext(AppContext);
   // const { t, toggleLanguage, language } = useTranslation();
-  const [dashaData, setDashaData] = useState(null);
-  const [isLoadingDasha, setIsLoadingDasha] = useState(false);
-  const [isDashaOpen, setIsDashaOpen] = useState(true);
+  const [kpData, setKpData] = useState(null);
+  const [isLoadingKp, setIsLoadingKp] = useState(false);
+  const [isKpOpen, setIsKpOpen] = useState(true);
 
   const navigate = useNavigate(); // Initialize navigation
   const [currentLanguage, setCurrentLanguage] = useState("en");
@@ -65,20 +65,20 @@ const Dasha = () => {
   }, [user]);
 
   const fetchInsights = async (lang = "en", forceRefresh = false) => {
-    setIsLoadingDasha(true);
+    setIsLoadingKp(true);
     try {
       // load astrology data from local storage
-      const cacheKey = `dashaData_${lang}`;
+      const cacheKey = `kpData_${lang}`;
       const storedData = localStorage.getItem(cacheKey);
       if (storedData && !forceRefresh) {
         try {
           const parsedData = JSON.parse(storedData);
-          setDashaData(parsedData);
+          setKpData(parsedData);
           setCurrentLanguage(lang);
-          setIsLoadingDasha(false);
+          setIsLoadingKp(false);
         } catch (err) {
-          console.error("Error parsing dasha data:", err);
-          setIsLoadingDasha(false);
+          console.error("Error parsing kp data:", err);
+          setIsLoadingKp(false);
         }
       } else {
         const userData = await getUserDetails(user._id);
@@ -123,28 +123,28 @@ const Dasha = () => {
           latitude: locationData.latitude,
           longitude: locationData.longitude,
           gmtOffset: locationData.gmtOffset,
-          la: lang,
+          lang: lang,
         };
 
-        const response = await getDashaReport(userData.user._id, apiParams);
-        //console.log("Fetched dasha data:", response);
+        const response = await getPlanetKpReport(userData.user._id, apiParams);
+        //console.log("Fetched kp data:", response);
         if (response && response.success) {
-          setDashaData(response);
+          setKpData(response);
           localStorage.setItem(cacheKey, JSON.stringify(response));
-          toast.success("Dasha report fetched successfully", {
+          toast.success("Planet KP report fetched successfully", {
             position: "top-right",
             autoClose: 1000,
           });
           setCurrentLanguage(lang);
-          setIsLoadingDasha(false);
+          setIsLoadingKp(false);
         }
       }
     } catch (err) {
-      console.error("Failed to fetch dasha report:", err);
-      toast.error("Failed to load dasha report. Please try again.");
-      setIsLoadingDasha(false);
+      console.error("Failed to fetch planet KP report:", err);
+      toast.error("Failed to load planet KP report. Please try again.");
+      setIsLoadingKp(false);
     } finally {
-      setIsLoadingDasha(false);
+      setIsLoadingKp(false);
     }
   };
 
@@ -157,14 +157,14 @@ const Dasha = () => {
     const newLanguage = languageMap[currentLanguage] || "en";
 
     // Show loading state
-    setIsLoadingDasha(true);
+    setIsLoadingKp(true);
 
     try {
       await fetchInsights(newLanguage, true); // Force refresh for new language
     } catch (error) {
       console.error("Failed to change language:", error);
       toast.error("Failed to change language. Please try again.");
-      setIsLoadingDasha(false);
+      setIsLoadingKp(false);
     }
   };
 
@@ -177,7 +177,7 @@ const Dasha = () => {
     return languageNames[currentLanguage] || "हिंदी";
   };
 
-  if (isLoadingDasha) {
+  if (isLoadingKp) {
     return (
       <div className="dashboard-layout">
         <NavigationMenu />
@@ -185,7 +185,7 @@ const Dasha = () => {
           <div className="dashboard-page">
             <div className="loading-container">
               <Star className="loading-icon" />
-              <p>Loading Dasha Data........ </p>
+              <p>Loading Planet KP Data........ </p>
             </div>
           </div>
         </div>
@@ -201,14 +201,14 @@ const Dasha = () => {
           <div className="stars" />
           <div className="dashboard-container">
             <div className="welcome-section">
-              <motion.h1 className="welcome-title">{"Dasha"}</motion.h1>
-              {dashaData && (
+              <motion.h1 className="welcome-title">{"Planet KP"}</motion.h1>
+              {kpData && (
                 <div className="action-buttons">
                   <button
                     className="translate-button"
                     onClick={handleLanguageChange}
                     title="Translate"
-                    disabled={isLoadingDasha}
+                    disabled={isLoadingKp}
                   >
                     <Languages className="icon" />
                     {getLanguageDisplayName()}
@@ -225,12 +225,12 @@ const Dasha = () => {
               )}
             </div>
 
-            {!dashaData && !isLoadingDasha && (
+            {!kpData && !isLoadingKp && (
               <motion.div className="no-data-section">
                 <div className="no-data-message">
                   <Star className="icon" />
-                  <h3>{"No Dasha available"}</h3>
-                  <p>{"Please complete your profile to generate Dasha."}</p>
+                  <h3>{"No Planet KP available"}</h3>
+                  <p>{"Please complete your profile to generate Planet KP."}</p>
                   <button
                     className="generate-button"
                     onClick={() => navigate("/login")}
@@ -241,26 +241,26 @@ const Dasha = () => {
               </motion.div>
             )}
 
-            {dashaData && (
-              <motion.div className="dasha-section">
+            {kpData && (
+              <motion.div className="kp-section">
                 <div
-                  className="dasha-header"
-                  onClick={() => setIsDashaOpen(!isDashaOpen)}
+                  className="kp-header"
+                  onClick={() => setIsKpOpen(!isKpOpen)}
                 >
-                  <h2 className="dasha-title">
-                    <LiaStarOfLifeSolid className="icon" /> {"Dasha"}
+                  <h2 className="kp-title">
+                    <Orbit className="icon" /> {"Planet KP"}
                   </h2>
-                  {isDashaOpen ? (
+                  {isKpOpen ? (
                     <ChevronUp className="icon" />
                   ) : (
                     <ChevronDown className="icon" />
                   )}
                 </div>
                 <AnimatePresence>
-                  {isDashaOpen && (
-                    <motion.div className="dasha-content">
-                      <div className="dasha-detail">
-                        <DashaTable dashaData={dashaData} />
+                  {isKpOpen && (
+                    <motion.div className="kp-content">
+                      <div className="kp-detail">
+                        <PlanetKpTable kpData={kpData} />
                       </div>
                     </motion.div>
                   )}
@@ -274,4 +274,4 @@ const Dasha = () => {
   );
 };
 
-export default Dasha;
+export default PlanetKp;
