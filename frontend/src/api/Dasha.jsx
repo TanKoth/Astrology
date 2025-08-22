@@ -1,8 +1,8 @@
 import axiosInstance from ".";
 
 export const getDashaReport = async (userId, params) => {
-  console.log("Fetching user report for userId:", userId);
-  console.log("Params received:", params);
+  //console.log("Fetching user report for userId:", userId);
+  //console.log("Params received:", params);
   try {
     //console.log("Fetching Sade Sati details for userId:", userId);
     if (
@@ -29,10 +29,10 @@ export const getDashaReport = async (userId, params) => {
     const response = await axiosInstance.get(
       `/api/dasha/dasha-periods/${userId}?${urlParams.toString()}`
     );
-    console.log("Dasha details response:", response.data);
+    //console.log("Dasha details response:", response.data);
     return response.data;
   } catch (error) {
-    console.error("Error fetching Dasha details:", error.message);
+    //console.error("Error fetching Dasha details:", error.message);
     throw error;
   }
 };
