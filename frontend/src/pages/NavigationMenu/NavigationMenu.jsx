@@ -19,6 +19,7 @@ import {
   View,
   Gem,
   Moon,
+  Sun,
   ScrollText,
   CalendarDays,
   HeartHandshake,
@@ -185,7 +186,30 @@ const NavigationMenu = ({ isOpen, onClose }) => {
       label: "Planet KP",
     },
     { id: "dosh", path: "/dosh", icon: GiLouvrePyramid, label: "Dosh" },
-    { id: "calculator", path: "", icon: Calculator, label: "Calculator" },
+    {
+      id: "calculator",
+      path: "",
+      icon: Calculator,
+      label: "Calculator",
+      hasSubMenu: true,
+      subItems: [
+        {
+          path: "/moon-sign",
+          icon: Moon,
+          label: "Moon Sign",
+        },
+        {
+          path: "/sun-sign",
+          icon: Sun,
+          label: "Sun Sign",
+        },
+        {
+          path: "/rasi-sign",
+          icon: RiAlipayLine,
+          label: "Rasi Sign",
+        },
+      ],
+    },
     {
       id: "lalkitab",
       path: "/lalkitab",

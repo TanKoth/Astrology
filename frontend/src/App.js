@@ -35,6 +35,9 @@ import NakshatraMatching from './pages/Matching/NakshatraMatching';
 import Matching from './pages/Matching/Matching';
 import ScrollToTop from './utilityFunction/ScrollToTop';
 import PlanetKp from "./pages/Planet-KP/PlanetKp";
+import MoonSign from "./pages/Calculator/MoonSign";
+import SunSign from "./pages/Calculator/SunSign";
+import RasiSign from "./pages/Calculator/RasiSign";
 
 function AppRoutes() {
   const location = useLocation();
@@ -77,6 +80,9 @@ function AppRoutes() {
           <Route path= {"/matching"} element={<Matching/>} />
           <Route path= {"/nakshatra-matching"} element={<NakshatraMatching/>} />
           <Route path= {"/planet-kp"} element={<PlanetKp/>} />
+          <Route path= {"/moon-sign"} element={<MoonSign/>} />
+          <Route path= {"/sun-sign"} element={<SunSign/>} />
+          <Route path= {"/rasi-sign"} element={<RasiSign/>} />
         </Routes>
       
       </div>
