@@ -251,9 +251,9 @@ const Dasha = () => {
                     <LiaStarOfLifeSolid className="icon" /> {"Dasha"}
                   </h2>
                   {isDashaOpen ? (
-                    <ChevronUp className="icon" />
+                    <ChevronUp className="chev-icon" />
                   ) : (
-                    <ChevronDown className="icon" />
+                    <ChevronDown className="chev-icon" />
                   )}
                 </div>
                 <AnimatePresence>

@@ -164,7 +164,7 @@ export const DashaTable = ({ dashaData }) => {
         )}
         pagination={false}
         bordered
-        size="small"
+        size="middle"
         className="dasha-table"
         scroll={{ x: 800 }}
         onRow={(record) => ({
