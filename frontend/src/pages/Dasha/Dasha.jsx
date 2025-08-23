@@ -56,7 +56,14 @@ const Dasha = () => {
   const navigate = useNavigate(); // Initialize navigation
   const [currentLanguage, setCurrentLanguage] = useState("en");
 
-  const handlePrint = () => {};
+  const handlePrint = () => {
+    const userName = user?.name || "User";
+    document.title = `Dasha Report - ${userName}`;
+
+    setTimeout(() => {
+      window.print();
+    }, 100);
+  };
 
   useEffect(() => {
     if (user) {
@@ -270,6 +277,7 @@ const Dasha = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

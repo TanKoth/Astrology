@@ -56,7 +56,14 @@ const PlanetKp = () => {
   const navigate = useNavigate(); // Initialize navigation
   const [currentLanguage, setCurrentLanguage] = useState("en");
 
-  const handlePrint = () => {};
+  const handlePrint = () => {
+    const userName = user?.name || "User";
+    document.title = `Planet KP Report - ${userName}`;
+
+    setTimeout(() => {
+      window.print();
+    }, 100);
+  };
 
   useEffect(() => {
     if (user) {
@@ -151,7 +158,8 @@ const PlanetKp = () => {
   const handleLanguageChange = async () => {
     const languageMap = {
       en: "hi",
-      hi: "en",
+      hi: "mr",
+      mr: "en",
     };
 
     const newLanguage = languageMap[currentLanguage] || "en";
@@ -172,7 +180,8 @@ const PlanetKp = () => {
   const getLanguageDisplayName = () => {
     const languageNames = {
       en: "हिंदी",
-      hi: "English",
+      hi: "मराठी",
+      mr: "English",
     };
     return languageNames[currentLanguage] || "हिंदी";
   };
@@ -270,6 +279,7 @@ const PlanetKp = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

@@ -16,6 +16,7 @@ const panchangRouter = require('./routes/panchangRoute');
 const matchingRouter = require('./routes/matchingRoute');
 const reportRouter = require('./routes/reportRoute');
 const dashaRouter = require('./routes/dashaRoute');
+const calculatorRouter = require('./routes/calculatorRoute')
 
 const app = express();
 require('dotenv').config();
@@ -50,6 +51,7 @@ app.use('/api', panchangRouter);
 app.use('/api', matchingRouter);
 app.use('/api/reports', reportRouter);
 app.use('/api/dasha', dashaRouter);
+app.use('/api', calculatorRouter);
 
 app.listen(PORT, ()=> {
   console.log(`Server is running on port ${PORT}`);
