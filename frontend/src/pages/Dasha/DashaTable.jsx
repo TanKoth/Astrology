@@ -83,7 +83,7 @@ export const DashaTable = ({ dashaData }) => {
         // First find the mahadasha
         const selectedMahadashaData =
           dashaData?.data?.data?.dasha_periods?.find(
-            (period) => period.id === selectedAntardasha.id
+            (period) => period.id === selectedMahadasha.id
           );
         // Then find the antardasha within that mahadasha
         const selectedAntardashaData = selectedMahadashaData?.antardasha?.find(

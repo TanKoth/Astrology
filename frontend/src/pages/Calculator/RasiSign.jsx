@@ -9,6 +9,7 @@ import {
   Languages,
   Moon,
 } from "lucide-react";
+import { RiAlipayLine } from "react-icons/ri";
 import AppContext from "../../context/AppContext";
 import NavigationMenu from "../NavigationMenu/NavigationMenu";
 import { useNavigate } from "react-router-dom";
@@ -374,7 +375,7 @@ const RasiSign = () => {
                   onClick={() => setIsRasiSignOpen(!isRasiSignOpen)}
                 >
                   <h2 className="sign-title">
-                    <Moon className="icon" /> {"Rashi Sign"}
+                    <RiAlipayLine className="icon" /> {"Rashi Sign"}
                   </h2>
                   {isRasiSignOpen ? (
                     <ChevronUp className="chev-icon" />

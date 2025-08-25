@@ -17,6 +17,7 @@ const matchingRouter = require('./routes/matchingRoute');
 const reportRouter = require('./routes/reportRoute');
 const dashaRouter = require('./routes/dashaRoute');
 const calculatorRouter = require('./routes/calculatorRoute')
+const doshRouter = require('./routes/doshRoute')
 
 const app = express();
 require('dotenv').config();
@@ -52,6 +53,7 @@ app.use('/api', matchingRouter);
 app.use('/api/reports', reportRouter);
 app.use('/api/dasha', dashaRouter);
 app.use('/api', calculatorRouter);
+app.use('/api/dosh', doshRouter);
 
 app.listen(PORT, ()=> {
   console.log(`Server is running on port ${PORT}`);

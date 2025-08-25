@@ -14,7 +14,9 @@ import ResetPassword from './pages/ResetPassword/ResetPassword';
 import EditUserDetails from './pages/EditUserDetails/EditUserDetails';
 import{TranslationProvider} from './context/TranslationContext';
 import Charts from './pages/Charts/Charts';
-import Dosh from './pages/Dosh/Dosh';
+import PitraDosh from './pages/Dosh/PitraDosh';
+import MangalDosh from './pages/Dosh/MangalDosh';
+import KalsarpDosh from './pages/Dosh/KalsarpDosh';
 //import Prediction from './pages/Prediction/Prediction';
 import LalKitab from './pages/LalKitab/LalKitab';
 import Dasha from './pages/Dasha/Dasha';
@@ -60,7 +62,9 @@ function AppRoutes() {
           <Route path = {"/reset-password/:email"} element = {<ResetPassword/>} /> 
           <Route path = {"/editUserDetails"} element= {<EditUserDetails/>} />
           <Route path= {"/charts"} element= {<Charts/>} />
-          <Route path= {"/dosh"} element= {<Dosh/>} />
+          <Route path= {"/pitra-dosh"} element= {<PitraDosh/>} />
+          <Route path= {"/kalsarp-dosh"} element= {<KalsarpDosh/>} />
+          <Route path= {"/mangal-dosh"} element= {<MangalDosh/>} />
           {/* <Route path= {"/prediction"} element= {<Prediction/>} /> */}
           <Route path= {"/lalkitab"} element= {<LalKitab/>} />
           <Route path= {"/dasha"} element={<Dasha/>} />

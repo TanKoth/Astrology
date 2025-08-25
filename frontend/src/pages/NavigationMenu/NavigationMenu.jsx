@@ -29,10 +29,15 @@ import {
   Orbit,
   Calculator,
 } from "lucide-react";
-import { FaRobot, FaBook } from "react-icons/fa";
+import { FaRobot, FaBook, FaMars } from "react-icons/fa";
 import { FaHeartCircleBolt } from "react-icons/fa6";
 import { LiaStarOfDavidSolid, LiaStarOfLifeSolid } from "react-icons/lia";
-import { GiLouvrePyramid, GiStarSattelites } from "react-icons/gi";
+import {
+  GiLouvrePyramid,
+  GiStarSattelites,
+  GiTripleBeak,
+  GiSnake,
+} from "react-icons/gi";
 import { RiPlanetFill, RiAlipayLine } from "react-icons/ri";
 import { useState } from "react";
 import AppContext from "../../context/AppContext";
@@ -185,7 +190,30 @@ const NavigationMenu = ({ isOpen, onClose }) => {
       icon: Orbit,
       label: "Planet KP",
     },
-    { id: "dosh", path: "/dosh", icon: GiLouvrePyramid, label: "Dosh" },
+    {
+      id: "dosh",
+      path: "",
+      icon: GiLouvrePyramid,
+      label: "Dosh",
+      hasSubMenu: true,
+      subItems: [
+        {
+          path: "/pitra-dosh",
+          icon: GiTripleBeak,
+          label: "Pitra Dosh",
+        },
+        {
+          path: "/kalsarp-dosh",
+          icon: GiSnake,
+          label: "Kalsarp Dosh",
+        },
+        {
+          path: "/mangal-dosh",
+          icon: FaMars,
+          label: "Mangal Dosh",
+        },
+      ],
+    },
     {
       id: "calculator",
       path: "",
