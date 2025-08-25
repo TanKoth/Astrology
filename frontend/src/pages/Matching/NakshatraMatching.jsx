@@ -84,7 +84,7 @@ const NakshatraMatching = () => {
 
   const handleBackToForm = () => {
     setShowForm(true);
-    setHoroscope(null);
+    setNakshatraMatchingData(null);
     form.resetFields();
     localStorage.removeItem("nakshatraMatchingData");
     navigate("/nakshatra-matching");

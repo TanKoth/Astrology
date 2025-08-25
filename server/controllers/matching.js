@@ -38,7 +38,7 @@ const matchingReport = async (boyNakshatra, girlNakshatra, boy_dob,
           if(response.status === 200){
             return response.data;
           } else {
-            throw new Error("Failed to fetch astrology insights");
+            throw new Error("Failed to fetch nakshatra matching insights");
           }
         }else if(endpoint === "ashtakoot-astro"){
           const baseUrl = `https://api.jyotishamastroapi.com/api/matching/${endpoint}`;
@@ -78,13 +78,13 @@ const matchingReport = async (boyNakshatra, girlNakshatra, boy_dob,
           if(response.status === 200){
             return response.data;
           } else {
-            throw new Error("Failed to fetch astrology insights");
+            throw new Error("Failed to fetch matching insights");
           }
         }
         
       }catch(error){
-        console.error("Error fetching astrology insights:", error.message);
-        throw new Error("Failed to fetch astrology insights");
+        console.error("Error fetching matching insights:", error.message);
+        throw new Error("Failed to fetch matching insights");
       }
 }
 
@@ -92,7 +92,7 @@ const getNakshatraMatching = async (req, res) => {
   const { boyNakshatra, girlNakshatra, lang } = req.query;
   console.log('Fetching Nakshatra Matching report with params:', req.query);
   try{
-    const report = await matchingReport(boyNakshatra, girlNakshatra, lang, 'nakshatra-match');
+    const report = await matchingReport(boyNakshatra, girlNakshatra,null,null,null,null,null,null,null,null,null,null, lang, 'nakshatra-match');
     return res.status(200).json({ success: true, message: "Nakshatra Matching report fetched successfully", report: report });
   }catch(error){
     console.error("Error fetching Nakshatra Matching report:", error.message);
