@@ -28,9 +28,11 @@ import {
   ShipWheel,
   Orbit,
   Calculator,
+  ChevronsRight,
 } from "lucide-react";
 import { FaRobot, FaBook, FaMars } from "react-icons/fa";
 import { FaHeartCircleBolt } from "react-icons/fa6";
+import { GoNumber } from "react-icons/go";
 import { LiaStarOfDavidSolid, LiaStarOfLifeSolid } from "react-icons/lia";
 import {
   GiLouvrePyramid,
@@ -239,10 +241,39 @@ const NavigationMenu = ({ isOpen, onClose }) => {
       ],
     },
     {
+      id: "numerology",
+      path: "",
+      icon: GoNumber,
+      label: "Numerology",
+    },
+    {
       id: "lalkitab",
-      path: "/lalkitab",
+      path: "",
       icon: FaBook,
-      label: "Lalkitab Remedies",
+      label: "Lalkitab",
+      hasSubMenu: true,
+      subItems: [
+        {
+          path: "/lalkitab-debt",
+          icon: ChevronsRight,
+          label: "Lalkitab Debt",
+        },
+        {
+          path: "/lalkitab-remedy",
+          icon: ChevronsRight,
+          label: "Lalkitab Remedies",
+        },
+        // {
+        //   path: "/lalkitab-houses",
+        //   icon: ChevronsRight,
+        //   label: "Lalkitab Houses",
+        // },
+        {
+          path: "/lalkitab-planets",
+          icon: ChevronsRight,
+          label: "Lalkitab Planets",
+        },
+      ],
     },
     {
       id: "ai-chat",

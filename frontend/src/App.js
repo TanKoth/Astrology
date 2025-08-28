@@ -18,7 +18,10 @@ import PitraDosh from './pages/Dosh/PitraDosh';
 import MangalDosh from './pages/Dosh/MangalDosh';
 import KalsarpDosh from './pages/Dosh/KalsarpDosh';
 //import Prediction from './pages/Prediction/Prediction';
-import LalKitab from './pages/LalKitab/LalKitab';
+import LalKitabDebt from './pages/LalKitab/LalKitabDebt';
+import LalKitabRemedy from './pages/LalKitab/LalKitabRemedy';
+import LalKitabHouse from './pages/LalKitab/LalKitabHouse';
+import LalKitabPlanet from './pages/LalKitab/LalKitabPlanet';
 import Dasha from './pages/Dasha/Dasha';
 import Gemstone from './pages/Report/Gemstone';
 import RudrakshReport from './pages/Report/RudrakshReport'
@@ -66,7 +69,10 @@ function AppRoutes() {
           <Route path= {"/kalsarp-dosh"} element= {<KalsarpDosh/>} />
           <Route path= {"/mangal-dosh"} element= {<MangalDosh/>} />
           {/* <Route path= {"/prediction"} element= {<Prediction/>} /> */}
-          <Route path= {"/lalkitab"} element= {<LalKitab/>} />
+          <Route path= {"/lalkitab-debt"} element= {<LalKitabDebt/>} />
+          <Route path= {"/lalkitab-remedy"} element= {<LalKitabRemedy/>} />
+          <Route path= {"/lalkitab-houses"} element= {<LalKitabHouse/>} />
+          <Route path= {"/lalkitab-planets"} element= {<LalKitabPlanet/>} />
           <Route path= {"/dasha"} element={<Dasha/>} />
           <Route path= {"/gemstones"} element={<Gemstone/>} />
           <Route path= {"/rudraksh-report"} element={<RudrakshReport/>} />
