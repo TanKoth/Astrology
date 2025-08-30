@@ -19,6 +19,7 @@ const dashaRouter = require('./routes/dashaRoute');
 const calculatorRouter = require('./routes/calculatorRoute');
 const doshRouter = require('./routes/doshRoute');
 const lalkitabRouter = require('./routes/lalKitabRoute');
+const numerologyRouter = require('./routes/numerologyRoute');
 
 const app = express();
 require('dotenv').config();
@@ -56,6 +57,7 @@ app.use('/api/dasha', dashaRouter);
 app.use('/api', calculatorRouter);
 app.use('/api/dosh', doshRouter);
 app.use('/api/lalkitab', lalkitabRouter);
+app.use('/api/numerology', numerologyRouter);
 
 app.listen(PORT, ()=> {
   console.log(`Server is running on port ${PORT}`);

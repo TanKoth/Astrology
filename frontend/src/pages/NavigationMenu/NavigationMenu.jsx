@@ -245,6 +245,24 @@ const NavigationMenu = ({ isOpen, onClose }) => {
       path: "",
       icon: GoNumber,
       label: "Numerology",
+      hasSubMenu: true,
+      subItems: [
+        {
+          path: "/birthdate",
+          icon: ChevronsRight,
+          label: "Birthdate Number",
+        },
+        {
+          path: "/numerology",
+          icon: ChevronsRight,
+          label: "Numerology",
+        },
+        // {
+        //   path: "/rational",
+        //   icon: ChevronsRight,
+        //   label: "Rational Number",
+        // },
+      ],
     },
     {
       id: "lalkitab",

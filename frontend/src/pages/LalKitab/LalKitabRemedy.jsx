@@ -50,14 +50,14 @@ const LalKitabRemedy = () => {
   const [isLoadingLalKitabRemedy, setIsLoadingLalKitabRemedy] = useState(false);
   const [isLalKitabRemedyOpen, setIsLalKitabRemedyOpen] = useState(true);
   const [isSunOpen, setIsSunOpen] = useState(true);
-  const [isMoonOpen, setIsMoonOpen] = useState(true);
-  const [isMarsOpen, setIsMarsOpen] = useState(true);
-  const [isMercuryOpen, setIsMercuryOpen] = useState(true);
-  const [isJupiterOpen, setIsJupiterOpen] = useState(true);
-  const [isVenusOpen, setIsVenusOpen] = useState(true);
-  const [isSaturnOpen, setIsSaturnOpen] = useState(true);
-  const [isRahuOpen, setIsRahuOpen] = useState(true);
-  const [isKetuOpen, setIsKetuOpen] = useState(true);
+  const [isMoonOpen, setIsMoonOpen] = useState(false);
+  const [isMarsOpen, setIsMarsOpen] = useState(false);
+  const [isMercuryOpen, setIsMercuryOpen] = useState(false);
+  const [isJupiterOpen, setIsJupiterOpen] = useState(false);
+  const [isVenusOpen, setIsVenusOpen] = useState(false);
+  const [isSaturnOpen, setIsSaturnOpen] = useState(false);
+  const [isRahuOpen, setIsRahuOpen] = useState(false);
+  const [isKetuOpen, setIsKetuOpen] = useState(false);
 
   const navigate = useNavigate(); // Initialize navigation
   const [currentLanguage, setCurrentLanguage] = useState("en");

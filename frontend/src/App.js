@@ -43,6 +43,10 @@ import PlanetKp from "./pages/Planet-KP/PlanetKp";
 import MoonSign from "./pages/Calculator/MoonSign";
 import SunSign from "./pages/Calculator/SunSign";
 import RasiSign from "./pages/Calculator/RasiSign";
+import Birthdate from "./pages/Numerology/BirthdateNumber";
+import Numerology from "./pages/Numerology/Numerology";
+import Rational from "./pages/Numerology/RationalNumber";
+
 
 function AppRoutes() {
   const location = useLocation();
@@ -93,6 +97,9 @@ function AppRoutes() {
           <Route path= {"/moon-sign"} element={<MoonSign/>} />
           <Route path= {"/sun-sign"} element={<SunSign/>} />
           <Route path= {"/rasi-sign"} element={<RasiSign/>} />
+          <Route path= {"/numerology"} element={<Numerology/>} />
+          <Route path= {"/rational"} element={<Rational/>} />
+          <Route path= {"/birthdate"} element={<Birthdate/>} />
         </Routes>
       
       </div>
