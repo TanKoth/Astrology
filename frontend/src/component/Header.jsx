@@ -5,12 +5,14 @@ import { useNavigate, Link } from "react-router-dom";
 import AppContext from "../context/AppContext";
 import "./Header.css";
 import Kundali_Logo from "../img/kundli2.png";
+import { toast, ToastContainer } from "react-toastify";
 import {
   KeyRound,
   Pencil,
   Crown,
   LogOut,
   UserRoundPlus,
+  FolderOpen,
   Menu as MenuIcon,
   X,
 } from "lucide-react";
@@ -19,6 +21,7 @@ import {
 const Header = () => {
   const { user, setUser } = useContext(AppContext);
   const [scrolled, setScrolled] = useState(false);
+  const [previousUsers, setPreviousUsers] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,6 +40,10 @@ const Header = () => {
         setUser(JSON.parse(storedUser));
       }
     }
+    const prev = localStorage.getItem("previousUsers");
+    if (prev) {
+      setPreviousUsers(JSON.parse(prev));
+    }
   }, [user]);
 
   const handleLogout = () => {
@@ -53,14 +60,94 @@ const Header = () => {
     }
   };
 
+  const updatePreviousUsers = (currentUser) => {
+    let prevUsers = JSON.parse(localStorage.getItem("previousUsers")) || [];
+    // Remove if already exists
+    prevUsers = prevUsers.filter((u) => u.email !== currentUser.email);
+    // Add to front
+    prevUsers.unshift(currentUser);
+    // Keep only 5
+    prevUsers = prevUsers.slice(0, 5);
+    localStorage.setItem("previousUsers", JSON.stringify(prevUsers));
+    setPreviousUsers(prevUsers);
+  };
+
+  const handleOpenPreviousUser = (selectedUser) => {
+    if (selectedUser) {
+      if (user) {
+        updatePreviousUsers(user);
+      }
+      localStorage.setItem("user", JSON.stringify(selectedUser));
+      setUser(selectedUser);
+      toast.success(`Switched to user: ${selectedUser.name || "User"}`);
+      navigate("/dashboard");
+    }
+  };
+
+  // const handleSwitchToCurrentUser = () => {
+  //   if (user) {
+  //     localStorage.setItem("user", JSON.stringify(user));
+  //     setUser(user);
+  //     message.success(`Switched to user: ${user.name || "User"}`);
+  //     navigate("/dashboard");
+  //   }
+  // };
+
+  const handleNewUser = () => {
+    if (user) {
+      updatePreviousUsers(user);
+    }
+    localStorage.removeItem("user");
+    setUser(null);
+    navigate("/signUp");
+  };
+
   const profileMenu = (
     <Menu className="profile-dropdown">
-      <Menu.Item key="new-user">
-        <Link to="/signup">
-          <UserRoundPlus size={16} className="plus-icon" />
-          Add New User
-        </Link>
+      <Menu.Item key="new-user" onClick={handleNewUser}>
+        <UserRoundPlus size={16} className="plus-icon" />
+        Add New User
       </Menu.Item>
+      {/* Show both users if previousUser exists */}
+      {previousUsers.length > 0 && (
+        <Menu.SubMenu
+          key="switch-user"
+          title={
+            <span className="switch-user-title">
+              <FolderOpen size={17} />
+              <span style={{ marginLeft: "5px" }}>Switch User</span>
+            </span>
+          }
+        >
+          {previousUsers.map((prevUser, idx) => (
+            <Menu.Item
+              key={`previous-user-${idx}`}
+              onClick={() => handleOpenPreviousUser(prevUser)}
+            >
+              <span>
+                <Button
+                  type="text"
+                  icon={
+                    <div className="nav-user">
+                      <div className="user-avatar">
+                        {prevUser?.name?.charAt(0)?.toUpperCase() || "U"}
+                      </div>
+                    </div>
+                  }
+                  style={{
+                    color: "#ffd700",
+                    fontWeight: "bold",
+                    marginLeft: "auto",
+                    fontSize: "1.1rem",
+                  }}
+                >
+                  {prevUser?.name || "Previous User"}
+                </Button>
+              </span>
+            </Menu.Item>
+          ))}
+        </Menu.SubMenu>
+      )}
       <Menu.Item key="user-details">
         <Link to="/editUserDetails">
           <Pencil size={16} className="pencil-icon" />

@@ -143,6 +143,19 @@ nav a:hover {
   transition: color 0.3s ease;
 }
 
+.switch-user-title {
+  margin-right: 5px;
+  color: #ffd700;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.ant-dropdown-menu-submenu-title.switch-user-title:hover,
+.switch-user-title:hover {
+  color: #fff !important;
+}
+
+
 .ant-dropdown-menu-item:hover .subscription-icon,
 .ant-dropdown-menu-item:hover .pencil-icon,
 .ant-dropdown-menu-item:hover .plus-icon,
