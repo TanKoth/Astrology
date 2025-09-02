@@ -46,6 +46,34 @@ const Header = () => {
     }
   }, [user]);
 
+  // Function to selectively clear localStorage while keeping specified keys
+  const clearLocalStorageExcept = (keysToKeep) => {
+    // Get all current localStorage data for keys we want to keep
+    const dataToKeep = {};
+    keysToKeep.forEach((key) => {
+      const value = localStorage.getItem(key);
+      if (value !== null) {
+        dataToKeep[key] = value;
+      }
+    });
+
+    // Also keep all user-specific astrology data
+    const allKeys = Object.keys(localStorage);
+    allKeys.forEach((key) => {
+      if (key.startsWith("astrologyData_")) {
+        dataToKeep[key] = localStorage.getItem(key);
+      }
+    });
+
+    // Clear localStorage
+    localStorage.clear();
+
+    // Restore the data we want to keep
+    Object.keys(dataToKeep).forEach((key) => {
+      localStorage.setItem(key, dataToKeep[key]);
+    });
+  };
+
   const handleLogout = () => {
     localStorage.clear();
     setUser(null);
@@ -60,12 +88,38 @@ const Header = () => {
     }
   };
 
+  const saveCurrentUserAstrologyData = () => {
+    if (user && user._id) {
+      const currentAstrologyData = localStorage.getItem("astrologyData");
+      if (currentAstrologyData) {
+        localStorage.setItem(`astrologyData_${user._id}`, currentAstrologyData);
+      }
+    }
+  };
+
+  const loadUserAstrologyData = (userId) => {
+    if (userId) {
+      const userAstrologyData = localStorage.getItem(`astrologyData_${userId}`);
+      if (userAstrologyData) {
+        localStorage.setItem("astrologyData", userAstrologyData);
+      } else {
+        // Clear astrology data if no data exists for this user
+        localStorage.removeItem("astrologyData");
+        console.log(`No astrology data found for user ${userId}`);
+      }
+    }
+  };
+
+  // const clearCurrentAstrologyData = () => {
+  //   localStorage.removeItem("astrologyData");
+  // };
+
   const updatePreviousUsers = (currentUser) => {
     let prevUsers = JSON.parse(localStorage.getItem("previousUsers")) || [];
     // Remove if already exists
     prevUsers = prevUsers.filter((u) => u.email !== currentUser.email);
-    // Add to front
-    prevUsers.unshift(currentUser);
+    // Add a clone to front
+    prevUsers.unshift({ ...currentUser });
     // Keep only 5
     prevUsers = prevUsers.slice(0, 5);
     localStorage.setItem("previousUsers", JSON.stringify(prevUsers));
@@ -73,14 +127,35 @@ const Header = () => {
   };
 
   const handleOpenPreviousUser = (selectedUser) => {
-    if (selectedUser) {
-      if (user) {
+    if (selectedUser && selectedUser._id) {
+      console.log(
+        `Switching to user: ${selectedUser.name} (ID: ${selectedUser._id})`
+      );
+
+      // Save current user's astrology data before switching
+      if (user && user._id) {
+        saveCurrentUserAstrologyData();
         updatePreviousUsers(user);
       }
+
+      // Clear localStorage but keep essential data including user-specific astrology data
+      const keysToKeep = ["astrologyData", "user", "token", "previousUsers"];
+      clearLocalStorageExcept(keysToKeep);
+
+      // Switch to selected user
       localStorage.setItem("user", JSON.stringify(selectedUser));
       setUser(selectedUser);
+
+      // Load the selected user's astrology data
+      loadUserAstrologyData(selectedUser._id);
+
       toast.success(`Switched to user: ${selectedUser.name || "User"}`);
       navigate("/dashboard");
+
+      // Use setTimeout to ensure state updates are processed
+      setTimeout(() => {
+        window.location.reload();
+      }, 100);
     }
   };
 
@@ -94,9 +169,18 @@ const Header = () => {
   // };
 
   const handleNewUser = () => {
-    if (user) {
+    console.log("Creating new user");
+
+    if (user && user._id) {
+      // Save current user's astrology data before creating new user
+      saveCurrentUserAstrologyData();
       updatePreviousUsers(user);
     }
+
+    /// Clear localStorage but keep essential data
+    const keysToKeep = ["token", "previousUsers"];
+    clearLocalStorageExcept(keysToKeep);
+
     localStorage.removeItem("user");
     setUser(null);
     navigate("/signUp");

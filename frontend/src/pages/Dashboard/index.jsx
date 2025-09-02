@@ -134,24 +134,52 @@ const Dashboard = () => {
         }
       }, 5000);
     } else {
-      // Load astrology data from localStorage
-      const storedAstrologyData = localStorage.getItem("astrologyData");
-      if (storedAstrologyData) {
-        try {
-          const parsedData = JSON.parse(storedAstrologyData);
-          setAstrologyData(parsedData);
-          setIsLoadingChart(false);
-        } catch (err) {
-          console.log("Error parsing astrology data:", err);
-          setIsLoadingChart(false);
+      // Load user-specific astrology data from localStorage
+      const currentUser = user || JSON.parse(storedUser);
+      if (currentUser && currentUser._id) {
+        // Try to load user-specific astrology data first
+        const userSpecificData = localStorage.getItem(
+          `astrologyData_${currentUser._id}`
+        );
+        if (userSpecificData) {
+          try {
+            const parsedData = JSON.parse(userSpecificData);
+            setAstrologyData(parsedData);
+            // Also set it in the general astrologyData key for current session
+            localStorage.setItem("astrologyData", userSpecificData);
+            setIsLoadingChart(false);
+          } catch (err) {
+            console.log("Error parsing user-specific astrology data:", err);
+            // Fallback to general astrology data
+            loadGeneralAstrologyData();
+          }
+        } else {
+          // Fallback to general astrology data or fetch from API
+          loadGeneralAstrologyData();
         }
       } else {
-        // If no stored data, Fetch astrology data from API
-        fetchInsights();
+        loadGeneralAstrologyData();
       }
-      setIsLoadingInsights(false);
     }
+    setIsLoadingInsights(false);
   }, [user, location.pathname]);
+
+  const loadGeneralAstrologyData = () => {
+    const storedAstrologyData = localStorage.getItem("astrologyData");
+    if (storedAstrologyData) {
+      try {
+        const parsedData = JSON.parse(storedAstrologyData);
+        setAstrologyData(parsedData);
+        setIsLoadingChart(false);
+      } catch (err) {
+        console.log("Error parsing astrology data:", err);
+        setIsLoadingChart(false);
+      }
+    } else {
+      // If no stored data, Fetch astrology data from API
+      fetchInsights();
+    }
+  };
 
   const fetchInsights = async () => {
     try {
@@ -167,6 +195,10 @@ const Dashboard = () => {
         );
         setAstrologyData(parsedData);
         localStorage.setItem("astrologyData", JSON.stringify(parsedData));
+        localStorage.setItem(
+          `astrologyData_${user._id}`,
+          JSON.stringify(parsedData)
+        );
       }
       setIsLoadingChart(false);
     } catch (error) {
