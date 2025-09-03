@@ -64,7 +64,7 @@ const Dashboard = () => {
   const [astrologyData, setAstrologyData] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  const [freeChatsLeft, setFreeChatsLeft] = useState(3);
+  const [freeChatsLeft, setFreeChatsLeft] = useState(5);
   const [isLoadingInsights, setIsLoadingInsights] = useState(true);
   const [isLoadingChart, setIsLoadingChart] = useState(true);
   const [isLoadingChat, setIsLoadingChat] = useState(false);
@@ -218,13 +218,13 @@ const Dashboard = () => {
   const sendMessage = async () => {
     // Checking the limit of the chat with AI
     if (!newMessage.trim()) return;
-    // if (freeChatsLeft <= 0) {
-    //   toast.error("You've reached your free chat limit. Upgrade to continue.", {
-    //     position: "top-right",
-    //     autoClose: 3000,
-    //   });
-    //   return;
-    // }
+    if (freeChatsLeft <= 0) {
+      toast.error("You've reached your free chat limit. Upgrade to continue.", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+      return;
+    }
 
     const newChat = { role: "user", content: String(newMessage.trim()) };
     const updatedMessages = [...messages, newChat];
