@@ -36,6 +36,14 @@ const userSchema = new mongoose.Schema({
   },
   otpExpiry: {
     type: Date,
+  },
+  chatLimit:{
+    type: Number,
+    default: 5,
+  },
+  lastChatReset: {
+    type: String,
+    default: () => new Date().toDateString()
   }
 });
 

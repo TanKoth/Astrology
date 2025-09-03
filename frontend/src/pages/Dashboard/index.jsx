@@ -21,7 +21,7 @@ import {
 } from "lucide-react";
 import AppContext from "../../context/AppContext";
 import { userLogin } from "../../api/UserLogin";
-import { sendMessageToAI } from "../../api/ChatWithAI";
+import { sendMessageToAI, getChatLimit } from "../../api/ChatWithAI";
 import "./Dashboard.css";
 import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
@@ -217,27 +217,25 @@ const Dashboard = () => {
 
   // Load user chat limit on component mount
   useEffect(() => {
-    const loadUserChatLimit = async () => {
+    const loadChatLimit = async () => {
       if (user?._id) {
         try {
-          const savedLimit = localStorage.getItem(`chatLimit_${user._id}`);
-          if (savedLimit !== null) {
-            const limitValue = parseInt(savedLimit);
-            setFreeChatsLeft(limitValue);
-          } else {
-            setFreeChatsLeft(5);
-            localStorage.setItem(`chatLimit_${user._id}`, "5");
+          const limitData = await getChatLimit(user._id);
+          if (limitData.success) {
+            setFreeChatsLeft(limitData.chatLimit);
           }
         } catch (error) {
-          console.error("Failed to load chat limit for user:", error);
-          setFreeChatsLeft(5);
+          console.error("Failed to load chat limit:", error);
+          // Set default limit if API fails
+          //setFreeChatsLeft(5);
         }
       } else {
+        // Default limit for guests
         setFreeChatsLeft(5);
       }
     };
 
-    loadUserChatLimit();
+    loadChatLimit();
   }, [user?._id]);
 
   const sendMessage = async () => {
@@ -246,7 +244,6 @@ const Dashboard = () => {
     if (freeChatsLeft <= 0) {
       toast.error("You've reached your free chat limit. Upgrade to continue.", {
         position: "top-right",
-        autoClose: 3000,
       });
       return;
     }
@@ -275,11 +272,14 @@ const Dashboard = () => {
       //console.log("AI Message object:", aiMessage);
 
       setMessages([...updatedMessages, aiMessage]);
-      const newLimit = freeChatsLeft - 1;
-      setFreeChatsLeft(newLimit);
-      if (user?._id) {
-        localStorage.setItem(`chatLimit_${user._id}`, newLimit.toString());
-      }
+      // const newLimit = freeChatsLeft - 1;
+      // setFreeChatsLeft(newLimit);
+      // if (user?._id) {
+      //   localStorage.setItem(`chatLimit_${user._id}`, newLimit.toString());
+      // }
+
+      setFreeChatsLeft((prev) => prev - 1);
+
       const chatKey = `chatHistory_${user?._id || "guest"}`;
       localStorage.setItem(
         chatKey,

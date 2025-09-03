@@ -1,11 +1,30 @@
 const OpenAI = require('openai');
+const User = require('../models/userDetailsModel');
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
 const chatWithAI = async (req, res) => {
   try{
-    const {message, chatHistory, userAstrologyData} = req.body;
+    const {message, chatHistory, userAstrologyData, userId} = req.body; // Add userId to request body
+
+    // Check chat limit before processing
+    if (userId) {
+      const user = await User.findById(userId);
+      
+      if (!user) {
+        return res.status(404).json({ success: false, message: 'User not found' });
+      }
+
+      // Check if user has remaining chat limit
+      if (user.chatLimit <= 0) {
+        return res.status(429).json({ 
+          success: false, 
+          message: 'Daily chat limit exceeded. Please upgrade your plan for more access.',
+          chatLimit: user.chatLimit 
+        });
+      }
+    }
 
     const astrologyContext = userAstrologyData ? `
     User's Birth Details:
@@ -46,12 +65,80 @@ const chatWithAI = async (req, res) => {
       messages: messages,
       max_tokens: 500,
       temperature: 0.7
-    })
-    return res.status(200).json({success: true, response: completion.choices[0].message.content});
+    });
+
+    // Decrement chat limit after successful AI response (if user is logged in)
+    let remainingChatLimit = null;
+    if (userId) {
+      const user = await User.findById(userId);
+      if (user) {
+        user.chatLimit -= 1;
+        await user.save();
+        remainingChatLimit = user.chatLimit;
+      }
+    }
+
+    return res.status(200).json({
+      success: true, 
+      response: completion.choices[0].message.content,
+      chatLimit: remainingChatLimit
+    });
   }catch(err){
-    //console.log('Cannot chat with AI:', err);
+    console.log('Cannot chat with AI:', err);
    return res.status(500).json({success: false, message: 'Internal Server Error', error: err.message});
   }
 };
 
-module.exports = { chatWithAI };
+const getChatLimit = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const user = await User.findById(userId);
+    
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    if (user.chatLimit === undefined || user.chatLimit === null) {
+      user.chatLimit = 5; // Set initial limit
+      await user.save();
+    }
+
+    res.json({
+      success: true,
+      chatLimit: user.chatLimit,
+      lastReset: user.lastChatReset
+    });
+  } catch (error) {
+    console.error('Get chat limit error:', error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+};
+
+
+const updateChatLimit = async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const user = await User.findById(userId);
+    
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    if (user.chatLimit <= 0) {
+      return res.status(400).json({ success: false, message: 'Chat limit exceeded' });
+    }
+
+    user.chatLimit -= 1;
+    await user.save();
+
+    res.json({
+      success: true,
+      chatLimit: user.chatLimit
+    });
+  } catch (error) {
+    console.error('Update chat limit error:', error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+};
+
+module.exports = { chatWithAI, getChatLimit, updateChatLimit };

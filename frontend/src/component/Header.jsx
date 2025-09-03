@@ -75,7 +75,8 @@ const Header = () => {
   };
 
   const handleLogout = () => {
-    clearLocalStorageExcept([`chatLimit_${user._id}`]);
+    // clearLocalStorageExcept([`chatLimit_${user._id}`]);
+    localStorage.clear();
     setUser(null);
     navigate("/");
   };
@@ -144,8 +145,8 @@ const Header = () => {
         "user",
         "token",
         "previousUsers",
-        `chatLimit_${selectedUser._id}`,
-        `chatLimit_${user._id}`,
+        // `chatLimit_${selectedUser._id}`,
+        // `chatLimit_${user._id}`,
       ];
       clearLocalStorageExcept(keysToKeep);
 
@@ -185,7 +186,8 @@ const Header = () => {
     }
 
     /// Clear localStorage but keep essential data
-    const keysToKeep = ["token", "previousUsers", `chatLimit_${user?._id}`];
+    //const keysToKeep = ["token", "previousUsers", `chatLimit_${user?._id}`];
+    const keysToKeep = ["token", "previousUsers"];
     clearLocalStorageExcept(keysToKeep);
 
     localStorage.removeItem("user");
