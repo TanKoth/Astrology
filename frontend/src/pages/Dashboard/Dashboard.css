@@ -103,6 +103,40 @@
   gap: 0.5rem;
 }
 
+.insights-title .icon {
+  width: 24px;
+  height: 24px;
+  color: #ffd700;
+}
+
+.insights-header .icon {
+  width: 20px;
+  height: 20px;
+  color: gold;
+  transition: transform 0.3s ease;
+}
+
+.insights-header .chev-icon {
+  width: 24px;
+  height: 24px;
+  color: gold;
+  transition: transform 0.3s ease;
+  right: 2rem;
+  position: absolute;
+
+}
+
+.insights-header .chev-icon:hover{
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+  cursor: pointer;
+}
+
+.insights-header .icon:hover{
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+  cursor: pointer;
+}
+
+
 .insights-content {
   margin-top: 1.5rem;
   color: #e2e8f0;
@@ -1549,6 +1583,14 @@
         backdrop-filter: blur(10px);
         right: 0;
     }
+
+  .insights-header .chev-icon {
+    width: 24px;
+    height: 24px;
+    color: #ffd700;
+    right: 2rem;
+    position: absolute;
+  }
 }
 
 /* Mobile-First Responsive Enhancements for Astrology Dashboard */
@@ -1808,6 +1850,14 @@
   /* Hide decorative elements on mobile */
   .stars {
     opacity: 0.05;
+  }
+
+  .insights-header .chev-icon {
+    width: 24px;
+    height: 24px;
+    color: #ffd700;
+    right: 2rem;
+    position: absolute;
   }
 }
 
@@ -2127,11 +2177,23 @@
   gap: 12px;
 }
 
+@media (max-width: 480px) {
+  .insights-header .chev-icon {
+    width: 24px;
+    height: 24px;
+    color: #ffd700;
+    right: 2rem;
+    position: absolute;
+  }
+}
+
+
+
 /* ====================
    PRINT STYLES FOR MOBILE
    ==================== */
 
-@media print {
+/* @media print {
   .mobile-only,
   .tablet-only,
   .action-buttons,
@@ -2139,4 +2201,4 @@
   .translate-button {
     display: none !important;
   }
-}
+} */

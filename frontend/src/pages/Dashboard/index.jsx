@@ -443,9 +443,9 @@ const Dashboard = () => {
                     <Calendar className="icon" /> {t("birthDetails")}
                   </h2>
                   {isPlanetaryOpen ? (
-                    <ChevronUp className="icon" />
+                    <ChevronUp className="chev-icon" />
                   ) : (
-                    <ChevronDown className="icon" />
+                    <ChevronDown className="chev-icon" />
                   )}
                 </div>
 
@@ -601,9 +601,9 @@ const Dashboard = () => {
                     <Sun className="icon" /> {t("planetaryPositions")}
                   </h2>
                   {isChartsOpen ? (
-                    <ChevronUp className="icon" />
+                    <ChevronUp className="chev-icon" />
                   ) : (
-                    <ChevronDown className="icon" />
+                    <ChevronDown className="chev-icon" />
                   )}
                 </div>
                 <motion.p className="welcome-subtitle">
