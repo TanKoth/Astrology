@@ -607,6 +607,66 @@
   margin-bottom: 0.5rem;
 }
 
+/* chat with AI */
+
+.chat-input textarea {
+  width: 100%;
+  min-height: 60px;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.chat-buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.clear-button {
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+}
+
+.suggested-questions {
+  margin: 16px 0;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+.suggested-title {
+  color: #ffd700;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.suggested-question {
+  display: block;
+  width: 100%;
+  margin: 4px 0;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  color: white;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.suggested-question:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
 /* Print button */
 
 /* Update your existing print media query */

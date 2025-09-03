@@ -199,7 +199,7 @@ const Header = () => {
           title={
             <span className="switch-user-title">
               <FolderOpen size={17} />
-              <span style={{ marginLeft: "5px" }}>Switch User</span>
+              <span style={{ marginLeft: "5px" }}>Open Previous User</span>
             </span>
           }
         >

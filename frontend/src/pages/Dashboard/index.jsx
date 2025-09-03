@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import AppContext from "../../context/AppContext";
 import { userLogin } from "../../api/UserLogin";
+import { sendMessageToAI } from "../../api/ChatWithAI";
 import "./Dashboard.css";
 import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
@@ -149,7 +150,7 @@ const Dashboard = () => {
             localStorage.setItem("astrologyData", userSpecificData);
             setIsLoadingChart(false);
           } catch (err) {
-            console.log("Error parsing user-specific astrology data:", err);
+            //console.log("Error parsing user-specific astrology data:", err);
             // Fallback to general astrology data
             loadGeneralAstrologyData();
           }
@@ -172,7 +173,7 @@ const Dashboard = () => {
         setAstrologyData(parsedData);
         setIsLoadingChart(false);
       } catch (err) {
-        console.log("Error parsing astrology data:", err);
+        //console.log("Error parsing astrology data:", err);
         setIsLoadingChart(false);
       }
     } else {
@@ -184,7 +185,7 @@ const Dashboard = () => {
   const fetchInsights = async () => {
     try {
       if (!user || !user._id) {
-        console.log("User Id not available");
+        //console.log("User Id not available");
         setIsLoadingChart(false);
         return;
       }
@@ -215,33 +216,130 @@ const Dashboard = () => {
   };
 
   const sendMessage = async () => {
+    // Checking the limit of the chat with AI
     if (!newMessage.trim()) return;
-    if (freeChatsLeft <= 0) {
-      alert("You've reached your free chat limit. Upgrade to continue.");
-      return;
-    }
+    // if (freeChatsLeft <= 0) {
+    //   toast.error("You've reached your free chat limit. Upgrade to continue.", {
+    //     position: "top-right",
+    //     autoClose: 3000,
+    //   });
+    //   return;
+    // }
 
-    const newChat = { role: "user", content: newMessage };
+    const newChat = { role: "user", content: String(newMessage.trim()) };
     const updatedMessages = [...messages, newChat];
     setMessages(updatedMessages);
     setNewMessage("");
     setIsTyping(true);
+    setIsLoadingChat(true);
 
     try {
-      // const recentHistory = [...updatedMessages].slice(-6); // Last 3 rounds
-      // const aiResponse = await sendMessageToAI(newMessage, recentHistory);
+      const recentHistory = [...updatedMessages].slice(-6); // Last 3 rounds
+      const aiResponse = await sendMessageToAI(
+        newMessage,
+        recentHistory,
+        astrologyData
+      );
+      //console.log("AI Response received:", aiResponse, typeof aiResponse);
 
-      // setMessages([
-      //   ...updatedMessages,
-      //   { role: "assistant", content: aiResponse },
-      // ]);
+      const aiMessage = {
+        role: "assistant",
+        content: String(aiResponse || "Sorry, I couldn't generate a response."),
+      };
+
+      //console.log("AI Message object:", aiMessage);
+
+      setMessages([...updatedMessages, aiMessage]);
       setFreeChatsLeft((prev) => prev - 1);
+      const chatKey = `chatHistory_${user?._id || "guest"}`;
+      localStorage.setItem(
+        chatKey,
+        JSON.stringify([...updatedMessages, aiMessage])
+      );
     } catch (error) {
-      console.error("Chat request failed.");
+      console.error("Chat request failed.", error);
+      toast.error("Failed to get response from AI. Please try again.", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+
+      // Remove the user message if AI response failed
+      setMessages(updatedMessages.slice(0, -1));
     } finally {
       setIsTyping(false);
+      setIsLoadingChat(false);
     }
   };
+
+  // Load chat history on component mount
+  useEffect(() => {
+    if (user?._id) {
+      const chatKey = `chatHistory_${user._id}`;
+      const savedMessages = localStorage.getItem(chatKey);
+      if (savedMessages) {
+        try {
+          const parsedMessages = JSON.parse(savedMessages);
+          // Ensure all loaded messages have string content
+          const validMessages = parsedMessages.map((msg) => ({
+            ...msg,
+            content:
+              typeof msg.content === "string"
+                ? msg.content
+                : String(msg.content || ""),
+          }));
+          setMessages(validMessages);
+        } catch (error) {
+          console.error("Failed to load chat history:", error);
+        }
+      }
+    }
+  }, [user]);
+
+  // Add welcome message when astrology data is loaded
+  useEffect(() => {
+    if (astrologyData && messages.length === 0) {
+      const welcomeMessage = {
+        role: "assistant",
+        content: `🌟 Namaste! I'm Vedic Vedang.AI, your personal astrology guide. I can see your birth chart and planetary positions. Feel free to ask me about:
+
+        • Your personality traits based on your planets
+        • Career and relationship guidance
+        • Auspicious times for important decisions
+        • Remedies for planetary influences
+        • Spiritual insights from your Nakshatra
+
+        What would you like to explore about your cosmic blueprint today?`,
+      };
+      setMessages([welcomeMessage]);
+    }
+  }, [astrologyData]);
+
+  const clearChatHistory = () => {
+    setMessages([]);
+    if (user?._id) {
+      localStorage.removeItem(`chatHistory_${user._id}`);
+    }
+    toast.success("Chat history cleared!", {
+      position: "top-right",
+      autoClose: 2000,
+    });
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  };
+
+  // Add suggested questions
+  const suggestedQuestions = [
+    "What does my birth chart say about my personality?",
+    "When is a good time for me to start new ventures?",
+    "What remedies can help improve my life?",
+    "Tell me about my Nakshatra and its significance",
+    "How do current planetary transits affect me?",
+  ];
 
   return (
     <div className="dashboard-layout">
@@ -542,38 +640,79 @@ const Dashboard = () => {
                   </div>
                 ) : (
                   <>
-                    {messages.map((msg, index) => (
-                      <div key={index} className={`message ${msg.role}`}>
-                        <ReactMarkdown className="message-content prose prose-invert max-w-none text-white">
-                          {msg.content}
-                        </ReactMarkdown>
-                      </div>
-                    ))}
+                    {messages.map((msg, index) => {
+                      // Validate message structure
+                      if (!msg || typeof msg !== "object") {
+                        console.warn("Invalid message at index", index, msg);
+                        return null;
+                      }
+
+                      const content =
+                        typeof msg.content === "string"
+                          ? msg.content
+                          : String(msg.content || "Invalid message content");
+
+                      return (
+                        <div
+                          key={index}
+                          className={`message ${msg.role || "user"}`}
+                        >
+                          <div className="message-content">
+                            <ReactMarkdown>{content}</ReactMarkdown>
+                          </div>
+                        </div>
+                      );
+                    })}
                     {isTyping && <TypingIndicator />}
                   </>
+                )}
+                {messages.length === 0 && (
+                  <div className="suggested-questions">
+                    <p className="suggested-title">Suggested questions:</p>
+                    {suggestedQuestions.map((question, index) => (
+                      <button
+                        key={index}
+                        className="suggested-question"
+                        onClick={() => setNewMessage(question)}
+                      >
+                        {question}
+                      </button>
+                    ))}
+                  </div>
                 )}
               </div>
 
               <div className="chat-input">
-                <input
-                  type="text"
+                <textarea
                   placeholder={t("typeQuestion")}
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
-                />
-                <button
-                  className="send-button"
-                  onClick={sendMessage}
+                  onKeyPress={handleKeyPress}
+                  rows="2"
                   disabled={isLoadingChat}
-                >
-                  {isLoadingChat ? (
-                    "Sending..."
-                  ) : (
-                    <>
-                      <Send className="icon" /> {t("send")}
-                    </>
-                  )}
-                </button>
+                />
+                <div className="chat-buttons">
+                  <button
+                    className="clear-button"
+                    onClick={clearChatHistory}
+                    title="Clear chat history"
+                  >
+                    Clear
+                  </button>
+                  <button
+                    className="send-button"
+                    onClick={sendMessage}
+                    disabled={isLoadingChat || !newMessage.trim()}
+                  >
+                    {isLoadingChat ? (
+                      "Sending..."
+                    ) : (
+                      <>
+                        <Send className="icon" /> {t("send")}
+                      </>
+                    )}
+                  </button>
+                </div>
               </div>
             </motion.div>
 
