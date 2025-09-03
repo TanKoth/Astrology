@@ -2,12 +2,12 @@ import axiosInstance from ".";
 
 export const sendMessageToAI = async (message, chatHistory, astrologyData) => {
   try {
-    //console.log(
-      "Sending message to AI with chatHistory and astrologyData:",
-      message,
-      chatHistory,
-      astrologyData
-    );
+    // console.log(
+    //   "Sending message to AI with chatHistory and astrologyData:",
+    //   message,
+    //   chatHistory,
+    //   astrologyData
+    // );
     const response = await axiosInstance.post("/api/chat", {
       message,
       chatHistory,
