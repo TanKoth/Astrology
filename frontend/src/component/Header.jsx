@@ -75,7 +75,7 @@ const Header = () => {
   };
 
   const handleLogout = () => {
-    localStorage.clear();
+    clearLocalStorageExcept([`chatLimit_${user._id}`]);
     setUser(null);
     navigate("/");
   };
@@ -139,7 +139,14 @@ const Header = () => {
       }
 
       // Clear localStorage but keep essential data including user-specific astrology data
-      const keysToKeep = ["astrologyData", "user", "token", "previousUsers"];
+      const keysToKeep = [
+        "astrologyData",
+        "user",
+        "token",
+        "previousUsers",
+        `chatLimit_${selectedUser._id}`,
+        `chatLimit_${user._id}`,
+      ];
       clearLocalStorageExcept(keysToKeep);
 
       // Switch to selected user
@@ -178,7 +185,7 @@ const Header = () => {
     }
 
     /// Clear localStorage but keep essential data
-    const keysToKeep = ["token", "previousUsers"];
+    const keysToKeep = ["token", "previousUsers", `chatLimit_${user?._id}`];
     clearLocalStorageExcept(keysToKeep);
 
     localStorage.removeItem("user");

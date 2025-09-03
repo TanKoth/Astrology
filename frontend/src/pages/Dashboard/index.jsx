@@ -215,6 +215,31 @@ const Dashboard = () => {
     16: t("ashtakvargaChart"), // Ashtakvarga Chart
   };
 
+  // Load user chat limit on component mount
+  useEffect(() => {
+    const loadUserChatLimit = async () => {
+      if (user?._id) {
+        try {
+          const savedLimit = localStorage.getItem(`chatLimit_${user._id}`);
+          if (savedLimit !== null) {
+            const limitValue = parseInt(savedLimit);
+            setFreeChatsLeft(limitValue);
+          } else {
+            setFreeChatsLeft(5);
+            localStorage.setItem(`chatLimit_${user._id}`, "5");
+          }
+        } catch (error) {
+          console.error("Failed to load chat limit for user:", error);
+          setFreeChatsLeft(5);
+        }
+      } else {
+        setFreeChatsLeft(5);
+      }
+    };
+
+    loadUserChatLimit();
+  }, [user?._id]);
+
   const sendMessage = async () => {
     // Checking the limit of the chat with AI
     if (!newMessage.trim()) return;
@@ -250,7 +275,11 @@ const Dashboard = () => {
       //console.log("AI Message object:", aiMessage);
 
       setMessages([...updatedMessages, aiMessage]);
-      setFreeChatsLeft((prev) => prev - 1);
+      const newLimit = freeChatsLeft - 1;
+      setFreeChatsLeft(newLimit);
+      if (user?._id) {
+        localStorage.setItem(`chatLimit_${user._id}`, newLimit.toString());
+      }
       const chatKey = `chatHistory_${user?._id || "guest"}`;
       localStorage.setItem(
         chatKey,
@@ -313,6 +342,15 @@ const Dashboard = () => {
       setMessages([welcomeMessage]);
     }
   }, [astrologyData]);
+
+  // Clear chat data when user logs out
+  useEffect(() => {
+    if (!user) {
+      setMessages([]);
+      setFreeChatsLeft(5);
+      setAstrologyData(null);
+    }
+  }, [user]);
 
   const clearChatHistory = () => {
     setMessages([]);
