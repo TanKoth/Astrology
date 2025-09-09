@@ -36,6 +36,10 @@
   justify-content: center;
   align-items: center;
   padding: 20px;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .all-chart-container svg {
@@ -43,6 +47,12 @@
   border: 2px solid #8b4513;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Responsive SVG styles */
+  width: 100% !important;
+  height: auto !important;
+  max-width: 100% !important;
+  display: block !important;
+  margin: 0 auto !important;
 }
 
 /* Planet text styling */
@@ -162,125 +172,82 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .chart-item {
-    padding: 15px 10px;
-    margin: 15px 5px;
-    width:23rem;
-  }
-  
-  .chart-title {
-    font-size: 20px;
-    margin-bottom: 20px;
-  }
-  
   .all-chart-container {
-    padding: 10px;
+    padding: 15px;
+    max-width: 100%;
   }
   
   .all-chart-container svg {
-    max-width: calc(100vw - 60px);
-    width: 100%;
-    height: auto;
+    border-width: 1px;
+    border-radius: 6px;
   }
   
-  .all-chart-container svg text {
-    font-size: 10px !important;
-  }
-
+  /* Adjust text sizes for better readability */
   .all-chart-container svg text[style*="font-weight:bold"] {
-    font-size: 10px !important;
+    font-size: 11px !important;
   }
   
   .all-chart-container svg text[style*="font-family:Arial"] {
-    font-size: 10px !important;
+    font-size: 11px !important;
   }
 }
 
 @media (max-width: 480px) {
-  .chart-item {
-    padding: 10px 5px;
-    margin: 10px 5px;
-    width:21rem;
-  }
-  
-  .chart-title {
-    font-size: 18px;
-    margin-bottom: 15px;
-  }
-  
   .all-chart-container {
-    padding: 5px;
+    padding: 10px;
   }
   
-  .all-chart-container svg {
-    max-width: calc(100vw - 40px);
-    width: 100%;
-    height: auto;
-  }
-  
-  .all-chart-container svg text {
-    font-size: 8px !important;
-  }
-
   .all-chart-container svg text[style*="font-weight:bold"] {
-    font-size: 8px !important;
+    font-size: 12px !important;
   }
   
   .all-chart-container svg text[style*="font-family:Arial"] {
-    font-size: 8px !important;
-  }
-  
-  .all-chart-placeholder,
-  .all-all-all-all-chart-error,
-  .chart-loading {
-    min-height: 250px;
-    margin: 0 5px;
+    font-size: 12px !important;
   }
 }
 
 @media (max-width: 320px) {
-  .chart-item {
-    padding: 8px 3px;
-    margin: 8px 3px;
-  }
-  
-  .chart-title {
-    font-size: 16px;
-    margin-bottom: 12px;
-  }
-  
   .all-chart-container {
-    padding: 3px;
+    padding: 8px;
   }
   
-  .all-chart-container svg {
-    max-width: calc(100vw - 30px);
-    width: 100%;
-    height: auto;
-  }
-  
-  .all-chart-container svg text {
-    font-size: 7px !important;
-  }
-
   .all-chart-container svg text[style*="font-weight:bold"] {
-    font-size: 7px !important;
+    font-size: 8px !important;
   }
   
   .all-chart-container svg text[style*="font-family:Arial"] {
-    font-size: 7px !important;
+    font-size: 8px !important;
+  }
+}
+
+@media (max-width: 280px) {
+  .chart-item {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 5px 2px;
+    margin: 5px 0;
+    box-sizing: border-box;
   }
   
-  .all-chart-placeholder,
-  .all-all-all-all-chart-error,
-  .chart-loading {
-    min-height: 200px;
-    margin: 0 3px;
+  .all-chart-container {
+    padding: 2px;
   }
   
-  .all-chart-placeholder p,
-  .all-all-all-all-chart-error p {
-    font-size: 14px;
+  .all-chart-container svg {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  
+  .all-chart-container svg text {
+    font-size: 6px !important;
+  }
+
+  .all-chart-container svg text[style*="font-weight:bold"] {
+    font-size: 6px !important;
+  }
+  
+  .all-chart-container svg text[style*="font-family:Arial"] {
+    font-size: 6px !important;
   }
 }
 

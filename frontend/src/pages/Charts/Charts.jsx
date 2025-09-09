@@ -230,7 +230,7 @@ const Charts = () => {
                     </LazyChartLoading>
 
                     <LazyChartLoading
-                      delay={500}
+                      delay={0}
                       loadingText="Loading D3 chart..."
                     >
                       <D3
@@ -240,7 +240,7 @@ const Charts = () => {
                     </LazyChartLoading>
 
                     <LazyChartLoading
-                      delay={1000}
+                      delay={500}
                       loadingText="Loading D4 chart..."
                     >
                       <D4
@@ -250,7 +250,7 @@ const Charts = () => {
                     </LazyChartLoading>
 
                     <LazyChartLoading
-                      delay={1500}
+                      delay={500}
                       loadingText="Loading D6 chart..."
                     >
                       <D6
@@ -260,7 +260,7 @@ const Charts = () => {
                     </LazyChartLoading>
 
                     <LazyChartLoading
-                      delay={2000}
+                      delay={1000}
                       loadingText="Loading D7 chart..."
                     >
                       <D7
@@ -270,7 +270,7 @@ const Charts = () => {
                     </LazyChartLoading>
 
                     <LazyChartLoading
-                      delay={2500}
+                      delay={1000}
                       loadingText="Loading D8 chart..."
                     >
                       <D8
@@ -280,7 +280,7 @@ const Charts = () => {
                     </LazyChartLoading>
 
                     <LazyChartLoading
-                      delay={3000}
+                      delay={1500}
                       loadingText="Loading D10 chart..."
                     >
                       <D10
@@ -290,7 +290,7 @@ const Charts = () => {
                     </LazyChartLoading>
 
                     <LazyChartLoading
-                      delay={3500}
+                      delay={1500}
                       loadingText="Loading D12 chart..."
                     >
                       <D12
@@ -300,7 +300,7 @@ const Charts = () => {
                     </LazyChartLoading>
 
                     <LazyChartLoading
-                      delay={4000}
+                      delay={2000}
                       loadingText="Loading D16 chart..."
                     >
                       <D16
@@ -310,7 +310,7 @@ const Charts = () => {
                     </LazyChartLoading>
 
                     <LazyChartLoading
-                      delay={4500}
+                      delay={2000}
                       loadingText="Loading D20 chart..."
                     >
                       <D20
@@ -320,7 +320,7 @@ const Charts = () => {
                     </LazyChartLoading>
 
                     <LazyChartLoading
-                      delay={5000}
+                      delay={2500}
                       loadingText="Loading D24 chart..."
                     >
                       <D24
@@ -330,7 +330,7 @@ const Charts = () => {
                     </LazyChartLoading>
 
                     <LazyChartLoading
-                      delay={5500}
+                      delay={2500}
                       loadingText="Loading D27 chart..."
                     >
                       <D27
@@ -340,7 +340,7 @@ const Charts = () => {
                     </LazyChartLoading>
 
                     <LazyChartLoading
-                      delay={6000}
+                      delay={3000}
                       loadingText="Loading D30 chart..."
                     >
                       <D30
@@ -350,7 +350,7 @@ const Charts = () => {
                     </LazyChartLoading>
 
                     <LazyChartLoading
-                      delay={6500}
+                      delay={3000}
                       loadingText="Loading D40 chart..."
                     >
                       <D40
@@ -360,7 +360,7 @@ const Charts = () => {
                     </LazyChartLoading>
 
                     <LazyChartLoading
-                      delay={7000}
+                      delay={3500}
                       loadingText="Loading D45 chart..."
                     >
                       <D45
@@ -370,7 +370,7 @@ const Charts = () => {
                     </LazyChartLoading>
 
                     <LazyChartLoading
-                      delay={7500}
+                      delay={3500}
                       loadingText="Loading D60 chart..."
                     >
                       <D60

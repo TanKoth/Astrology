@@ -266,7 +266,7 @@ const cleanPlanetText = (svgString) => {
     "<text$1>$2</text>"
   );
 };
-// D3Chart component for rendering SVG
+// component for rendering SVG
 export const SVGRenderer = ({ svgString, className = "" }) => {
   if (!svgString) {
     return (
@@ -293,11 +293,40 @@ export const SVGRenderer = ({ svgString, className = "" }) => {
     );
   }
 
+  // Make SVG responsive by adding viewBox and removing fixed dimensions
+  const makeResponsiveSVG = (svgStr) => {
+    // Extract original width and height
+    const widthMatch = svgStr.match(/width="(\d+)"/);
+    const heightMatch = svgStr.match(/height="(\d+)"/);
+
+    const originalWidth = widthMatch ? widthMatch[1] : "330";
+    const originalHeight = heightMatch ? heightMatch[1] : "330";
+
+    // Replace the opening SVG tag to make it responsive
+    return svgStr.replace(
+      /<svg[^>]*>/,
+      `<svg viewBox="0 0 ${originalWidth} ${originalHeight}" 
+           preserveAspectRatio="xMidYMid meet" 
+           style="width: 100%; height: auto; max-width: 100%; display: block;" 
+           xmlns="http://www.w3.org/2000/svg">`
+    );
+  };
+
+  const responsiveSVG = makeResponsiveSVG(cleanSvgString);
+
   return (
     <div
       className={`all-chart-container ${className}`}
-      dangerouslySetInnerHTML={{ __html: cleanSvgString }}
+      dangerouslySetInnerHTML={{ __html: responsiveSVG }}
       role="img"
+      style={{
+        width: "100%",
+        maxWidth: "500px", // Set a reasonable max-width
+        margin: "0 auto",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
     />
   );
 };

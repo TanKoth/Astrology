@@ -46,7 +46,7 @@ import RasiSign from "./pages/Calculator/RasiSign";
 import Birthdate from "./pages/Numerology/BirthdateNumber";
 import Numerology from "./pages/Numerology/Numerology";
 import Rational from "./pages/Numerology/RationalNumber";
-import PrastharashtakvargaCharts from './pages/Charts/PrastharashtakvargaCharts';
+import PrastharashtakvargaCharts from './pages/PrastharashtakvargaCharts/PrastharashtakvargaCharts';
 
 
 function AppRoutes() {

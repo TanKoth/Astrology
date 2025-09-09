@@ -604,7 +604,7 @@ const Dashboard = () => {
                       />
                     </LazyChartLoading>
                     <LazyChartLoading
-                      delay={0}
+                      delay={500}
                       loadingText="Loading Navamsa Chart..."
                     >
                       <D9
@@ -613,7 +613,7 @@ const Dashboard = () => {
                       />
                     </LazyChartLoading>
                     <LazyChartLoading
-                      delay={0}
+                      delay={500}
                       loadingText="Loading Sarvashtakvarga Chart..."
                     >
                       <SarvashtakvargaChart />
