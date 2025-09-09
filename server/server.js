@@ -21,6 +21,7 @@ const doshRouter = require('./routes/doshRoute');
 const lalkitabRouter = require('./routes/lalKitabRoute');
 const numerologyRouter = require('./routes/numerologyRoute');
 const chatRouter = require('./routes/chatWithAIRoute')
+const chartRouter = require('./routes/chartsRoute');
 
 const app = express();
 require('dotenv').config();
@@ -30,12 +31,12 @@ connectDB();
 app.use(cors());
 
 //setting rate limiter
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
-  message: "Too many requests from this IP, please try again later."
-});
-app.use('/api/', limiter);
+// const limiter = rateLimit({
+//   windowMs: 15 * 60 * 1000, // 15 minutes
+//   max: 100, // limit each IP to 100 requests per windowMs
+//   message: "Too many requests from this IP, please try again later."
+// });
+// app.use('/api/', limiter);
 app.use(helmet());
 
 
@@ -59,7 +60,8 @@ app.use('/api', calculatorRouter);
 app.use('/api/dosh', doshRouter);
 app.use('/api/lalkitab', lalkitabRouter);
 app.use('/api/numerology', numerologyRouter);
-app.use('/api', chatRouter);
+app.use('/api',chatRouter);
+app.use('/api', chartRouter);
 
 app.listen(PORT, ()=> {
   console.log(`Server is running on port ${PORT}`);

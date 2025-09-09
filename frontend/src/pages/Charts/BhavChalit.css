@@ -1,0 +1,133 @@
+.bhav-chalit-chart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.bhav-chalit-chart svg {
+  background-color: #faf0e6;
+  border: 2px solid #8b4513;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Planet text styling */
+.bhav-chalit-chart svg text[style*="font-weight:bold"] {
+  font-family: 'Arial', sans-serif !important;
+  font-size: 11px !important;
+  font-weight: bold !important;
+  fill: #2c5aa0 !important;
+  text-anchor: middle !important;
+  dominant-baseline: central !important;
+  pointer-events: none;
+}
+
+/* Additional planet text centering */
+.bhav-chalit-chart svg text.planet-text {
+  text-anchor: middle !important;
+  dominant-baseline: central !important;
+  font-family: 'Arial', sans-serif !important;
+  font-size: 9px !important;
+  font-weight: bold !important;
+  pointer-events: none;
+  letter-spacing: 0.3px;
+  line-height: 1.2;
+}
+
+.bhav-chalit-chart svg text[class*="planet-"] {
+  text-anchor: middle !important;
+  dominant-baseline: central !important;
+  font-size: 10px !important;
+}
+
+/* Ensure planets don't overlap with house lines */
+.bhav-chalit-chart svg text[style*="font-weight:bold"]:not([style*="font-family:Arial"]) {
+  font-family: 'Arial', sans-serif !important;
+  font-size: 9px !important;
+  font-weight: bold !important;
+  fill: #2c5aa0 !important;
+  text-anchor: middle !important;
+  dominant-baseline: central !important;
+}
+
+/* House number styling */
+.bhav-chalit-chart svg text[style*="font-family:Arial"] {
+  font-family: 'Arial', sans-serif;
+  font-size: 11px;
+  fill: #000000 !important;
+  text-anchor: middle;
+  font-weight: normal;
+}
+
+/* Path styling for the chart structure */
+.bhav-chalit-chart svg path {
+  fill: none;
+  stroke: #8b4513;
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .bhav-chalit-chart svg {
+    width: 280px;
+    height: 280px;
+  }
+  
+  .bhav-chalit-chart svg text {
+    font-size: 10px;
+  }
+
+  .bhav-chalit-chart svg text[style*="font-weight:bold"] {
+    font-size: 10px;
+    dominant-baseline: central;
+  }
+}
+
+@media (max-width: 480px) {
+  .bhav-chalit-chart svg {
+    width: 250px;
+    height: 250px;
+  }
+  
+  .bhav-chalit-chart svg text {
+    font-size: 9px;
+  }
+
+  .bhav-chalit-chart svg text[style*="font-weight:bold"] {
+    font-size: 9px;
+    dominant-baseline: central;
+  }
+}
+
+/* Container for the chart component */
+/* .chart-container {
+
+  padding: 30px;
+  border-radius: 12px;
+  margin: 20px auto;
+  max-width: 435px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  height: 435px;
+} */
+
+/* .chart-title {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #2c5aa0;
+  margin-bottom: 20px;
+  font-family: 'Arial', sans-serif;
+} */
+
+/* Planet color coding */
+.planet-sun { fill: #ff6b35 !important; }
+.planet-moon { fill: #4a90e2 !important; }
+.planet-mars { fill: #e74c3c !important; }
+.planet-mercury { fill: #2ecc71 !important; }
+.planet-jupiter { fill: #f39c12 !important; }
+.planet-venus { fill: #9b59b6 !important; }
+.planet-saturn { fill: #34495e !important; }
+.planet-rahu { fill: #8b4513 !important; }
+.planet-ketu { fill: #7f8c8d !important; }

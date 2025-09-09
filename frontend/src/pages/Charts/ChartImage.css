@@ -1,0 +1,312 @@
+/* D3 Chart Specific Styles */
+/* .chart-item {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border-radius: 20px;
+  padding: 25px;
+  margin: 20px 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+} */
+
+.chart-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+}
+
+/* .chart-title {
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 25px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  letter-spacing: 0.5px;
+} */
+
+/* D3 Chart Container Styles - Same as bhav-chalit-chart */
+.all-chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.all-chart-container svg {
+  background-color: #faf0e6;
+  border: 2px solid #8b4513;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Planet text styling */
+.all-chart-container svg text[style*="font-weight:bold"] {
+  font-family: 'Arial', sans-serif !important;
+  font-size: 11px !important;
+  font-weight: bold !important;
+  fill: #2c5aa0 !important;
+  /* text-anchor: middle !important;
+  dominant-baseline: central !important;
+  pointer-events: none; */
+}
+
+/* Additional planet text centering */
+/* .all-chart-container svg text.planet-text {
+  text-anchor: middle !important;
+  dominant-baseline: central !important;
+  font-family: 'Arial', sans-serif !important;
+  font-size: 9px !important;
+  font-weight: bold !important;
+  pointer-events: none;
+  letter-spacing: 0.3px;
+  line-height: 1.2;
+} */
+
+/* .all-chart-container svg text[class*="planet-"] {
+  text-anchor: middle !important;
+  dominant-baseline: central !important;
+  font-size: 10px !important;
+} */
+
+/* Ensure planets don't overlap with house lines */
+/* .all-chart-container svg text[style*="font-weight:bold"]:not([style*="font-family:Arial"]) {
+  font-family: 'Arial', sans-serif !important;
+  font-size: 9px !important;
+  font-weight: bold !important;
+  fill: #2c5aa0 !important;
+  text-anchor: middle !important;
+  dominant-baseline: central !important;
+} */
+
+/* House number styling */
+.all-chart-container svg text[style*="font-family:Arial"] {
+  font-family: 'Arial', sans-serif;
+  font-size: 11px;
+  fill: #000000 !important;
+  /* text-anchor: middle; */
+  font-weight: normal;
+}
+
+/* Path styling for the chart structure */
+.all-chart-container svg path {
+  fill: none;
+  stroke: #8b4513;
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+/* Chart placeholder and error states */
+.all-chart-placeholder,
+.all-all-all-all-chart-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  background: #faf0e6;
+  border-radius: 8px;
+  border: 2px solid #8b4513;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.all-chart-placeholder p,
+.all-all-all-all-chart-error p {
+  color: #8b4513;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Loading state */
+.chart-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  background: #faf0e6;
+  border-radius: 8px;
+  border: 2px solid #8b4513;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chart-loading::after {
+  content: '';
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(139, 69, 19, 0.3);
+  border-top: 3px solid #8b4513;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Planet color coding */
+.planet-sun { fill: #ff6b35 !important; }
+.planet-moon { fill: #4a90e2 !important; }
+.planet-mars { fill: #e74c3c !important; }
+.planet-mercury { fill: #2ecc71 !important; }
+.planet-jupiter { fill: #f39c12 !important; }
+.planet-venus { fill: #9b59b6 !important; }
+.planet-saturn { fill: #34495e !important; }
+.planet-rahu { fill: #8b4513 !important; }
+.planet-ketu { fill: #7f8c8d !important; }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .chart-item {
+    padding: 15px 10px;
+    margin: 15px 5px;
+    width:23rem;
+  }
+  
+  .chart-title {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .all-chart-container {
+    padding: 10px;
+  }
+  
+  .all-chart-container svg {
+    max-width: calc(100vw - 60px);
+    width: 100%;
+    height: auto;
+  }
+  
+  .all-chart-container svg text {
+    font-size: 10px !important;
+  }
+
+  .all-chart-container svg text[style*="font-weight:bold"] {
+    font-size: 10px !important;
+  }
+  
+  .all-chart-container svg text[style*="font-family:Arial"] {
+    font-size: 10px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .chart-item {
+    padding: 10px 5px;
+    margin: 10px 5px;
+    width:18rem;
+  }
+  
+  .chart-title {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+  
+  .all-chart-container {
+    padding: 5px;
+  }
+  
+  .all-chart-container svg {
+    max-width: calc(100vw - 40px);
+    width: 100%;
+    height: auto;
+  }
+  
+  .all-chart-container svg text {
+    font-size: 8px !important;
+  }
+
+  .all-chart-container svg text[style*="font-weight:bold"] {
+    font-size: 8px !important;
+  }
+  
+  .all-chart-container svg text[style*="font-family:Arial"] {
+    font-size: 8px !important;
+  }
+  
+  .all-chart-placeholder,
+  .all-all-all-all-chart-error,
+  .chart-loading {
+    min-height: 250px;
+    margin: 0 5px;
+  }
+}
+
+@media (max-width: 320px) {
+  .chart-item {
+    padding: 8px 3px;
+    margin: 8px 3px;
+  }
+  
+  .chart-title {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+  
+  .all-chart-container {
+    padding: 3px;
+  }
+  
+  .all-chart-container svg {
+    max-width: calc(100vw - 30px);
+    width: 100%;
+    height: auto;
+  }
+  
+  .all-chart-container svg text {
+    font-size: 7px !important;
+  }
+
+  .all-chart-container svg text[style*="font-weight:bold"] {
+    font-size: 7px !important;
+  }
+  
+  .all-chart-container svg text[style*="font-family:Arial"] {
+    font-size: 7px !important;
+  }
+  
+  .all-chart-placeholder,
+  .all-all-all-all-chart-error,
+  .chart-loading {
+    min-height: 200px;
+    margin: 0 3px;
+  }
+  
+  .all-chart-placeholder p,
+  .all-all-all-all-chart-error p {
+    font-size: 14px;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .chart-item {
+    background: white !important;
+    box-shadow: none !important;
+    border: 1px solid #000 !important;
+  }
+  
+  .chart-title {
+    color: #000 !important;
+    text-shadow: none !important;
+  }
+  
+  .all-chart-container {
+    background: #faf0e6 !important;
+    border: 2px solid #8b4513 !important;
+  }
+  
+  .all-chart-container svg text {
+    fill: #2c5aa0 !important;
+  }
+  
+  .all-chart-container svg path {
+    stroke: #8b4513 !important;
+  }
+}

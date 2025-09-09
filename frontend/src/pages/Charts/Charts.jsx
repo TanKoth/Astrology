@@ -20,22 +20,23 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "../../context/TranslationContext";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-const TypingIndicator = () => (
-  <div className="message ai">
-    <div className="typing-indicator">
-      <Sparkles className="crystal-ball" />
-      <span className="typing-indicator-text">
-        Vedic Vedang.AI is consulting the stars
-      </span>
-      <div className="typing-indicator-dots">
-        <div className="typing-dot"></div>
-        <div className="typing-dot"></div>
-        <div className="typing-dot"></div>
-      </div>
-    </div>
-  </div>
-);
+import BhavChalit from "./BhavChalit";
+import D3 from "./D3";
+import D4 from "./D4";
+import D6 from "./D6";
+import D7 from "./D7";
+import D8 from "./D8";
+import D10 from "./D10";
+import D12 from "./D12";
+import D16 from "./D16";
+import D20 from "./D20";
+import D24 from "./D24";
+import D27 from "./D27";
+import D30 from "./D30";
+import D40 from "./D40";
+import D45 from "./D45";
+import D60 from "./D60";
+import LazyChartLoading from "../../utilityFunction/LazyChartLoading";
 
 const Charts = () => {
   const { user } = useContext(AppContext);
@@ -43,6 +44,46 @@ const Charts = () => {
   const [astrologyData, setAstrologyData] = useState(null);
   const [isLoadingChart, setIsLoadingChart] = useState(false);
   const navigate = useNavigate(); // Initialize navigation
+  const [currentLanguage, setCurrentLanguage] = useState(language || "en");
+
+  const handleLanguageChange = async () => {
+    const languageMap = {
+      en: "hi",
+      hi: "en",
+    };
+
+    const newLanguage = languageMap[currentLanguage] || "en";
+    setCurrentLanguage(newLanguage);
+
+    try {
+      // Call the global language toggle function
+      toggleLanguage();
+
+      // Show success message
+      toast.success(
+        `Language changed to ${newLanguage === "hi" ? "Hindi" : "English"}`,
+        {
+          position: "top-right",
+        }
+      );
+    } catch (error) {
+      console.error("Failed to change language:", error);
+      toast.error("Failed to change language. Please try again.");
+    }
+  };
+
+  const getLanguageDisplayName = () => {
+    const languageNames = {
+      en: "हिंदी",
+      hi: "English",
+    };
+    return languageNames[currentLanguage] || "हिंदी";
+  };
+
+  // Update currentLanguage when language context changes
+  useEffect(() => {
+    setCurrentLanguage(language || "en");
+  }, [language]);
 
   const handlePrint = () => {
     //const originalTitle = document.title;
@@ -54,22 +95,22 @@ const Charts = () => {
     }, 100);
   };
 
-  const chartNameMapping = {
-    0: t("horaChart") || "Hora (Wealth - D2)",
-    1: t("drekkanaChart") || "Drekkana (Sibling - D3)",
-    2: t("chaturtamshaChart") || "Chaturtamsha (Luck - D4)",
-    3: t("saptamshaChart") || "Saptamsha (Children - D7)",
-    4: t("navamshaChart") || "Navamsha (Spouse - D9)",
-    5: t("dashamshaChart") || "Dashamsha (Profession - D10)",
-    6: t("dwadashamshaChart") || "Dwadashamsha (Parents - D12)",
-    7: t("shodasamshaChart") || "Shodasamsha (Vehicles - D16)",
-    8: t("vimshamshaChart") || "Vimshamsha (Religious Inclinations - D20)",
-    9: t("chaturvimshamshaChart") || "Chaturvimshamsha (Education - D24)",
-    10: t("saptavimshaChart") || "Saptavimsha (Strength - D27)",
-    11: t("trimsamshaChart") || "Trimsamsha (Misfortune - D30)",
-    12: t("khavedamshaChart") || "Khavedamsha (Auspicious Results - D40)",
-    13: t("shashtiamshaChart") || "Shashtiamsha (General Well-being - D60)",
-  };
+  // const chartNameMapping = {
+  //   0: t("horaChart") || "Hora (Wealth - D2)",
+  //   1: t("drekkanaChart") || "Drekkana (Sibling - D3)",
+  //   2: t("chaturtamshaChart") || "Chaturtamsha (Luck - D4)",
+  //   3: t("saptamshaChart") || "Saptamsha (Children - D7)",
+  //   4: t("navamshaChart") || "Navamsha (Spouse - D9)",
+  //   5: t("dashamshaChart") || "Dashamsha (Profession - D10)",
+  //   6: t("dwadashamshaChart") || "Dwadashamsha (Parents - D12)",
+  //   7: t("shodasamshaChart") || "Shodasamsha (Vehicles - D16)",
+  //   8: t("vimshamshaChart") || "Vimshamsha (Religious Inclinations - D20)",
+  //   9: t("chaturvimshamshaChart") || "Chaturvimshamsha (Education - D24)",
+  //   10: t("saptavimshaChart") || "Saptavimsha (Strength - D27)",
+  //   11: t("trimsamshaChart") || "Trimsamsha (Misfortune - D30)",
+  //   12: t("khavedamshaChart") || "Khavedamsha (Auspicious Results - D40)",
+  //   13: t("shashtiamshaChart") || "Shashtiamsha (General Well-being - D60)",
+  // };
 
   useEffect(() => {
     if (user) {
@@ -130,11 +171,11 @@ const Charts = () => {
               <div className="action-buttons">
                 <button
                   className="translate-button"
-                  onClick={toggleLanguage}
+                  onClick={handleLanguageChange}
                   title="Translate"
                 >
                   <Languages className="icon" />
-                  {language === "en" ? "हिंदी" : "English"}
+                  {getLanguageDisplayName()}
                 </button>
                 <button
                   className="print-button"
@@ -178,7 +219,118 @@ const Charts = () => {
                 </motion.p> */}
                 <div className="insights-content">
                   <div className="charts-grid">
-                    {astrologyData.charts.slice(3, 16).map((chart, index) => (
+                    <LazyChartLoading delay={0}>
+                      <BhavChalit
+                        currentLanguage={currentLanguage}
+                        onLanguageChange={handleLanguageChange}
+                      />
+                    </LazyChartLoading>
+
+                    <LazyChartLoading delay={500}>
+                      <D3
+                        currentLanguage={currentLanguage}
+                        onLanguageChange={handleLanguageChange}
+                      />
+                    </LazyChartLoading>
+
+                    <LazyChartLoading delay={1000}>
+                      <D4
+                        currentLanguage={currentLanguage}
+                        onLanguageChange={handleLanguageChange}
+                      />
+                    </LazyChartLoading>
+
+                    <LazyChartLoading delay={1500}>
+                      <D6
+                        currentLanguage={currentLanguage}
+                        onLanguageChange={handleLanguageChange}
+                      />
+                    </LazyChartLoading>
+
+                    <LazyChartLoading delay={2000}>
+                      <D7
+                        currentLanguage={currentLanguage}
+                        onLanguageChange={handleLanguageChange}
+                      />
+                    </LazyChartLoading>
+
+                    <LazyChartLoading delay={2500}>
+                      <D8
+                        currentLanguage={currentLanguage}
+                        onLanguageChange={handleLanguageChange}
+                      />
+                    </LazyChartLoading>
+
+                    <LazyChartLoading delay={3000}>
+                      <D10
+                        currentLanguage={currentLanguage}
+                        onLanguageChange={handleLanguageChange}
+                      />
+                    </LazyChartLoading>
+
+                    <LazyChartLoading delay={3500}>
+                      <D12
+                        currentLanguage={currentLanguage}
+                        onLanguageChange={handleLanguageChange}
+                      />
+                    </LazyChartLoading>
+
+                    <LazyChartLoading delay={4000}>
+                      <D16
+                        currentLanguage={currentLanguage}
+                        onLanguageChange={handleLanguageChange}
+                      />
+                    </LazyChartLoading>
+
+                    <LazyChartLoading delay={4500}>
+                      <D20
+                        currentLanguage={currentLanguage}
+                        onLanguageChange={handleLanguageChange}
+                      />
+                    </LazyChartLoading>
+
+                    <LazyChartLoading delay={5000}>
+                      <D24
+                        currentLanguage={currentLanguage}
+                        onLanguageChange={handleLanguageChange}
+                      />
+                    </LazyChartLoading>
+
+                    <LazyChartLoading delay={5500}>
+                      <D27
+                        currentLanguage={currentLanguage}
+                        onLanguageChange={handleLanguageChange}
+                      />
+                    </LazyChartLoading>
+
+                    <LazyChartLoading delay={6000}>
+                      <D30
+                        currentLanguage={currentLanguage}
+                        onLanguageChange={handleLanguageChange}
+                      />
+                    </LazyChartLoading>
+
+                    <LazyChartLoading delay={6500}>
+                      <D40
+                        currentLanguage={currentLanguage}
+                        onLanguageChange={handleLanguageChange}
+                      />
+                    </LazyChartLoading>
+
+                    <LazyChartLoading delay={7000}>
+                      <D45
+                        currentLanguage={currentLanguage}
+                        onLanguageChange={handleLanguageChange}
+                      />
+                    </LazyChartLoading>
+
+                    <LazyChartLoading delay={7500}>
+                      <D60
+                        currentLanguage={currentLanguage}
+                        onLanguageChange={handleLanguageChange}
+                      />
+                    </LazyChartLoading>
+                    {/* {astrologyData.charts.slice(3, 16).map((chart, index) => (
                       <div key={index} className="chart-item">
                         <h4 className="chart-title">
                           {chartNameMapping[index] ||
@@ -206,7 +358,7 @@ const Charts = () => {
                           </div>
                         </div>
                       </div>
-                    ))}
+                    ))} */}
                   </div>
                 </div>
               </motion.div>

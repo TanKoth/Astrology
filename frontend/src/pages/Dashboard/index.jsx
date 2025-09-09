@@ -30,6 +30,11 @@ import { convertHtmlToAstrologyJson } from "../../utilityFunction/utilityFunctio
 import { useTranslation } from "../../context/TranslationContext";
 import { toast, ToastContainer } from "react-toastify";
 //import Header from "../../component/Header";
+import D1 from "../Charts/D1";
+import D9 from "../Charts/D9";
+import MoonChart from "../Charts/Moon";
+import SarvashtakvargaChart from "../Charts/SarvashtakvargaChart";
+import LazyChartLoading from "../../utilityFunction/LazyChartLoading";
 
 const TypingIndicator = () => (
   <div className="message ai">
@@ -75,6 +80,47 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const { t, toggleLanguage, language } = useTranslation();
   // const [isNavOpen, setIsNavOpen] = useState(false);
+
+  const [currentLanguage, setCurrentLanguage] = useState(language || "en");
+
+  const handleLanguageChange = async () => {
+    const languageMap = {
+      en: "hi",
+      hi: "en",
+    };
+
+    const newLanguage = languageMap[currentLanguage] || "en";
+    setCurrentLanguage(newLanguage);
+
+    try {
+      // Call the global language toggle function
+      toggleLanguage();
+
+      // Show success message
+      toast.success(
+        `Language changed to ${newLanguage === "hi" ? "Hindi" : "English"}`,
+        {
+          position: "top-right",
+        }
+      );
+    } catch (error) {
+      console.error("Failed to change language:", error);
+      toast.error("Failed to change language. Please try again.");
+    }
+  };
+
+  const getLanguageDisplayName = () => {
+    const languageNames = {
+      en: "हिंदी",
+      hi: "English",
+    };
+    return languageNames[currentLanguage] || "हिंदी";
+  };
+
+  // Update currentLanguage when language context changes
+  useEffect(() => {
+    setCurrentLanguage(language || "en");
+  }, [language]);
 
   // const handleToggleNav = () => {
   //   setIsNavOpen(!isNavOpen);
@@ -208,12 +254,12 @@ const Dashboard = () => {
     }
   };
 
-  const chartNameMapping = {
-    0: t("lagnaChart"), // Lagna Chart
-    1: t("chandraChart"), // Chandra Chart
-    2: t("navamsaChart"), // Navamsa Chart
-    16: t("ashtakvargaChart"), // Ashtakvarga Chart
-  };
+  // const chartNameMapping = {
+  //   0: t("lagnaChart"), // Lagna Chart
+  //   1: t("chandraChart"), // Chandra Chart
+  //   2: t("navamsaChart"), // Navamsa Chart
+  //   16: t("ashtakvargaChart"), // Ashtakvarga Chart
+  // };
 
   // Load user chat limit on component mount
   useEffect(() => {
@@ -411,15 +457,11 @@ const Dashboard = () => {
               <div className="action-buttons">
                 <button
                   className="translate-button"
-                  onClick={toggleLanguage}
+                  onClick={handleLanguageChange}
                   title="Translate"
                 >
                   <Languages className="icon" />
-                  {language === "en"
-                    ? "हिंदी"
-                    : language === "hi"
-                    ? "मराठी"
-                    : "English"}
+                  {getLanguageDisplayName()}
                 </button>
                 <button
                   className="print-button"
@@ -543,7 +585,29 @@ const Dashboard = () => {
                 </motion.p>
                 <div className="insights-content">
                   <div className="charts-grid">
-                    {astrologyData.charts
+                    <LazyChartLoading delay={0}>
+                      <D1
+                        currentLanguage={currentLanguage}
+                        onLanguageChange={handleLanguageChange}
+                      />
+                    </LazyChartLoading>
+                    <LazyChartLoading delay={0}>
+                      <MoonChart
+                        currentLanguage={currentLanguage}
+                        onLanguageChange={handleLanguageChange}
+                      />
+                    </LazyChartLoading>
+                    <LazyChartLoading delay={0}>
+                      <D9
+                        currentLanguage={currentLanguage}
+                        onLanguageChange={handleLanguageChange}
+                      />
+                    </LazyChartLoading>
+                    <LazyChartLoading delay={0}>
+                      <SarvashtakvargaChart />
+                    </LazyChartLoading>
+                    {/* <AshtakvargaChart /> */}
+                    {/* {astrologyData.charts
                       .filter(
                         (chart, index) =>
                           index < 3 || index === astrologyData.charts.length - 1
@@ -584,7 +648,7 @@ const Dashboard = () => {
                             </div>
                           </div>
                         );
-                      })}
+                      })} */}
                   </div>
                 </div>
               </motion.div>
