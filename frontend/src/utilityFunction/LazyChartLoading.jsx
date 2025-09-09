@@ -1,7 +1,11 @@
 import { useState, useEffect, useContext, useRef, useCallback } from "react";
 import { Star } from "lucide-react";
 
-const LazyChartLoading = ({ children, delay = 0 }) => {
+const LazyChartLoading = ({
+  children,
+  delay = 0,
+  loadingText = "Loading chart...",
+}) => {
   const [isVisible, setIsVisible] = useState(false);
   const [shouldLoad, setShouldLoad] = useState(false);
   const elementRef = useRef();
@@ -33,7 +37,7 @@ const LazyChartLoading = ({ children, delay = 0 }) => {
       ) : (
         <div className="chart-placeholder-loading">
           <Star className="loading-icon" />
-          <span>Loading chart...</span>
+          <span>{loadingText}</span>
         </div>
       )}
     </div>

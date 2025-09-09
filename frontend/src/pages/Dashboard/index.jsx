@@ -585,25 +585,37 @@ const Dashboard = () => {
                 </motion.p>
                 <div className="insights-content">
                   <div className="charts-grid">
-                    <LazyChartLoading delay={0}>
+                    <LazyChartLoading
+                      delay={0}
+                      loadingText="Loading Lagna Chart..."
+                    >
                       <D1
                         currentLanguage={currentLanguage}
                         onLanguageChange={handleLanguageChange}
                       />
                     </LazyChartLoading>
-                    <LazyChartLoading delay={0}>
+                    <LazyChartLoading
+                      delay={0}
+                      loadingText="Loading Moon Chart..."
+                    >
                       <MoonChart
                         currentLanguage={currentLanguage}
                         onLanguageChange={handleLanguageChange}
                       />
                     </LazyChartLoading>
-                    <LazyChartLoading delay={0}>
+                    <LazyChartLoading
+                      delay={0}
+                      loadingText="Loading Navamsa Chart..."
+                    >
                       <D9
                         currentLanguage={currentLanguage}
                         onLanguageChange={handleLanguageChange}
                       />
                     </LazyChartLoading>
-                    <LazyChartLoading delay={0}>
+                    <LazyChartLoading
+                      delay={0}
+                      loadingText="Loading Sarvashtakvarga Chart..."
+                    >
                       <SarvashtakvargaChart />
                     </LazyChartLoading>
                     {/* <AshtakvargaChart /> */}

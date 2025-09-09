@@ -91,6 +91,12 @@ const NavigationMenu = ({ isOpen, onClose }) => {
           label: "Charts",
         },
         {
+          path: "/prastharashtakvarga-charts",
+          icon: Kundali_Logo,
+          iconType: "image",
+          label: "Prasthar -\nAshtakvarga Charts",
+        },
+        {
           path: "/daily-horoscope",
           icon: LiaStarOfDavidSolid,
           label: "Daily Horoscope",

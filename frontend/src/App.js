@@ -46,6 +46,7 @@ import RasiSign from "./pages/Calculator/RasiSign";
 import Birthdate from "./pages/Numerology/BirthdateNumber";
 import Numerology from "./pages/Numerology/Numerology";
 import Rational from "./pages/Numerology/RationalNumber";
+import PrastharashtakvargaCharts from './pages/Charts/PrastharashtakvargaCharts';
 
 
 function AppRoutes() {
@@ -69,6 +70,7 @@ function AppRoutes() {
           <Route path = {"/reset-password/:email"} element = {<ResetPassword/>} /> 
           <Route path = {"/editUserDetails"} element= {<EditUserDetails/>} />
           <Route path= {"/charts"} element= {<Charts/>} />
+          <Route path= {"/prastharashtakvarga-charts"} element= {<PrastharashtakvargaCharts/>} />
           <Route path= {"/pitra-dosh"} element= {<PitraDosh/>} />
           <Route path= {"/kalsarp-dosh"} element= {<KalsarpDosh/>} />
           <Route path= {"/mangal-dosh"} element= {<MangalDosh/>} />

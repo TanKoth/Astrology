@@ -219,112 +219,160 @@ const Charts = () => {
                 </motion.p> */}
                 <div className="insights-content">
                   <div className="charts-grid">
-                    <LazyChartLoading delay={0}>
+                    <LazyChartLoading
+                      delay={0}
+                      loadingText="Loading Bhav Chalit chart..."
+                    >
                       <BhavChalit
                         currentLanguage={currentLanguage}
                         onLanguageChange={handleLanguageChange}
                       />
                     </LazyChartLoading>
 
-                    <LazyChartLoading delay={500}>
+                    <LazyChartLoading
+                      delay={500}
+                      loadingText="Loading D3 chart..."
+                    >
                       <D3
                         currentLanguage={currentLanguage}
                         onLanguageChange={handleLanguageChange}
                       />
                     </LazyChartLoading>
 
-                    <LazyChartLoading delay={1000}>
+                    <LazyChartLoading
+                      delay={1000}
+                      loadingText="Loading D4 chart..."
+                    >
                       <D4
                         currentLanguage={currentLanguage}
                         onLanguageChange={handleLanguageChange}
                       />
                     </LazyChartLoading>
 
-                    <LazyChartLoading delay={1500}>
+                    <LazyChartLoading
+                      delay={1500}
+                      loadingText="Loading D6 chart..."
+                    >
                       <D6
                         currentLanguage={currentLanguage}
                         onLanguageChange={handleLanguageChange}
                       />
                     </LazyChartLoading>
 
-                    <LazyChartLoading delay={2000}>
+                    <LazyChartLoading
+                      delay={2000}
+                      loadingText="Loading D7 chart..."
+                    >
                       <D7
                         currentLanguage={currentLanguage}
                         onLanguageChange={handleLanguageChange}
                       />
                     </LazyChartLoading>
 
-                    <LazyChartLoading delay={2500}>
+                    <LazyChartLoading
+                      delay={2500}
+                      loadingText="Loading D8 chart..."
+                    >
                       <D8
                         currentLanguage={currentLanguage}
                         onLanguageChange={handleLanguageChange}
                       />
                     </LazyChartLoading>
 
-                    <LazyChartLoading delay={3000}>
+                    <LazyChartLoading
+                      delay={3000}
+                      loadingText="Loading D10 chart..."
+                    >
                       <D10
                         currentLanguage={currentLanguage}
                         onLanguageChange={handleLanguageChange}
                       />
                     </LazyChartLoading>
 
-                    <LazyChartLoading delay={3500}>
+                    <LazyChartLoading
+                      delay={3500}
+                      loadingText="Loading D12 chart..."
+                    >
                       <D12
                         currentLanguage={currentLanguage}
                         onLanguageChange={handleLanguageChange}
                       />
                     </LazyChartLoading>
 
-                    <LazyChartLoading delay={4000}>
+                    <LazyChartLoading
+                      delay={4000}
+                      loadingText="Loading D16 chart..."
+                    >
                       <D16
                         currentLanguage={currentLanguage}
                         onLanguageChange={handleLanguageChange}
                       />
                     </LazyChartLoading>
 
-                    <LazyChartLoading delay={4500}>
+                    <LazyChartLoading
+                      delay={4500}
+                      loadingText="Loading D20 chart..."
+                    >
                       <D20
                         currentLanguage={currentLanguage}
                         onLanguageChange={handleLanguageChange}
                       />
                     </LazyChartLoading>
 
-                    <LazyChartLoading delay={5000}>
+                    <LazyChartLoading
+                      delay={5000}
+                      loadingText="Loading D24 chart..."
+                    >
                       <D24
                         currentLanguage={currentLanguage}
                         onLanguageChange={handleLanguageChange}
                       />
                     </LazyChartLoading>
 
-                    <LazyChartLoading delay={5500}>
+                    <LazyChartLoading
+                      delay={5500}
+                      loadingText="Loading D27 chart..."
+                    >
                       <D27
                         currentLanguage={currentLanguage}
                         onLanguageChange={handleLanguageChange}
                       />
                     </LazyChartLoading>
 
-                    <LazyChartLoading delay={6000}>
+                    <LazyChartLoading
+                      delay={6000}
+                      loadingText="Loading D30 chart..."
+                    >
                       <D30
                         currentLanguage={currentLanguage}
                         onLanguageChange={handleLanguageChange}
                       />
                     </LazyChartLoading>
 
-                    <LazyChartLoading delay={6500}>
+                    <LazyChartLoading
+                      delay={6500}
+                      loadingText="Loading D40 chart..."
+                    >
                       <D40
                         currentLanguage={currentLanguage}
                         onLanguageChange={handleLanguageChange}
                       />
                     </LazyChartLoading>
 
-                    <LazyChartLoading delay={7000}>
+                    <LazyChartLoading
+                      delay={7000}
+                      loadingText="Loading D45 chart..."
+                    >
                       <D45
                         currentLanguage={currentLanguage}
                         onLanguageChange={handleLanguageChange}
                       />
                     </LazyChartLoading>
 
-                    <LazyChartLoading delay={7500}>
+                    <LazyChartLoading
+                      delay={7500}
+                      loadingText="Loading D60 chart..."
+                    >
                       <D60
                         currentLanguage={currentLanguage}
                         onLanguageChange={handleLanguageChange}
