@@ -90,11 +90,17 @@ const NavigationMenu = ({ isOpen, onClose }) => {
           iconType: "image",
           label: "Charts",
         },
+        // {
+        //   path: "/bhinnashtakavarga-charts",
+        //   icon: Kundali_Logo,
+        //   iconType: "image",
+        //   label: "Bhinnashtak- \nvarga Charts",
+        // },
         {
-          path: "/prastharashtakvarga-charts",
+          path: "/bhinnashtakavarga-tables",
           icon: Kundali_Logo,
           iconType: "image",
-          label: "Prasthar -\nAshtakvarga Charts",
+          label: "Bhinnashtak- \nvarga",
         },
         {
           path: "/daily-horoscope",

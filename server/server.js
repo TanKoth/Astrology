@@ -22,6 +22,8 @@ const lalkitabRouter = require('./routes/lalKitabRoute');
 const numerologyRouter = require('./routes/numerologyRoute');
 const chatRouter = require('./routes/chatWithAIRoute')
 const chartRouter = require('./routes/chartsRoute');
+const BhinnashtakavargaChartsRouter = require('./routes/BhinnashtakavargaChartsRoute');
+const binnashtakavargaTablerouter = require('./routes/BhinnashtakavargaTableRoute');
 
 const app = express();
 require('dotenv').config();
@@ -62,6 +64,8 @@ app.use('/api/lalkitab', lalkitabRouter);
 app.use('/api/numerology', numerologyRouter);
 app.use('/api',chatRouter);
 app.use('/api', chartRouter);
+app.use('/api', BhinnashtakavargaChartsRouter);
+app.use('/api', binnashtakavargaTablerouter);
 
 app.listen(PORT, ()=> {
   console.log(`Server is running on port ${PORT}`);

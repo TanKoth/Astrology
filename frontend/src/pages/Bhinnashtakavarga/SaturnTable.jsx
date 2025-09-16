@@ -14,27 +14,37 @@ import {
   Languages,
   Gem,
   Download,
+  Sun,
 } from "lucide-react";
 import { LiaStarOfLifeSolid } from "react-icons/lia";
 import AppContext from "../../context/AppContext";
 import NavigationMenu from "../NavigationMenu/NavigationMenu";
 //import "./ChartImage.css";
-import "./Charts.css";
+import "./Bhinnashtakavarga.css";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { getD1Chart } from "../../api/Charts";
+import { getBinnashtakavargaSaturnTable } from "../../api/BhinnashtakavargaTable";
 import { getUserDetails } from "../../api/user";
 import {
   fetchLocationData,
   formateDate,
 } from "../../utilityFunction/FetchLocationData";
-import { SVGRenderer } from "../../utilityFunction/SvgFileConvertor";
+import { SaturnTableData } from "./BhinnashtakavargaTable";
 
-const D1 = ({ currentLanguage: propCurrentLanguage, onLanguageChange }) => {
+const SaturnTable = ({
+  currentLanguage: propCurrentLanguage,
+  onLanguageChange,
+}) => {
   const { user } = useContext(AppContext);
-  const [d1Data, setD1Data] = useState(null);
-  const [isLoadingD1, setIsLoadingD1] = useState(false);
+  const [
+    bhinnashtakavargaSaturnTableData,
+    setBhinnashtakavargaSaturnTableData,
+  ] = useState(null);
+  const [
+    isLoadingBhinnashtakavargaSaturnTable,
+    setIsLoadingBhinnashtakavargaSaturnTable,
+  ] = useState(false);
   const navigate = useNavigate();
   const [currentLanguage, setCurrentLanguage] = useState(
     propCurrentLanguage || "en"
@@ -50,7 +60,7 @@ const D1 = ({ currentLanguage: propCurrentLanguage, onLanguageChange }) => {
 
   // const handlePrint = () => {
   //   const userName = user?.name || "User";
-  //   document.title = `D1 Chart - ${userName}`;
+  //   document.title = `Bhinnashtakavarga Saturn Table - ${userName}`;
 
   //   setTimeout(() => {
   //     window.print();
@@ -64,20 +74,23 @@ const D1 = ({ currentLanguage: propCurrentLanguage, onLanguageChange }) => {
   }, [user]);
 
   const fetchInsights = async (lang = "en", forceRefresh = false) => {
-    setIsLoadingD1(true);
+    setIsLoadingBhinnashtakavargaSaturnTable(true);
     try {
-      const cacheKey = `d1Data_${lang}`;
+      const cacheKey = `bhinnashtakavargaSaturnTableData_${lang}`;
       const storedData = localStorage.getItem(cacheKey);
 
       if (storedData && !forceRefresh) {
         try {
           const parsedData = JSON.parse(storedData);
-          setD1Data(parsedData);
+          setBhinnashtakavargaSaturnTableData(parsedData);
           setCurrentLanguage(lang);
-          setIsLoadingD1(false);
+          setIsLoadingBhinnashtakavargaSaturnTable(false);
           return;
         } catch (err) {
-          console.error("Error parsing D1 data:", err);
+          console.error(
+            "Error parsing Bhinnashtakavarga Saturn Table data:",
+            err
+          );
         }
       }
 
@@ -113,23 +126,28 @@ const D1 = ({ currentLanguage: propCurrentLanguage, onLanguageChange }) => {
         lang: lang,
       };
 
-      const response = await getD1Chart(userData.user._id, apiParams);
+      const response = await getBinnashtakavargaSaturnTable(
+        userData.user._id,
+        apiParams
+      );
 
       if (response && response.success) {
-        console.log("D1 API Response:", response);
-        setD1Data(response);
+        console.log("Bhinnashtakavarga Saturn Table API Response:", response);
+        setBhinnashtakavargaSaturnTableData(response);
         localStorage.setItem(cacheKey, JSON.stringify(response));
-        // toast.success("D1 chart fetched successfully", {
+        // toast.success("Bhinnashtakavarga Saturn Table fetched successfully", {
         //   position: "top-right",
         //   autoClose: 1000,
         // });
         setCurrentLanguage(lang);
       }
     } catch (err) {
-      console.error("Failed to fetch D1 chart:", err);
-      toast.error("Failed to load D1 chart. Please try again.");
+      console.error("Failed to fetch Bhinnashtakavarga Saturn Table:", err);
+      toast.error(
+        "Failed to load Bhinnashtakavarga Saturn Table. Please try again."
+      );
     } finally {
-      setIsLoadingD1(false);
+      setIsLoadingBhinnashtakavargaSaturnTable(false);
     }
   };
 
@@ -140,7 +158,7 @@ const D1 = ({ currentLanguage: propCurrentLanguage, onLanguageChange }) => {
     };
 
     const newLanguage = languageMap[currentLanguage] || "en";
-    setIsLoadingD1(true);
+    setIsLoadingBhinnashtakavargaSaturnTable(true);
 
     try {
       await fetchInsights(newLanguage, true);
@@ -151,7 +169,7 @@ const D1 = ({ currentLanguage: propCurrentLanguage, onLanguageChange }) => {
     } catch (error) {
       console.error("Failed to change language:", error);
       toast.error("Failed to change language. Please try again.");
-      setIsLoadingD1(false);
+      setIsLoadingBhinnashtakavargaSaturnTable(false);
     }
   };
 
@@ -164,15 +182,13 @@ const D1 = ({ currentLanguage: propCurrentLanguage, onLanguageChange }) => {
   // };
 
   return (
-    <div className="chart-item">
-      <h4 className="chart-title">Lagna Chart</h4>
-      <div>
-        {d1Data?.charts && (
-          <SVGRenderer svgString={d1Data?.charts} className="chart-image" />
-        )}
-      </div>
-    </div>
+    <SaturnTableData
+      bhinnashtakavargaSaturnTableData={bhinnashtakavargaSaturnTableData}
+      isLoadingBhinnashtakavargaSaturnTable={
+        isLoadingBhinnashtakavargaSaturnTable
+      }
+    />
   );
 };
 
-export default D1;
+export default SaturnTable;
