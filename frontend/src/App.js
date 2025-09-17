@@ -46,7 +46,7 @@ import RasiSign from "./pages/Calculator/RasiSign";
 import Birthdate from "./pages/Numerology/BirthdateNumber";
 import Numerology from "./pages/Numerology/Numerology";
 import Rational from "./pages/Numerology/RationalNumber";
-//import BhinnashtakavargaCharts from './pages/BhinnashtakavargaCharts/BhinnashtakavargaCharts';
+import BhinnashtakavargaCharts from './pages/BhinnashtakavargaCharts/BhinnashtakavargaCharts';
 import Bhinnashtakavarga from './pages/Bhinnashtakavarga/Bhinnashtakavarga';
 
 
@@ -71,7 +71,7 @@ function AppRoutes() {
           <Route path = {"/reset-password/:email"} element = {<ResetPassword/>} /> 
           <Route path = {"/editUserDetails"} element= {<EditUserDetails/>} />
           <Route path= {"/charts"} element= {<Charts/>} />
-          {/* <Route path= {"/bhinnashtakavarga-charts"} element= {<BhinnashtakavargaCharts/>} /> */}
+          <Route path= {"/bhinnashtakavarga-charts"} element= {<BhinnashtakavargaCharts/>} />
           <Route path= {"/bhinnashtakavarga-tables"} element= {<Bhinnashtakavarga/>} />
           <Route path= {"/pitra-dosh"} element= {<PitraDosh/>} />
           <Route path= {"/kalsarp-dosh"} element= {<KalsarpDosh/>} />

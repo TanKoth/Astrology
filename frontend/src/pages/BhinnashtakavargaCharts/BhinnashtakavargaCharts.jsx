@@ -23,6 +23,11 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SunChart from "./SunChart";
 import MoonChart from "./MoonChart";
+import MarsChart from "./MarsChart";
+import MercuryChart from "./MercuryChart";
+import JupiterChart from "./JupiterChart";
+import VenusChart from "./VenusChart";
+import SaturnChart from "./SaturnChart";
 
 import LazyChartLoading from "../../utilityFunction/LazyChartLoading";
 
@@ -212,6 +217,11 @@ const BhinnashtakavargaCharts = () => {
                     >
                       <MoonChart />
                     </LazyChartLoading>
+                    <MarsChart />
+                    <MercuryChart />
+                    <JupiterChart />
+                    <VenusChart />
+                    <SaturnChart />
                   </div>
                 </div>
               </motion.div>

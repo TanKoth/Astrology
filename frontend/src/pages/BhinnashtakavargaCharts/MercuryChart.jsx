@@ -1,29 +1,10 @@
 import { useState, useEffect, useContext } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  ChevronDown,
-  ChevronUp,
-  Star,
-  Lock,
-  MessageCircle,
-  Crown,
-  Send,
-  Sparkles,
-  Navigation,
-  Printer,
-  Languages,
-  Gem,
-  Download,
-} from "lucide-react";
-import { LiaStarOfLifeSolid } from "react-icons/lia";
 import AppContext from "../../context/AppContext";
-import NavigationMenu from "../NavigationMenu/NavigationMenu";
-//import "./ChartImage.css";
 import "../../pages/Charts/Charts.css";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { getBinnashtakavargaSunTable } from "../../api/BhinnashtakavargaTable";
+import { getBinnashtakavargaMercuryTable } from "../../api/BhinnashtakavargaTable";
 import { getD1Chart } from "../../api/Charts";
 import { getUserDetails } from "../../api/user";
 import {
@@ -32,15 +13,17 @@ import {
 } from "../../utilityFunction/FetchLocationData";
 import { SVGRenderer } from "../../utilityFunction/SvgFileConvertor";
 
-const SunChart = ({
+const MercuryChart = ({
   currentLanguage: propCurrentLanguage,
   onLanguageChange,
 }) => {
   const { user } = useContext(AppContext);
-  const [bhinnashtakaSunChartData, setBhinnashtakaSunChartData] =
+  const [bhinnashtakaMercuryChartData, setBhinnashtakaMercuryChartData] =
     useState(null);
-  const [isLoadingBhinnashtakaSunChart, setIsLoadingBhinnashtakaSunChart] =
-    useState(false);
+  const [
+    isLoadingBhinnashtakaMercuryChart,
+    setIsLoadingBhinnashtakaMercuryChart,
+  ] = useState(false);
   const navigate = useNavigate();
 
   const [currentLanguage, setCurrentLanguage] = useState(
@@ -57,7 +40,7 @@ const SunChart = ({
 
   // const handlePrint = () => {
   //   const userName = user?.name || "User";
-  //   document.title = `Bhinnashtaka Moon Chart - ${userName}`;
+  //   document.title = `Bhinnashtaka Mercury Chart - ${userName}`;
 
   //   setTimeout(() => {
   //     window.print();
@@ -71,21 +54,21 @@ const SunChart = ({
   }, [user]);
 
   const fetchInsights = async (lang = "en", forceRefresh = false) => {
-    setIsLoadingBhinnashtakaSunChart(true);
+    setIsLoadingBhinnashtakaMercuryChart(true);
     try {
       // Make cache key user-specific
-      const cacheKey = `bhinnashtakaSunChartData_${user._id}_${lang}`;
+      const cacheKey = `bhinnashtakaMercuryChartData_${user._id}_${lang}`;
       const storedData = localStorage.getItem(cacheKey);
 
       if (storedData && !forceRefresh) {
         try {
           const parsedData = JSON.parse(storedData);
-          setBhinnashtakaSunChartData(parsedData);
+          setBhinnashtakaMercuryChartData(parsedData);
           setCurrentLanguage(lang);
-          setIsLoadingBhinnashtakaSunChart(false);
+          setIsLoadingBhinnashtakaMercuryChart(false);
           return;
         } catch (err) {
-          console.error("Error parsing bhinnashtaka sun chart data:", err);
+          console.error("Error parsing bhinnashtaka mercury chart data:", err);
         }
       }
 
@@ -93,13 +76,13 @@ const SunChart = ({
 
       if (!userData) {
         toast.error("No user data found. Please complete your profile.");
-        setIsLoadingBhinnashtakaSunChart(false);
+        setIsLoadingBhinnashtakaMercuryChart(false);
         return;
       }
 
       if (!userData.user.placeOfBirth) {
         toast.error("Birth place not found. Please update your profile.");
-        setIsLoadingBhinnashtakaSunChart(false);
+        setIsLoadingBhinnashtakaMercuryChart(false);
         return;
       }
 
@@ -115,7 +98,7 @@ const SunChart = ({
         toast.error(
           "Could not fetch complete location data for birth place. Please check your birth place format."
         );
-        setIsLoadingBhinnashtakaSunChart(false);
+        setIsLoadingBhinnashtakaMercuryChart(false);
         return;
       }
 
@@ -127,28 +110,28 @@ const SunChart = ({
         gmtOffset: locationData.gmtOffset,
       };
 
-      // Fetch both Bhinnashtaka Sun and D1 chart data
-      const [bhinnashtakaSunResponse, d1Response] = await Promise.all([
-        getBinnashtakavargaSunTable(userData.user._id, apiParams),
+      // Fetch both Bhinnashtaka Mercury and D1 chart data
+      const [bhinnashtakaMercuryResponse, d1Response] = await Promise.all([
+        getBinnashtakavargaMercuryTable(userData.user._id, apiParams),
         getD1Chart(userData.user._id, apiParams),
       ]);
 
-      if (bhinnashtakaSunResponse && bhinnashtakaSunResponse.success) {
+      if (bhinnashtakaMercuryResponse && bhinnashtakaMercuryResponse.success) {
         // console.log(
-        //   "Bhinnashtaka Sun API Response:",
-        //   bhinnashtakaSunResponse
+        //   "Bhinnashtaka Mars API Response:",
+        //   bhinnashtakaMarsResponse
         // );
 
         // Extract total values from binnashtakavargaTable
         let totalValues = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; // Default fallback
 
         if (
-          bhinnashtakaSunResponse?.binnashtakavargaTable &&
-          bhinnashtakaSunResponse?.binnashtakavargaTable?.response?.Total
+          bhinnashtakaMercuryResponse?.binnashtakavargaTable &&
+          bhinnashtakaMercuryResponse?.binnashtakavargaTable?.response?.Total
         ) {
           totalValues =
-            bhinnashtakaSunResponse.binnashtakavargaTable?.response?.Total;
-          console.log("Extracted total values:", totalValues);
+            bhinnashtakaMercuryResponse.binnashtakavargaTable?.response?.Total;
+          //console.log("Extracted total values:", totalValues);
         }
 
         // Extract house numbers from D1 chart
@@ -440,23 +423,23 @@ const SunChart = ({
 
         // Update response with new chart structure
         const updatedResponse = {
-          ...bhinnashtakaSunResponse,
+          ...bhinnashtakaMercuryResponse,
           data: newSvgStructure,
         };
 
-        setBhinnashtakaSunChartData(updatedResponse);
+        setBhinnashtakaMercuryChartData(updatedResponse);
 
         // Store with user-specific cache key
         localStorage.setItem(cacheKey, JSON.stringify(updatedResponse));
         setCurrentLanguage(lang);
       }
     } catch (err) {
-      console.error("Failed to fetch Bhinnashtakavarga Sun chart:", err);
+      console.error("Failed to fetch Bhinnashtakavarga Mercury chart:", err);
       toast.error(
-        "Failed to load Bhinnashtakavarga Sun chart. Please try again."
+        "Failed to load Bhinnashtakavarga Mercury chart. Please try again."
       );
     } finally {
-      setIsLoadingBhinnashtakaSunChart(false);
+      setIsLoadingBhinnashtakaMercuryChart(false);
     }
   };
 
@@ -467,7 +450,7 @@ const SunChart = ({
     };
 
     const newLanguage = languageMap[currentLanguage] || "en";
-    setIsLoadingBhinnashtakaSunChart(true);
+    setIsLoadingBhinnashtakaMercuryChart(true);
 
     try {
       await fetchInsights(newLanguage, true);
@@ -478,7 +461,7 @@ const SunChart = ({
     } catch (error) {
       console.error("Failed to change language:", error);
       toast.error("Failed to change language. Please try again.");
-      setIsLoadingBhinnashtakaSunChart(false);
+      setIsLoadingBhinnashtakaMercuryChart(false);
     }
   };
 
@@ -492,11 +475,11 @@ const SunChart = ({
 
   return (
     <div className="chart-item">
-      {/* <h4 className="chart-title">Sun</h4> */}
+      {/* <h4 className="chart-title">Moon</h4> */}
       <div>
-        {bhinnashtakaSunChartData?.data && (
+        {bhinnashtakaMercuryChartData?.data && (
           <SVGRenderer
-            svgString={bhinnashtakaSunChartData?.data}
+            svgString={bhinnashtakaMercuryChartData?.data}
             className="chart-image"
           />
         )}
@@ -505,4 +488,4 @@ const SunChart = ({
   );
 };
 
-export default SunChart;
+export default MercuryChart;
