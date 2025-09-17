@@ -100,7 +100,7 @@ const NavigationMenu = ({ isOpen, onClose }) => {
           path: "/bhinnashtakavarga-tables",
           icon: Kundali_Logo,
           iconType: "image",
-          label: "Bhinnashtak- \nvarga",
+          label: "Bhinnashtak \nVarga",
         },
         {
           path: "/daily-horoscope",
